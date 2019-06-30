@@ -35,7 +35,7 @@ open class PinterestLayoutPlugin: Plugin {
                 let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
                 let itemSize = self.itemSize(at: indexPath, collectionView: collectionView, layout: layout)
                 let origin: CGPoint
-                if let last = itemsAccumulator.last {
+                if let last = itemsAccumulator.last, itemsAccumulator.count >= columns {
                     let x = last.frame.maxX + itemSpacing
                     if currentColumn + 1 >= columns {
                         origin = CGPoint(x: insets.left, y: lineBottom[0] + lineSpacing)
