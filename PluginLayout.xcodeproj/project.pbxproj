@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		70E71E4322C8F91C005674CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E4222C8F91C005674CD /* AppDelegate.swift */; };
-		70E71E4522C8F91C005674CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E4422C8F91C005674CD /* ViewController.swift */; };
+		70E71E4522C8F91C005674CD /* SimpleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E4422C8F91C005674CD /* SimpleViewController.swift */; };
 		70E71E4822C8F91C005674CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70E71E4622C8F91C005674CD /* Main.storyboard */; };
 		70E71E4A22C8F91E005674CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70E71E4922C8F91E005674CD /* Assets.xcassets */; };
 		70E71E4D22C8F91E005674CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70E71E4B22C8F91E005674CD /* LaunchScreen.storyboard */; };
@@ -21,6 +21,9 @@
 		70E71E7B22C9087C005674CD /* PictureCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E71E7922C9087C005674CD /* PictureCollectionViewCell.xib */; };
 		70E71E7D22C910FE005674CD /* FlowLayoutPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */; };
 		70E71E8022C91255005674CD /* GridLayoutPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E7F22C91255005674CD /* GridLayoutPlugin.swift */; };
+		70E71E8222C920A3005674CD /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8122C920A2005674CD /* GridViewController.swift */; };
+		70E71E8422C9248C005674CD /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8322C9248C005674CD /* PinterestLayout.swift */; };
+		70E71E8622C927F8005674CD /* PinterestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8522C927F7005674CD /* PinterestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +53,7 @@
 /* Begin PBXFileReference section */
 		70E71E3F22C8F91C005674CD /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70E71E4222C8F91C005674CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		70E71E4422C8F91C005674CD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		70E71E4422C8F91C005674CD /* SimpleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleViewController.swift; sourceTree = "<group>"; };
 		70E71E4722C8F91C005674CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		70E71E4922C8F91E005674CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70E71E4C22C8F91E005674CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,6 +68,9 @@
 		70E71E7922C9087C005674CD /* PictureCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PictureCollectionViewCell.xib; sourceTree = "<group>"; };
 		70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayoutPlugin.swift; sourceTree = "<group>"; };
 		70E71E7F22C91255005674CD /* GridLayoutPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutPlugin.swift; sourceTree = "<group>"; };
+		70E71E8122C920A2005674CD /* GridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
+		70E71E8322C9248C005674CD /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
+		70E71E8522C927F7005674CD /* PinterestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +115,9 @@
 			children = (
 				70E71E4E22C8F91E005674CD /* Info.plist */,
 				70E71E4222C8F91C005674CD /* AppDelegate.swift */,
-				70E71E4422C8F91C005674CD /* ViewController.swift */,
+				70E71E4422C8F91C005674CD /* SimpleViewController.swift */,
+				70E71E8122C920A2005674CD /* GridViewController.swift */,
+				70E71E8522C927F7005674CD /* PinterestViewController.swift */,
 				70E71E7622C907DD005674CD /* DataSource.swift */,
 				70E71E7422C9064E005674CD /* Picture.swift */,
 				70E71E4622C8F91C005674CD /* Main.storyboard */,
@@ -127,6 +135,7 @@
 				70E71E7222C8FA11005674CD /* PluginLayout.swift */,
 				70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */,
 				70E71E7F22C91255005674CD /* GridLayoutPlugin.swift */,
+				70E71E8322C9248C005674CD /* PinterestLayout.swift */,
 				70E71E6F22C8F9F7005674CD /* Info.plist */,
 			);
 			path = Sources;
@@ -256,7 +265,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				70E71E7522C9064E005674CD /* Picture.swift in Sources */,
-				70E71E4522C8F91C005674CD /* ViewController.swift in Sources */,
+				70E71E8622C927F8005674CD /* PinterestViewController.swift in Sources */,
+				70E71E4522C8F91C005674CD /* SimpleViewController.swift in Sources */,
+				70E71E8222C920A3005674CD /* GridViewController.swift in Sources */,
 				70E71E7A22C9087C005674CD /* PictureCollectionViewCell.swift in Sources */,
 				70E71E7722C907DD005674CD /* DataSource.swift in Sources */,
 				70E71E4322C8F91C005674CD /* AppDelegate.swift in Sources */,
@@ -267,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70E71E8422C9248C005674CD /* PinterestLayout.swift in Sources */,
 				70E71E7D22C910FE005674CD /* FlowLayoutPlugin.swift in Sources */,
 				70E71E8022C91255005674CD /* GridLayoutPlugin.swift in Sources */,
 				70E71E7322C8FA11005674CD /* PluginLayout.swift in Sources */,

@@ -10,24 +10,55 @@ import Foundation
 import UIKit
 
 struct Picture {
-    var ratio: CGFloat
-    var id: Int
+    private static var cache: [URL: UIImage] = [:]
+    enum ContentType: String {
+        case cats
+        case food
+        case sports
+        case nature
+        
+        var ratio: CGFloat {
+            switch self {
+            case .cats: return 4/3
+            case .nature: return CGFloat([16.0/9.0 ,4.0/3.0, 9.0/16.0, 3.0/4.0, 21.0/9.0 , 9.0/21.0].randomElement() ?? 1)
+            default: return 1
+            }
+        }
+        var max: Int {
+            switch self {
+            case .nature: return 6
+            case .cats: return 11
+            default: return 7
+            }
+        }
+    }
     
-    init(id: Int, ratio: CGFloat = 4.0/3.0) {
+    var id: Int
+    var type: ContentType
+    var ratio: CGFloat {
+        return type.ratio
+    }
+    init(id: Int, type: ContentType = .food) {
         self.id = id
-        self.ratio = ratio
+        
+        self.type = type
     }
     var url: URL {
-        let width = 1000
+        let width = 600
         let height = Int(round(CGFloat(width) / ratio))
-        return URL(string:"http://lorempixel.com/\(width)/\(height)/food/\(id % 11)")!
+        return URL(string:"http://lorempixel.com/\(width)/\(height)/\(type.rawValue)/\(id % type.max)")!
     }
     
-    func download(_ completion: @escaping (UIImage) -> ()) -> URLSessionTask {
+    func download(_ completion: @escaping (UIImage) -> ()) -> URLSessionTask? {
         print (url)
+        if let cached = Picture.cache[url] {
+            completion(cached)
+            return nil
+        }
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async {
                 if let data = data, let image = UIImage(data: data) {
+                    Picture.cache[self.url] = image
                     completion(image)
                 } else {
                     completion(UIImage())

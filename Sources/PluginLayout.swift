@@ -13,6 +13,9 @@ public protocol Plugin {
     func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes]
 }
 
+public protocol PluginDelegate: class {
+    func plugin(for section: Int) -> Plugin?
+}
 open class PluginLayout: UICollectionViewLayout {
     
     private var contentSize: CGSize = .zero
@@ -21,14 +24,29 @@ open class PluginLayout: UICollectionViewLayout {
     private var plugins:[Int: Plugin] = [:]
     public var defaultPlugin: Plugin? {
         didSet { invalidateLayout() }
+    
     }
     
+    weak var delegate: PluginDelegate?
+    
+    public init(delegate: PluginDelegate? = nil) {
+        self.delegate = delegate
+        super.init()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     public func register(plugin: Plugin?, for section: Int) {
         self.plugins[section] = plugin
         invalidateLayout()
     }
     
     public func plugin(for section: Int) -> Plugin? {
+        if let delegate = delegate,
+            let plugin = delegate.plugin(for: section) {
+            return plugin
+        }
         return plugins[section] ?? defaultPlugin
     }
     
@@ -48,5 +66,8 @@ open class PluginLayout: UICollectionViewLayout {
     }
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return attributesCache.filter { $0.frame.intersects(rect) }
+    }
+    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return attributesCache.filter { $0.indexPath == indexPath}.first
     }
 }

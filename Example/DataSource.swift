@@ -19,8 +19,8 @@ class DataSource: NSObject, UICollectionViewDataSource {
     convenience init(pictures:[Picture]) {
         self.init(pictures:[pictures])
     }
-    convenience init(count: Int) {
-        let pictures = (0..<count).map { Picture(id: $0)}
+    convenience init(count: Int, contentType: Picture.ContentType = .food) {
+        let pictures = (0..<count).map { Picture(id: $0, type: contentType)}
         self.init(pictures: pictures)
     }
     

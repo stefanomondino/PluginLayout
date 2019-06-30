@@ -61,4 +61,6 @@ open class FlowLayoutPlugin: Plugin {
     open func itemSize(at indexPath: IndexPath, collectionView: UICollectionView, layout: PluginLayout) -> CGSize {
         return delegate?.collectionView?(collectionView, layout: layout, sizeForItemAt: indexPath) ?? .zero
     }
+    
+    
 }
