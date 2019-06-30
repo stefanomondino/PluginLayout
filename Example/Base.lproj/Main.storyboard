@@ -61,6 +61,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="dKI-OR-5O0"/>
                         <segue destination="JwZ-tY-okQ" kind="relationship" relationship="viewControllers" id="B0n-nH-H8g"/>
                         <segue destination="O1R-sg-gBd" kind="relationship" relationship="viewControllers" id="uSI-EA-3Z1"/>
+                        <segue destination="uCQ-GC-ymr" kind="relationship" relationship="viewControllers" id="GTN-uw-aM6"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TDe-VA-BEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -103,7 +104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lz0-11-MtZ" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1270" y="443"/>
+            <point key="canvasLocation" x="2246" y="54"/>
         </scene>
         <!--Pinterest-->
         <scene sceneID="eg9-Nc-vVY">
@@ -141,7 +142,45 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ivD-NS-akI" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1270" y="1111"/>
+            <point key="canvasLocation" x="1270" y="482"/>
+        </scene>
+        <!--Mixed-->
+        <scene sceneID="uQT-kG-fTP">
+            <objects>
+                <viewController id="uCQ-GC-ymr" customClass="MixedViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="W4Y-5y-lib">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0Ti-DP-dFt">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="U3G-Ng-YkR">
+                                    <size key="itemSize" width="145" height="103"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hka-Hi-mrp" firstAttribute="trailing" secondItem="0Ti-DP-dFt" secondAttribute="trailing" id="bha-HI-sHr"/>
+                            <constraint firstItem="0Ti-DP-dFt" firstAttribute="top" secondItem="hka-Hi-mrp" secondAttribute="top" id="i2y-eC-hCc"/>
+                            <constraint firstItem="0Ti-DP-dFt" firstAttribute="leading" secondItem="hka-Hi-mrp" secondAttribute="leading" id="kJh-bt-511"/>
+                            <constraint firstItem="hka-Hi-mrp" firstAttribute="bottom" secondItem="0Ti-DP-dFt" secondAttribute="bottom" id="mfm-zD-kpD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hka-Hi-mrp"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Mixed" id="XCB-DM-WbN"/>
+                    <connections>
+                        <outlet property="collectionView" destination="0Ti-DP-dFt" id="klo-e1-koS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HGX-tg-24q" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2170" y="796"/>
         </scene>
     </scenes>
 </document>
