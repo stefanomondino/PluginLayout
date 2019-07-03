@@ -6,16 +6,8 @@
 //  Copyright © 2019 Stefano Mondino. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-public protocol Plugin {
-    func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes]
-}
-
-public protocol PluginLayoutDelegate: class {
-    func plugin(for section: Int) -> Plugin?
-}
 open class PluginLayout: UICollectionViewLayout {
     
     private var contentSize: CGSize = .zero
