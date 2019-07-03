@@ -13,41 +13,28 @@ public protocol Plugin {
     func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes]
 }
 
-public protocol PluginDelegate: class {
+public protocol PluginLayoutDelegate: class {
     func plugin(for section: Int) -> Plugin?
 }
 open class PluginLayout: UICollectionViewLayout {
     
     private var contentSize: CGSize = .zero
     private var attributesCache: Set<UICollectionViewLayoutAttributes> = []
-    
-    private var plugins:[Int: Plugin] = [:]
-    public var defaultPlugin: Plugin? {
-        didSet { invalidateLayout() }
-    
+
+    private var delegate: PluginLayoutDelegate? {
+        return self.collectionView?.delegate as? PluginLayoutDelegate
     }
     
-    weak var delegate: PluginDelegate?
-    
-    public init(delegate: PluginDelegate? = nil) {
-        self.delegate = delegate
-        super.init()
+    public var defaultPlugin: Plugin? {
+        didSet { invalidateLayout() }
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    public func register(plugin: Plugin?, for section: Int) {
-        self.plugins[section] = plugin
-        invalidateLayout()
-    }
     
     public func plugin(for section: Int) -> Plugin? {
-        if let delegate = delegate,
-            let plugin = delegate.plugin(for: section) {
-            return plugin
-        }
-        return plugins[section] ?? defaultPlugin
+        return self.delegate?.plugin(for: section) ?? defaultPlugin
     }
     
     open override func prepare() {

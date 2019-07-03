@@ -9,7 +9,7 @@
 import UIKit
 import PluginLayout
 
-class MixedViewController: UIViewController, PinterestLayoutDelegate, GridLayoutDelegate, PluginDelegate {
+class MixedViewController: UIViewController, PinterestLayoutDelegate, GridLayoutDelegate, PluginLayoutDelegate {
     func plugin(for section: Int) -> Plugin? {
         switch section {
         case 1: return PinterestLayoutPlugin(delegate: self)
