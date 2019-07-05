@@ -9,7 +9,7 @@
 import UIKit
 import PluginLayout
 
-class MixedViewController: UIViewController, PinterestLayoutDelegate, GridLayoutDelegate, PluginLayoutDelegate {
+class MixedViewController: UIViewController {
     func plugin(for section: Int) -> Plugin? {
         switch section {
         case 1: return PinterestLayoutPlugin(delegate: self)
@@ -37,13 +37,13 @@ class MixedViewController: UIViewController, PinterestLayoutDelegate, GridLayout
         super.viewDidLoad()
         collectionView.dataSource = dataSource
         collectionView.delegate = self
-        
-        let layout = PluginLayout(delegate: self)
 
-        self.collectionView.setCollectionViewLayout(layout, animated: false)
-        
+        self.collectionView.setCollectionViewLayout(PluginLayout(), animated: false)
         self.collectionView.reloadData()
     }
+}
+
+extension MixedViewController: PluginLayoutDelegate, PinterestLayoutDelegate, GridLayoutDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2

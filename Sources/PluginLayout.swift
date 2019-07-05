@@ -20,11 +20,7 @@ open class PluginLayout: UICollectionViewLayout {
     public var defaultPlugin: Plugin? {
         didSet { invalidateLayout() }
     }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
+        
     public func plugin(for section: Int) -> Plugin? {
         return self.delegate?.plugin(for: section) ?? defaultPlugin
     }
