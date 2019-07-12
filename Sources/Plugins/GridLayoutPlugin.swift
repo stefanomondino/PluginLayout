@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 public protocol GridLayoutDelegate: UICollectionViewDelegateFlowLayout {
-    func itemsPerLine(at indexPath: IndexPath) -> Int
-    func aspectRatio(at indexPath: IndexPath) -> CGFloat
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat
 }
 
 open class GridLayoutPlugin: FlowLayoutPlugin {
@@ -20,8 +20,8 @@ open class GridLayoutPlugin: FlowLayoutPlugin {
         
     }
     open override func itemSize(at indexPath: IndexPath, collectionView: UICollectionView, layout: PluginLayout) -> CGSize {
-        let n = (delegate as? GridLayoutDelegate)?.itemsPerLine(at: indexPath) ?? 1
-        let ratio = (delegate as? GridLayoutDelegate)?.aspectRatio(at: indexPath) ?? 1
+        let n = (delegate as? GridLayoutDelegate)?.collectionView(collectionView, layout: layout, itemsPerLineAt: indexPath) ?? 1
+        let ratio = (delegate as? GridLayoutDelegate)?.collectionView(collectionView, layout: layout, aspectRatioAt: indexPath) ?? 1
         let itemsPerLine = max(n, 1)
         let insets = delegate?.collectionView?(collectionView, layout: layout, insetForSectionAt: indexPath.section) ?? .zero
         let spacing = delegate?.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: indexPath.section) ?? 0

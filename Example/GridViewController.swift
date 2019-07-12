@@ -9,7 +9,7 @@
 import UIKit
 import PluginLayout
 
-class GridViewController: UIViewController, GridLayoutDelegate {
+class GridViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     let dataSource = DataSource(count: 160, contentType: .cats)
@@ -26,6 +26,18 @@ class GridViewController: UIViewController, GridLayoutDelegate {
         self.collectionView.reloadData()
     }
     
+ 
+}
+
+extension GridViewController: GridLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
+        return dataSource.picture(at: indexPath).ratio
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
@@ -36,12 +48,4 @@ class GridViewController: UIViewController, GridLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     }
-    
-    func itemsPerLine(at indexPath: IndexPath) -> Int {
-        return 3
-    }
-    func aspectRatio(at indexPath: IndexPath) -> CGFloat {
-        return dataSource.picture(at: indexPath).ratio
-    }
 }
-

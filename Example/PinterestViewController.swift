@@ -9,12 +9,8 @@
 import UIKit
 import PluginLayout
 
-class PinterestViewController: UIViewController, PinterestLayoutDelegate {
-    
-    func columns(for section: Int) -> Int {
-        return 3
-    }
-    
+class PinterestViewController: UIViewController {
+
     @IBOutlet weak var collectionView: UICollectionView!
     
     let dataSource = DataSource(count: 160, contentType: .nature)
@@ -42,12 +38,15 @@ class PinterestViewController: UIViewController, PinterestLayoutDelegate {
         return UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     }
     
-    func itemsPerLine(at indexPath: IndexPath) -> Int {
+}
+
+extension PinterestViewController: PinterestLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int {
         return 3
     }
     
-    func aspectRatio(at indexPath: IndexPath) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
         return dataSource.picture(at: indexPath).ratio
     }
+    
 }
-
