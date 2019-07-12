@@ -21,11 +21,24 @@ open class FlowLayoutPlugin: Plugin {
         let insets = delegate.collectionView?(collectionView, layout: layout, insetForSectionAt: section) ?? .zero
         let itemSpacing = delegate.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: section) ?? 0
         let lineSpacing = delegate.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: section) ?? 0
+        
+        var header: UICollectionViewLayoutAttributes?
+        var footer: UICollectionViewLayoutAttributes?
+        
+        if let headerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForHeaderInSection: section),
+            headerSize.height > 0 {
+            header = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: IndexPath(item: 0, section: section))
+            header?.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: headerSize)
+            offset.y += headerSize.height
+        }
+        
         offset.y += insets.top
         var lineTop: CGFloat = offset.y
         var lineBottom = lineTop
         let contentBounds = collectionView.frame.inset(by: collectionView.contentInset)
         offset.x = max(offset.x, contentBounds.width)
+        
+       
         let attributes: [UICollectionViewLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: section))
             .map { item in IndexPath(item: item, section: section) }
             .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
@@ -55,7 +68,14 @@ open class FlowLayoutPlugin: Plugin {
         }
         
         offset.y = lineBottom + insets.bottom
-        return attributes
+    
+        if let footerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForFooterInSection: section),
+            footerSize.height > 0 {
+            footer = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 0, section: section))
+            footer?.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: footerSize)
+            offset.y += footerSize.height
+        }
+        return ([header] + attributes + [footer]).compactMap { $0 }
         
     }
     open func itemSize(at indexPath: IndexPath, collectionView: UICollectionView, layout: PluginLayout) -> CGSize {
