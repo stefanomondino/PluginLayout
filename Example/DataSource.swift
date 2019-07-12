@@ -41,5 +41,10 @@ class DataSource: NSObject, UICollectionViewDataSource {
         (cell as? PictureCollectionViewCell)?.picture = pictures[indexPath.section][indexPath.item]
         return cell
     }
-    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        collectionView.register(UINib(nibName: "SupplementaryCollectionViewCell", bundle: nil), forSupplementaryViewOfKind: kind, withReuseIdentifier: "supplementary")
+        let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "supplementary", for: indexPath)
+         (cell as? SupplementaryCollectionViewCell)?.titleLabel.text = kind.uppercased()
+        return cell
+    }
 }
