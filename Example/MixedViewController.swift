@@ -44,7 +44,18 @@ class MixedViewController: UIViewController {
 }
 
 extension MixedViewController: PluginLayoutDelegate, PinterestLayoutDelegate, GridLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int {
+        return 4
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
+        return dataSource.picture(at: indexPath).ratio
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
+        return 3
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
@@ -57,17 +68,6 @@ extension MixedViewController: PluginLayoutDelegate, PinterestLayoutDelegate, Gr
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width - 4, height: 100)
-    }
-    func itemsPerLine(at indexPath: IndexPath) -> Int {
-        return 3
-    }
-    
-    func aspectRatio(at indexPath: IndexPath) -> CGFloat {
-        return dataSource.picture(at: indexPath).ratio
-    }
-    
-    func columns(for section: Int) -> Int {
-        return 4
     }
 }
 
