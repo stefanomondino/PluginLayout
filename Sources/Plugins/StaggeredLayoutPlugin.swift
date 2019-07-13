@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-public protocol PinterestLayoutDelegate: UICollectionViewDelegateFlowLayout {
+public protocol StaggeredLayoutDelegate: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat
 }
 
-open class PinterestLayoutPlugin: Plugin {
+open class StaggeredLayoutPlugin: Plugin {
     public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
         
         guard let collectionView = layout.collectionView,
@@ -47,9 +47,14 @@ open class PinterestLayoutPlugin: Plugin {
                         lineBottom[currentColumn] = origin.y + itemSize.height
                     }
                 } else {
-                    
-                    origin = CGPoint(x: insets.left, y: lineBottom[currentColumn])
-                    lineBottom[currentColumn] = origin.y
+                    let x: CGFloat
+                    if let last = itemsAccumulator.last {
+                        x = last.frame.maxX + itemSpacing
+                    } else {
+                        x = insets.left
+                    }
+                    origin = CGPoint(x: x, y: lineBottom[currentColumn])
+                    lineBottom[currentColumn] = origin.y + itemSize.height
                     currentColumn = currentColumn + 1
                 }
                 attribute.frame = CGRect(origin: origin, size: itemSize)
@@ -66,8 +71,8 @@ open class PinterestLayoutPlugin: Plugin {
         return attributes
     }
     
-    public weak var delegate: PinterestLayoutDelegate?
-    public init(delegate: PinterestLayoutDelegate ) {
+    public weak var delegate: StaggeredLayoutDelegate?
+    public init(delegate: StaggeredLayoutDelegate ) {
         self.delegate = delegate
     }
     func columnWidth(for section: Int, collectionView: UICollectionView, layout: PluginLayout) -> CGFloat {

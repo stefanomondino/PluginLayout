@@ -9,7 +9,7 @@
 import UIKit
 import PluginLayout
 
-class PinterestViewController: UIViewController {
+class StaggeredViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -21,7 +21,7 @@ class PinterestViewController: UIViewController {
         collectionView.delegate = self
         
         let layout = PluginLayout()
-        layout.defaultPlugin = PinterestLayoutPlugin(delegate: self)
+        layout.defaultPlugin = StaggeredLayoutPlugin(delegate: self)
         self.collectionView.setCollectionViewLayout(layout, animated: false)
         
         self.collectionView.reloadData()
@@ -40,7 +40,7 @@ class PinterestViewController: UIViewController {
     
 }
 
-extension PinterestViewController: PinterestLayoutDelegate {
+extension StaggeredViewController: StaggeredLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int {
         return 3
     }

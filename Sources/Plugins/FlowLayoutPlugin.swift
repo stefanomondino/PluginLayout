@@ -22,58 +22,115 @@ open class FlowLayoutPlugin: Plugin {
         let itemSpacing = delegate.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: section) ?? 0
         let lineSpacing = delegate.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: section) ?? 0
         
+        let isRTL = UIView.userInterfaceLayoutDirection(for: collectionView.semanticContentAttribute) == .rightToLeft
+        
         var header: UICollectionViewLayoutAttributes?
         var footer: UICollectionViewLayoutAttributes?
-        
-        if let headerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForHeaderInSection: section),
-            headerSize.height > 0 {
-            header = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: IndexPath(item: 0, section: section))
-            header?.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: headerSize)
-            offset.y += headerSize.height
-        }
-        
-        offset.y += insets.top
-        var lineTop: CGFloat = offset.y
-        var lineBottom = lineTop
+        let attributes: [UICollectionViewLayoutAttributes]
         let contentBounds = collectionView.frame.inset(by: collectionView.contentInset)
-        offset.x = max(offset.x, contentBounds.width)
-        
-       
-        let attributes: [UICollectionViewLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: section))
-            .map { item in IndexPath(item: item, section: section) }
-            .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
-                let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-                let itemSize = self.itemSize(at: indexPath, collectionView: collectionView, layout: layout)
-                let origin: CGPoint
-                if let last = itemsAccumulator.last {
-                    let x = last.frame.maxX + itemSpacing
-                    if x + itemSize.width + insets.right > contentBounds.width {
-                        origin = CGPoint(x: insets.left, y: lineBottom + lineSpacing)
-                        lineTop = origin.y
-                    } else {
-                        origin = CGPoint(x: x, y: lineTop)
-                    }
-                } else {
-                    origin = CGPoint(x: insets.left, y: lineBottom)
-                }
-                attribute.frame = CGRect(origin: origin, size: itemSize)
-                if attribute.frame.minY > lineTop {
-                    lineTop = attribute.frame.minY
-                }
-                if attribute.frame.maxY > lineBottom {
-                    lineBottom = attribute.frame.maxY
-                }
-                
-                return  itemsAccumulator + [attribute]
+        if let headerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForHeaderInSection: section),
+            headerSize.height > 0 && headerSize.width > 0 {
+            header = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: IndexPath(item: 0, section: section))
+            switch layout.scrollDirection {
+            case .horizontal:
+                header?.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: headerSize.width, height: contentBounds.height))
+                offset.x += headerSize.width
+            case .vertical:
+                header?.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: CGSize(width: contentBounds.width, height: headerSize.height))
+                offset.y += headerSize.height
+            @unknown default:
+                break
+            }
+          
         }
-        
-        offset.y = lineBottom + insets.bottom
-    
+        if layout.scrollDirection == .vertical {
+            offset.y += insets.top
+            var lineTop: CGFloat = offset.y
+            var lineBottom = lineTop
+            offset.x = max(offset.x, contentBounds.width)
+     
+            attributes = (0..<collectionView.numberOfItems(inSection: section))
+                .map { item in IndexPath(item: item, section: section) }
+                
+                .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
+                    let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+                    let itemSize = self.itemSize(at: indexPath, collectionView: collectionView, layout: layout)
+                    let origin: CGPoint
+                    if let last = itemsAccumulator.last {
+                        let x = last.frame.maxX + itemSpacing
+                        if x + itemSize.width + insets.right > contentBounds.width {
+                            origin = CGPoint(x: insets.left, y: lineBottom + lineSpacing)
+                            lineTop = origin.y
+                        } else {
+                            origin = CGPoint(x: x, y: lineTop)
+                        }
+                    } else {
+                        origin = CGPoint(x: insets.left, y: lineBottom)
+                    }
+                    attribute.frame = CGRect(origin: origin, size: itemSize)
+                    if attribute.frame.minY > lineTop {
+                        lineTop = attribute.frame.minY
+                    }
+                    if attribute.frame.maxY > lineBottom {
+                        lineBottom = attribute.frame.maxY
+                    }
+                    
+                    return  itemsAccumulator + [attribute]
+            }
+            
+            offset.y = lineBottom + insets.bottom
+        } else {
+            offset.x += insets.left
+            var lineTop: CGFloat = offset.x
+            var lineBottom = lineTop
+            
+            offset.y = max(offset.y, contentBounds.height)
+            var sequence = Array((0..<collectionView.numberOfItems(inSection: section)))
+//            if isRTL { sequence.reverse() }
+            attributes = sequence
+                .map { item in IndexPath(item: item, section: section) }
+                .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
+                    let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+                    let itemSize = self.itemSize(at: indexPath, collectionView: collectionView, layout: layout)
+                    let origin: CGPoint
+                    if let last = itemsAccumulator.last {
+                        let y = last.frame.maxY + itemSpacing
+                        if y + itemSize.height + insets.bottom > contentBounds.height {
+                            origin = CGPoint(x: lineBottom + lineSpacing, y: insets.top )
+                            lineTop = origin.x
+                        } else {
+                            origin = CGPoint(x: lineTop, y: y)
+                        }
+                    } else {
+                        origin = CGPoint(x: lineBottom, y: insets.top)
+                    }
+                    attribute.frame = CGRect(origin: origin, size: itemSize)
+                    if attribute.frame.minX > lineTop {
+                        lineTop = attribute.frame.minX
+                    }
+                    if attribute.frame.maxX > lineBottom {
+                        lineBottom = attribute.frame.maxX
+                    }
+                    
+                    return  itemsAccumulator + [attribute]
+            }
+            
+            offset.x = lineBottom + insets.right
+        }
         if let footerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForFooterInSection: section),
-            footerSize.height > 0 {
+            footerSize.height > 0 && footerSize.width > 0 {
             footer = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 0, section: section))
-            footer?.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: footerSize)
-            offset.y += footerSize.height
+            switch layout.scrollDirection {
+            case .horizontal:
+                footer?.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: footerSize.width, height: contentBounds.height))
+                offset.x += footerSize.width
+            case .vertical:
+                footer?.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: CGSize(width: contentBounds.width, height: footerSize.height))
+                offset.y += footerSize.height
+            @unknown default:
+                break
+            }
+         
         }
         return ([header] + attributes + [footer]).compactMap { $0 }
         

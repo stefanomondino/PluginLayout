@@ -11,6 +11,7 @@ import UIKit
 class PictureCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var number: UILabel!
     private var task: URLSessionTask?
     
     var picture: Picture? {

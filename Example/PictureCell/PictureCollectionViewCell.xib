@@ -22,19 +22,29 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GYQ-KQ-LAh">
                         <rect key="frame" x="0.0" y="0.0" width="128" height="129"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odc-CF-pLt">
+                        <rect key="frame" x="76" y="98" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </label>
                 </subviews>
             </view>
             <color key="backgroundColor" red="1" green="0.59607843140000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="odc-CF-pLt" secondAttribute="bottom" constant="10" id="Aw1-Wp-iuC"/>
                 <constraint firstAttribute="bottom" secondItem="GYQ-KQ-LAh" secondAttribute="bottom" id="NXY-aA-KxA"/>
                 <constraint firstItem="GYQ-KQ-LAh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="NfK-7X-MO2"/>
                 <constraint firstItem="GYQ-KQ-LAh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="P82-Aj-Ee0"/>
+                <constraint firstAttribute="trailing" secondItem="odc-CF-pLt" secondAttribute="trailing" constant="10" id="eDg-P1-qbg"/>
                 <constraint firstAttribute="trailing" secondItem="GYQ-KQ-LAh" secondAttribute="trailing" id="qM5-Ct-q14"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="128" height="129"/>
             <connections>
                 <outlet property="image" destination="GYQ-KQ-LAh" id="bQ4-Qc-hmp"/>
+                <outlet property="number" destination="odc-CF-pLt" id="KvL-tL-J6z"/>
             </connections>
             <point key="canvasLocation" x="181.15942028985509" y="146.31696428571428"/>
         </collectionViewCell>

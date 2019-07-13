@@ -12,7 +12,7 @@ import PluginLayout
 class MixedViewController: UIViewController {
     func plugin(for section: Int) -> Plugin? {
         switch section {
-        case 1: return PinterestLayoutPlugin(delegate: self)
+        case 1: return StaggeredLayoutPlugin(delegate: self)
         case 2: return GridLayoutPlugin(delegate: self)
         default: return FlowLayoutPlugin(delegate: self)
         }
@@ -43,7 +43,7 @@ class MixedViewController: UIViewController {
     }
 }
 
-extension MixedViewController: PluginLayoutDelegate, PinterestLayoutDelegate, GridLayoutDelegate {
+extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, GridLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int {
         return 4
     }
