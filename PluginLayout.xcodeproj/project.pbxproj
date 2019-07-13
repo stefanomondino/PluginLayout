@@ -23,8 +23,8 @@
 		70E71E7D22C910FE005674CD /* FlowLayoutPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */; };
 		70E71E8022C91255005674CD /* GridLayoutPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E7F22C91255005674CD /* GridLayoutPlugin.swift */; };
 		70E71E8222C920A3005674CD /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8122C920A2005674CD /* GridViewController.swift */; };
-		70E71E8422C9248C005674CD /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8322C9248C005674CD /* PinterestLayout.swift */; };
-		70E71E8622C927F8005674CD /* PinterestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8522C927F7005674CD /* PinterestViewController.swift */; };
+		70E71E8422C9248C005674CD /* StaggeredLayoutPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8322C9248C005674CD /* StaggeredLayoutPlugin.swift */; };
+		70E71E8622C927F8005674CD /* StaggeredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8522C927F7005674CD /* StaggeredViewController.swift */; };
 		70E71E8822C9428C005674CD /* MixedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8722C9428C005674CD /* MixedViewController.swift */; };
 		7BB795C922D92D6100733085 /* SupplementaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB795C722D92D6100733085 /* SupplementaryCollectionViewCell.swift */; };
 		7BB795CA22D92D6100733085 /* SupplementaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BB795C822D92D6100733085 /* SupplementaryCollectionViewCell.xib */; };
@@ -74,8 +74,8 @@
 		70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayoutPlugin.swift; sourceTree = "<group>"; };
 		70E71E7F22C91255005674CD /* GridLayoutPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutPlugin.swift; sourceTree = "<group>"; };
 		70E71E8122C920A2005674CD /* GridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
-		70E71E8322C9248C005674CD /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
-		70E71E8522C927F7005674CD /* PinterestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestViewController.swift; sourceTree = "<group>"; };
+		70E71E8322C9248C005674CD /* StaggeredLayoutPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredLayoutPlugin.swift; sourceTree = "<group>"; };
+		70E71E8522C927F7005674CD /* StaggeredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredViewController.swift; sourceTree = "<group>"; };
 		70E71E8722C9428C005674CD /* MixedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixedViewController.swift; sourceTree = "<group>"; };
 		7BB795C722D92D6100733085 /* SupplementaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BB795C822D92D6100733085 /* SupplementaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SupplementaryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 			children = (
 				70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */,
 				70E71E7F22C91255005674CD /* GridLayoutPlugin.swift */,
-				70E71E8322C9248C005674CD /* PinterestLayout.swift */,
+				70E71E8322C9248C005674CD /* StaggeredLayoutPlugin.swift */,
 			);
 			path = Plugins;
 			sourceTree = "<group>";
@@ -135,7 +135,7 @@
 				70E71E4222C8F91C005674CD /* AppDelegate.swift */,
 				70E71E4422C8F91C005674CD /* SimpleViewController.swift */,
 				70E71E8122C920A2005674CD /* GridViewController.swift */,
-				70E71E8522C927F7005674CD /* PinterestViewController.swift */,
+				70E71E8522C927F7005674CD /* StaggeredViewController.swift */,
 				70E71E8722C9428C005674CD /* MixedViewController.swift */,
 				70E71E7622C907DD005674CD /* DataSource.swift */,
 				70E71E7422C9064E005674CD /* Picture.swift */,
@@ -295,7 +295,7 @@
 			files = (
 				70E71E7522C9064E005674CD /* Picture.swift in Sources */,
 				70E71E8822C9428C005674CD /* MixedViewController.swift in Sources */,
-				70E71E8622C927F8005674CD /* PinterestViewController.swift in Sources */,
+				70E71E8622C927F8005674CD /* StaggeredViewController.swift in Sources */,
 				70E71E4522C8F91C005674CD /* SimpleViewController.swift in Sources */,
 				70E71E8222C920A3005674CD /* GridViewController.swift in Sources */,
 				70E71E7A22C9087C005674CD /* PictureCollectionViewCell.swift in Sources */,
@@ -309,7 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70E71E8422C9248C005674CD /* PinterestLayout.swift in Sources */,
+				70E71E8422C9248C005674CD /* StaggeredLayoutPlugin.swift in Sources */,
 				2F00D2B522CCD199006E132E /* PluginLayoutDelegate.swift in Sources */,
 				70E71E7D22C910FE005674CD /* FlowLayoutPlugin.swift in Sources */,
 				70E71E8022C91255005674CD /* GridLayoutPlugin.swift in Sources */,

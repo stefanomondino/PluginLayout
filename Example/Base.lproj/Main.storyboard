@@ -107,10 +107,10 @@
             </objects>
             <point key="canvasLocation" x="4065.217391304348" y="53.571428571428569"/>
         </scene>
-        <!--Pinterest-->
+        <!--Staggered-->
         <scene sceneID="eg9-Nc-vVY">
             <objects>
-                <viewController id="O1R-sg-gBd" customClass="PinterestViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="O1R-sg-gBd" customClass="StaggeredViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lkc-Ag-CDQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,7 +136,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RfB-y4-onq"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Pinterest" id="1xC-RN-Rz1"/>
+                    <tabBarItem key="tabBarItem" title="Staggered" id="1xC-RN-Rz1"/>
                     <connections>
                         <outlet property="collectionView" destination="bF1-PH-612" id="DiV-Yi-6Ed"/>
                     </connections>
