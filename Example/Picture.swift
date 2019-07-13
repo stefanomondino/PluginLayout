@@ -35,12 +35,11 @@ struct Picture {
     
     var id: Int
     var type: ContentType
-    var ratio: CGFloat {
-        return type.ratio
-    }
+    var ratio: CGFloat
+
     init(id: Int, type: ContentType = .food) {
         self.id = id
-        
+        self.ratio = type.ratio
         self.type = type
     }
     var url: URL {

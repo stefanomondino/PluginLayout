@@ -12,7 +12,7 @@ import PluginLayout
 class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let dataSource = DataSource(count: 30)
+    let dataSource = DataSource(count: 6, sections: 2)
     let layout = PluginLayout()
     let flow = UICollectionViewFlowLayout()
     override func viewDidLoad() {
@@ -23,14 +23,19 @@ class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout
         
         let toggleFlow = UIBarButtonItem(title: "Toggle Flow", style: .done, target: self, action: #selector(toggleFlow(_:)))
         self.navigationItem.leftBarButtonItem = toggleFlow
-        
+
         collectionView.dataSource = dataSource
         collectionView.delegate = self
-        
-        layout.defaultPlugin = FlowLayoutPlugin(delegate: self)
+        let plugin = FlowLayoutPlugin(delegate: self)
+        plugin.sectionHeadersPinToVisibleBounds = true
+        plugin.sectionFootersPinToVisibleBounds = true
+        layout.defaultPlugin = plugin
         self.collectionView.setCollectionViewLayout(layout, animated: false)
         
         self.collectionView.reloadData()
+        
+        flow.sectionHeadersPinToVisibleBounds = true
+        flow.sectionFootersPinToVisibleBounds = true
     }
     @objc func toggleDirection(_ sender: Any) {
         layout.scrollDirection = layout.scrollDirection == .horizontal ? .vertical : .horizontal
@@ -52,11 +57,20 @@ class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 60)
+        let dimension: CGFloat = 60
+        switch flow.scrollDirection {
+        case .horizontal:  return CGSize(width: dimension, height: collectionView.frame.width)
+        default:  return CGSize(width: collectionView.frame.width, height: dimension)
+        }
+       
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 60)
+        let dimension: CGFloat = 60
+        switch flow.scrollDirection {
+        case .horizontal:  return CGSize(width: dimension, height: collectionView.frame.width)
+        default:  return CGSize(width: collectionView.frame.width, height: dimension)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

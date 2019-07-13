@@ -19,9 +19,9 @@ class DataSource: NSObject, UICollectionViewDataSource {
     convenience init(pictures:[Picture]) {
         self.init(pictures:[pictures])
     }
-    convenience init(count: Int, contentType: Picture.ContentType = .food) {
+    convenience init(count: Int, contentType: Picture.ContentType = .food, sections: Int = 1) {
         let pictures = (0..<count).map { Picture(id: $0, type: contentType)}
-        self.init(pictures: pictures)
+        self.init(pictures: (0..<sections).map { _ in pictures } )
     }
     
     func picture(at indexPath: IndexPath) -> Picture {
@@ -45,7 +45,7 @@ class DataSource: NSObject, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         collectionView.register(UINib(nibName: "SupplementaryCollectionViewCell", bundle: nil), forSupplementaryViewOfKind: kind, withReuseIdentifier: "supplementary")
         let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "supplementary", for: indexPath)
-         (cell as? SupplementaryCollectionViewCell)?.titleLabel.text = kind.uppercased()
+         (cell as? SupplementaryCollectionViewCell)?.titleLabel.text = "\(indexPath.section) " + kind.uppercased() 
         return cell
     }
 }
