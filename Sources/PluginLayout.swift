@@ -10,8 +10,27 @@ import UIKit
 
 open class PluginLayout: UICollectionViewLayout {
     
+    class Cache {
+        private var items: [Int: [UICollectionViewLayoutAttributes]] = [:]
+        
+        init() {}
+        
+        func clear() {
+            self.items = [:]
+        }
+        func all() -> [UICollectionViewLayoutAttributes] {
+            return items.flatMap { $0.value }
+        }
+        func set(items: [UICollectionViewLayoutAttributes]?, forSection section: Int) {
+            self.items[section] = items
+        }
+        func items(forSection section: Int) -> [UICollectionViewLayoutAttributes]? {
+            return self.items[section]
+        }
+    }
+    
     private var contentSize: CGSize = .zero
-    private var attributesCache: Set<UICollectionViewLayoutAttributes> = []
+    private let attributesCache = Cache()
 
     private var delegate: PluginLayoutDelegate? {
         return self.collectionView?.delegate as? PluginLayoutDelegate
@@ -37,10 +56,10 @@ open class PluginLayout: UICollectionViewLayout {
         
         var offset = CGPoint.zero
         let sections = collectionView?.numberOfSections ?? 0
-        let items = (0..<sections).compactMap {
-            self.plugin(for: $0)?.layoutAttributes(in: $0, offset: &offset, layout: self)
+        (0..<sections).forEach { section in
+            let attributes = self.plugin(for: section)?.layoutAttributes(in: section, offset: &offset, layout: self)
+            self.attributesCache.set(items: attributes, forSection: section)
         }
-        self.attributesCache = Set(items.flatMap { $0 })
         self.contentSize = CGSize(width: offset.x, height: offset.y)
     }
     
@@ -48,12 +67,21 @@ open class PluginLayout: UICollectionViewLayout {
         return contentSize
     }
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return attributesCache.filter { $0.frame.intersects(rect) }
+        guard let collectionView = collectionView else { return nil }
+        return (0..<collectionView.numberOfSections).flatMap { section  -> [UICollectionViewLayoutAttributes] in
+            let attributes = self.attributesCache.items(forSection: section)
+            let plugin = self.plugin(for: section)
+            let results = plugin?.layoutAttributesForElements(in: rect, from: attributes ?? [], section: section, layout: self)
+            return results ?? []
+        }
     }
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return attributesCache.filter { $0.indexPath == indexPath && $0.representedElementKind == nil }.first
+        return attributesCache.all().filter { $0.indexPath == indexPath && $0.representedElementKind == nil }.first
     }
     open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return attributesCache.filter { $0.indexPath == indexPath && $0.representedElementKind == elementKind }.first
+        return attributesCache.all().filter { $0.indexPath == indexPath && $0.representedElementKind == elementKind }.first
+    }
+    open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
     }
 }
