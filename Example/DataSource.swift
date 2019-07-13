@@ -39,6 +39,7 @@ class DataSource: NSObject, UICollectionViewDataSource {
         collectionView.register(UINib(nibName: "PictureCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "picture")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "picture", for: indexPath)
         (cell as? PictureCollectionViewCell)?.picture = pictures[indexPath.section][indexPath.item]
+        (cell as? PictureCollectionViewCell)?.number.text = "\(indexPath.item)"
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

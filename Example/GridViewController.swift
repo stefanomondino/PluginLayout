@@ -14,18 +14,27 @@ class GridViewController: UIViewController {
     
     let dataSource = DataSource(count: 160, contentType: .cats)
     
+    let layout = PluginLayout()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let toggleDirection = UIBarButtonItem(title: "Toggle Direction", style: .done, target: self, action: #selector(toggleDirection(_:)))
+        self.navigationItem.rightBarButtonItem = toggleDirection
+        
         collectionView.dataSource = dataSource
         collectionView.delegate = self
         
-        let layout = PluginLayout()
+        layout.scrollDirection = .horizontal
         layout.defaultPlugin = GridLayoutPlugin(delegate: self)
         self.collectionView.setCollectionViewLayout(layout, animated: false)
         
         self.collectionView.reloadData()
     }
     
+    @objc func toggleDirection(_ sender: Any) {
+        layout.scrollDirection = layout.scrollDirection == .horizontal ? .vertical : .horizontal
+    }
  
 }
 

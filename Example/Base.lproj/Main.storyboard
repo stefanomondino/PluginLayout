@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Flow-->
+        <!--Simple View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SimpleViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dRz-C9-Va6">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5pQ-hg-0AX">
-                                    <size key="itemSize" width="145" height="103"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jEU-Bv-ZNc">
+                                    <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -39,14 +39,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Flow" id="mJK-P1-GWU"/>
+                    <navigationItem key="navigationItem" id="iB6-UR-JLd"/>
                     <connections>
                         <outlet property="collectionView" destination="dRz-C9-Va6" id="EjN-ra-04J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1270" y="-295"/>
+            <point key="canvasLocation" x="2179.7101449275365" y="-295.3125"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Ffi-Jp-uQY">
@@ -54,12 +54,13 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="c0l-yW-9Xh" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YDn-He-YNG">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="dKI-OR-5O0"/>
-                        <segue destination="JwZ-tY-okQ" kind="relationship" relationship="viewControllers" id="B0n-nH-H8g"/>
+                        <segue destination="0Hi-YP-w44" kind="relationship" relationship="viewControllers" id="dKI-OR-5O0"/>
+                        <segue destination="cxQ-tW-6CA" kind="relationship" relationship="viewControllers" id="B0n-nH-H8g"/>
                         <segue destination="O1R-sg-gBd" kind="relationship" relationship="viewControllers" id="uSI-EA-3Z1"/>
                         <segue destination="uCQ-GC-ymr" kind="relationship" relationship="viewControllers" id="GTN-uw-aM6"/>
                     </connections>
@@ -68,7 +69,7 @@
             </objects>
             <point key="canvasLocation" x="47.826086956521742" y="20.758928571428569"/>
         </scene>
-        <!--Grid-->
+        <!--Grid View Controller-->
         <scene sceneID="Xt8-hE-8Ld">
             <objects>
                 <viewController id="JwZ-tY-okQ" customClass="GridViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -77,7 +78,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="njE-qT-qJ4">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jKC-kS-v3q">
                                     <size key="itemSize" width="145" height="103"/>
@@ -97,14 +98,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lVI-WG-x1B"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Grid" id="lpU-Fe-kJB"/>
+                    <navigationItem key="navigationItem" id="wXt-Db-sAm"/>
                     <connections>
                         <outlet property="collectionView" destination="njE-qT-qJ4" id="ZvR-6t-q52"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lz0-11-MtZ" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2246" y="54"/>
+            <point key="canvasLocation" x="4065.217391304348" y="53.571428571428569"/>
         </scene>
         <!--Pinterest-->
         <scene sceneID="eg9-Nc-vVY">
@@ -181,6 +182,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HGX-tg-24q" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2170" y="796"/>
+        </scene>
+        <!--Flow-->
+        <scene sceneID="QfU-aB-lNP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0Hi-YP-w44" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Flow" id="mJK-P1-GWU"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="i3z-rr-Fm9">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="oKe-6U-FRP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MXI-36-puR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1269.5652173913045" y="-295.3125"/>
+        </scene>
+        <!--Grid-->
+        <scene sceneID="tJZ-6k-igo">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cxQ-tW-6CA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Grid" id="lpU-Fe-kJB"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cvP-BQ-StW">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="JwZ-tY-okQ" kind="relationship" relationship="rootViewController" id="7v1-Zd-PvM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ju-Yh-Lno" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3155.072463768116" y="53.571428571428569"/>
         </scene>
     </scenes>
 </document>

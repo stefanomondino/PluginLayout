@@ -17,6 +17,11 @@ open class PluginLayout: UICollectionViewLayout {
         return self.collectionView?.delegate as? PluginLayoutDelegate
     }
     
+    @IBInspectable
+    public var scrollDirection: UICollectionView.ScrollDirection = .vertical {
+        didSet { invalidateLayout() }
+    }
+    
     public var defaultPlugin: Plugin? {
         didSet { invalidateLayout() }
     }
@@ -24,9 +29,12 @@ open class PluginLayout: UICollectionViewLayout {
     public func plugin(for section: Int) -> Plugin? {
         return self.delegate?.plugin(for: section) ?? defaultPlugin
     }
-    
+    open override var flipsHorizontallyInOppositeLayoutDirection: Bool {
+        return true
+    }
     open override func prepare() {
         super.prepare()
+        
         var offset = CGPoint.zero
         let sections = collectionView?.numberOfSections ?? 0
         let items = (0..<sections).compactMap {
@@ -43,6 +51,9 @@ open class PluginLayout: UICollectionViewLayout {
         return attributesCache.filter { $0.frame.intersects(rect) }
     }
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return attributesCache.filter { $0.indexPath == indexPath}.first
+        return attributesCache.filter { $0.indexPath == indexPath && $0.representedElementKind == nil }.first
+    }
+    open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return attributesCache.filter { $0.indexPath == indexPath && $0.representedElementKind == elementKind }.first
     }
 }
