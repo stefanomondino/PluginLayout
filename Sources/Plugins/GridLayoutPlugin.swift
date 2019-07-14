@@ -15,9 +15,12 @@ public protocol GridLayoutDelegate: UICollectionViewDelegateFlowLayout {
 }
 
 open class GridLayoutPlugin: FlowLayoutPlugin {
-    public init(delegate: GridLayoutDelegate ) {
+    public convenience init(delegate: GridLayoutDelegate ) {
+        self.init(delegate: delegate as FlowLayoutDelegate)
+    }
+    
+    required public init(delegate: FlowLayoutDelegate) {
         super.init(delegate: delegate)
-        
     }
     open override func itemSize(at indexPath: IndexPath, collectionView: UICollectionView, layout: PluginLayout) -> CGSize {
         let n = (delegate as? GridLayoutDelegate)?.collectionView(collectionView, layout: layout, itemsPerLineAt: indexPath) ?? 1

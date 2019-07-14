@@ -13,7 +13,7 @@ class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout
     @IBOutlet weak var collectionView: UICollectionView!
     
     let dataSource = DataSource(count: 6, sections: 2)
-    let layout = PluginLayout()
+    let layout = FlowLayout()
     let flow = UICollectionViewFlowLayout()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +26,9 @@ class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout
 
         collectionView.dataSource = dataSource
         collectionView.delegate = self
-        let plugin = FlowLayoutPlugin(delegate: self)
-        plugin.sectionHeadersPinToVisibleBounds = true
-        plugin.sectionFootersPinToVisibleBounds = true
-        layout.defaultPlugin = plugin
+        layout.sectionHeadersPinToVisibleBounds = true
+        layout.sectionFootersPinToVisibleBounds = true
+        
         self.collectionView.setCollectionViewLayout(layout, animated: false)
         
         self.collectionView.reloadData()

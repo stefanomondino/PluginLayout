@@ -20,8 +20,7 @@ class StaggeredViewController: UIViewController {
         collectionView.dataSource = dataSource
         collectionView.delegate = self
         
-        let layout = PluginLayout()
-        layout.defaultPlugin = StaggeredLayoutPlugin(delegate: self)
+        let layout = StaggeredLayout()
         self.collectionView.setCollectionViewLayout(layout, animated: false)
         
         self.collectionView.reloadData()

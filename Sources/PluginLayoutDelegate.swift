@@ -8,9 +8,14 @@
 
 import UIKit
 
-public protocol Plugin {
+public protocol PluginType {
     func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes]
     func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int,  layout: PluginLayout) -> [UICollectionViewLayoutAttributes]
+}
+
+public protocol Plugin: PluginType {
+    associatedtype Delegate = UICollectionViewDelegateFlowLayout
+    init(delegate: Delegate)
 }
 
 public extension Plugin {
@@ -20,11 +25,12 @@ public extension Plugin {
 }
 
 public protocol PluginLayoutDelegate: UICollectionViewDelegate {
-    func plugin(for section: Int) -> Plugin?
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, pluginForSectionAt section: Int) -> PluginType?
+    
 }
 
 extension PluginLayoutDelegate {
-    func plugin(for section: Int) -> Plugin? {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, pluginForSectionAt section: Int) -> PluginType? {
         return nil
     }
 }

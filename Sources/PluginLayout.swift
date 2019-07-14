@@ -41,13 +41,16 @@ open class PluginLayout: UICollectionViewLayout {
         didSet { invalidateLayout() }
     }
     
-    public var defaultPlugin: Plugin? {
+    public var defaultPlugin: PluginType? {
         didSet { invalidateLayout() }
     }
         
-    public func plugin(for section: Int) -> Plugin? {
-        return self.delegate?.plugin(for: section) ?? defaultPlugin
+    public func plugin(for section: Int) -> PluginType? {
+        guard let delegate = self.delegate,
+            let collectionView = collectionView else { return defaultPlugin }
+        return delegate.collectionView(collectionView, layout: self, pluginForSectionAt: section)
     }
+    
     open override var flipsHorizontallyInOppositeLayoutDirection: Bool {
         return true
     }

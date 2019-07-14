@@ -72,9 +72,11 @@ open class StaggeredLayoutPlugin: Plugin {
     }
     
     public weak var delegate: StaggeredLayoutDelegate?
-    public init(delegate: StaggeredLayoutDelegate ) {
+    
+    required public init(delegate: StaggeredLayoutDelegate ) {
         self.delegate = delegate
     }
+    
     func columnWidth(for section: Int, collectionView: UICollectionView, layout: PluginLayout) -> CGFloat {
         let n = delegate?.collectionView(collectionView, layout: layout, columnsForSectionAt: section) ?? 1
         
