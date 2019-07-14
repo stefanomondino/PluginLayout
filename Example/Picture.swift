@@ -15,18 +15,20 @@ struct Picture {
         case cats
         case food
         case sports
+        case people
         case nature
         
         var ratio: CGFloat {
             switch self {
             case .cats: return 4/3
-            case .nature: return CGFloat([16.0/9.0 ,4.0/3.0, 9.0/16.0, 3.0/4.0, 21.0/9.0 , 9.0/21.0].randomElement() ?? 1)
+            case .nature, .people: return CGFloat([16.0/9.0 ,4.0/3.0, 9.0/16.0, 3.0/4.0, 21.0/9.0 , 9.0/21.0].randomElement() ?? 1)
             default: return 1
             }
         }
         var max: Int {
             switch self {
             case .nature: return 6
+            case .people: return 8
             case .cats: return 11
             default: return 7
             }
