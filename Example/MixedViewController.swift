@@ -10,16 +10,6 @@ import UIKit
 import PluginLayout
 
 class MixedViewController: UIViewController {
-    func plugin(for section: Int) -> Plugin? {
-        switch section {
-        case 1: return StaggeredLayoutPlugin(delegate: self)
-        case 2: return GridLayoutPlugin(delegate: self)
-        default: return FlowLayoutPlugin(delegate: self)
-        }
-    }
-    
-
-    
     @IBOutlet weak var collectionView: UICollectionView!
     
     let dataSource: DataSource = {
@@ -44,6 +34,17 @@ class MixedViewController: UIViewController {
 }
 
 extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, GridLayoutDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, pluginForSectionAt section: Int) -> PluginType? {
+        switch section {
+        case 1: return StaggeredLayoutPlugin(delegate: self)
+        case 2: return GridLayoutPlugin(delegate: self)
+        default: return FlowLayoutPlugin(delegate: self)
+        }
+    }
+    
+
+    
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int {
         return 4
     }

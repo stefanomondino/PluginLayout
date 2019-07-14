@@ -9,15 +9,19 @@
 import Foundation
 import UIKit
 
+public typealias FlowLayoutDelegate = UICollectionViewDelegateFlowLayout
+
 open class FlowLayoutPlugin: Plugin {
     
     public var sectionHeadersPinToVisibleBounds: Bool = false
     public var sectionFootersPinToVisibleBounds: Bool = false
     
-    public private(set) weak var delegate: UICollectionViewDelegateFlowLayout?
-    public init(delegate: UICollectionViewDelegateFlowLayout) {
+    public private(set) weak var delegate: FlowLayoutDelegate?
+    
+    required public init(delegate: FlowLayoutDelegate) {
         self.delegate = delegate
     }
+    
     public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
         
         guard let collectionView = layout.collectionView,
@@ -161,7 +165,6 @@ open class FlowLayoutPlugin: Plugin {
             default: frame.origin.y = max(itemsRect.minY - frame.height - insets.top, min(itemsRect.maxY - frame.height,collectionView.contentOffset.y))
             }
             
-            print (rect)
             header.zIndex = 900 + section + 1
             header.frame = frame
             supplementary += [header]
