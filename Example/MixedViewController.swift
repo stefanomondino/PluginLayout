@@ -63,7 +63,8 @@ extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, Gr
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
         switch indexPath.item {
         case  0..<4: return 2
-        case  0..<16: return 4
+        case  0..<7: return 4
+        case 0..<16: return 5
         default: return 3
         }
         

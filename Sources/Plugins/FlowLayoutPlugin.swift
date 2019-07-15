@@ -49,12 +49,14 @@ open class FlowLayoutPlugin: Plugin {
             }
           
         }
+        
+        var lineAttributes: [UICollectionViewLayoutAttributes] = []
         if layout.scrollDirection == .vertical {
             offset.y += insets.top
             var lineTop: CGFloat = offset.y
             var lineBottom = lineTop
             offset.x = max(offset.x, contentBounds.width)
-     
+            let biggestWidth = contentBounds.width - insets.left - insets.right
             attributes = (0..<collectionView.numberOfItems(inSection: section))
                 .map { item in IndexPath(item: item, section: section) }
                 
@@ -65,12 +67,16 @@ open class FlowLayoutPlugin: Plugin {
                     if let last = itemsAccumulator.last {
                         let x = last.frame.maxX + itemSpacing
                         if x + itemSize.width + insets.right > contentBounds.width {
+                            realignAttibutes(lineAttributes, inAvailableWidth: biggestWidth)
+                            lineAttributes = [attribute]
                             origin = CGPoint(x: insets.left, y: lineBottom + lineSpacing)
                             lineTop = origin.y
                         } else {
+                            lineAttributes += [attribute]
                             origin = CGPoint(x: x, y: lineTop)
                         }
                     } else {
+                        lineAttributes += [attribute]
                         origin = CGPoint(x: insets.left, y: lineBottom)
                     }
                     attribute.frame = CGRect(origin: origin, size: itemSize)
@@ -83,14 +89,15 @@ open class FlowLayoutPlugin: Plugin {
                     
                     return  itemsAccumulator + [attribute]
             }
-            
+            realignAttibutes(lineAttributes, inAvailableWidth: biggestWidth)
             offset.y = lineBottom + insets.bottom
         } else {
             offset.x += insets.left
             var lineTop: CGFloat = offset.x
             var lineBottom = lineTop
-            
+            let biggestHeight = contentBounds.height - insets.top - insets.bottom
             offset.y = max(offset.y, contentBounds.height)
+            
             attributes = (0..<collectionView.numberOfItems(inSection: section))
                 .map { item in IndexPath(item: item, section: section) }
                 .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
@@ -101,11 +108,16 @@ open class FlowLayoutPlugin: Plugin {
                         let y = last.frame.maxY + itemSpacing
                         if y + itemSize.height + insets.bottom > contentBounds.height {
                             origin = CGPoint(x: lineBottom + lineSpacing, y: insets.top )
+
+                            realignAttibutes(lineAttributes, inAvailableHeight: biggestHeight)
+                            lineAttributes = [attribute]
                             lineTop = origin.x
                         } else {
+                            lineAttributes += [attribute]
                             origin = CGPoint(x: lineTop, y: y)
                         }
                     } else {
+                         lineAttributes += [attribute]
                         origin = CGPoint(x: lineBottom, y: insets.top)
                     }
                     attribute.frame = CGRect(origin: origin, size: itemSize)
@@ -118,7 +130,7 @@ open class FlowLayoutPlugin: Plugin {
                     
                     return  itemsAccumulator + [attribute]
             }
-            
+            realignAttibutes(lineAttributes, inAvailableHeight: biggestHeight)
             offset.x = lineBottom + insets.right
         }
         if let footerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForFooterInSection: section),
@@ -139,7 +151,26 @@ open class FlowLayoutPlugin: Plugin {
         return ([header] + attributes + [footer]).compactMap { $0 }
         
     }
-    
+    private func realignAttibutes(_ attributes: [UICollectionViewLayoutAttributes], inAvailableHeight height: CGFloat ) {
+        let maxX = attributes.map { $0.frame.maxX }.sorted(by: >).first ?? 0
+        let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? height
+        attributes.forEach {
+            var f = $0.frame
+            f.origin.x += (maxX - f.maxX) / 2
+            f.origin.y += (height - maxY) / 2
+            $0.frame = f
+        }
+    }
+    private func realignAttibutes(_ attributes: [UICollectionViewLayoutAttributes], inAvailableWidth width: CGFloat ) {
+        let maxX = attributes.map { $0.frame.maxX }.sorted(by: >).first ?? width
+        let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? 0
+        attributes.forEach {
+            var f = $0.frame
+            f.origin.x += (width - maxX) / 2
+            f.origin.y += (maxY - f.maxY) / 2
+            $0.frame = f
+        }
+    }
     public func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
         guard let collectionView = layout.collectionView,
             let delegate = delegate else { return [] }
