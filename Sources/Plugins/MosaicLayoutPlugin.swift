@@ -35,6 +35,9 @@ open class MosaicLayoutPlugin: Plugin {
         let insets = delegate.collectionView?(collectionView, layout: layout, insetForSectionAt: section) ?? .zero
         let itemSpacing = delegate.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: section) ?? 0
         let lineSpacing = delegate.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: section) ?? 0
+        
+        let header: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
+        
         offset.y += insets.top
         let contentBounds = collectionView.frame.inset(by: collectionView.contentInset)
         offset.x = max(offset.x, contentBounds.width)
@@ -90,8 +93,8 @@ open class MosaicLayoutPlugin: Plugin {
             offset.y = finalY
         }
         offset.y += insets.bottom
-        
-        return attributes
+        let footer: UICollectionViewLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
+        return ([header] + attributes + [footer]).compactMap { $0 }
     }
     
 }

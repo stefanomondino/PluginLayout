@@ -24,6 +24,8 @@ open class StaggeredLayoutPlugin: Plugin {
         let insets = delegate.collectionView?(collectionView, layout: layout, insetForSectionAt: section) ?? .zero
         let itemSpacing = delegate.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: section) ?? 0
         let lineSpacing = delegate.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: section) ?? 0
+        
+        let header: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
         offset.y += insets.top
         //var lineTop: [CGFloat] = (0..<columns).map { _ in offset.y }
         var lineBottom = (0..<columns).map { _ in offset.y }
@@ -69,7 +71,8 @@ open class StaggeredLayoutPlugin: Plugin {
                 return  itemsAccumulator + [attribute]
         }
         offset.y = (lineBottom.sorted(by: >).first ?? offset.y) + insets.bottom
-        return attributes
+        let footer: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
+        return ([header] + attributes + [footer]).compactMap { $0 }
     }
     
     public weak var delegate: StaggeredLayoutDelegate?

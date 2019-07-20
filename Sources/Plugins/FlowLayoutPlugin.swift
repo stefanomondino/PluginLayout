@@ -43,47 +43,6 @@ open class FlowLayoutPlugin: Plugin {
         self.delegate = delegate
     }
     
-    internal func header(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes? {
-        if
-            let collectionView = layout.collectionView,
-            let headerSize = delegate?.collectionView?(collectionView, layout: layout, referenceSizeForHeaderInSection: section),
-            headerSize.height > 0 && headerSize.width > 0 {
-            let header = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: IndexPath(item: 0, section: section))
-            switch layout.scrollDirection {
-            case .horizontal:
-                header.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: headerSize.width, height: layout.contentBounds.height))
-                offset.x += headerSize.width
-            case .vertical:
-                header.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: CGSize(width: layout.contentBounds.width, height: headerSize.height))
-                offset.y += headerSize.height
-            @unknown default:
-                break
-            }
-            return header
-        }
-        return nil
-    }
-    
-    internal func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes? {
-        if
-            let collectionView = layout.collectionView,
-            let footerSize = delegate?.collectionView?(collectionView, layout: layout, referenceSizeForFooterInSection: section),
-            footerSize.height > 0 && footerSize.width > 0 {
-            let footer = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 0, section: section))
-            switch layout.scrollDirection {
-            case .horizontal:
-                footer.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: footerSize.width, height: layout.contentBounds.height))
-                offset.x += footerSize.width
-            case .vertical:
-                footer.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: CGSize(width: layout.contentBounds.width, height: footerSize.height))
-                offset.y += footerSize.height
-            @unknown default:
-                break
-            }
-            return footer
-        }
-        return nil
-    }
     public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
         
         guard let collectionView = layout.collectionView else { return [] }

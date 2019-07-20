@@ -14,11 +14,13 @@ public protocol PluginType {
 }
 
 public protocol Plugin: PluginType {
-    associatedtype Delegate = UICollectionViewDelegateFlowLayout
+    associatedtype Delegate = UICollectionViewDelegateFlowLayout 
     associatedtype Parameters = SectionParameters
     var delegate:Delegate? { get }
     init(delegate: Delegate)
     func sectionParameters(inSection section: Int, layout: PluginLayout) -> Parameters
+     func header(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes?
+     func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes? 
 }
 
 public extension Plugin {
