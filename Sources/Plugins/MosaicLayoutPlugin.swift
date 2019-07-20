@@ -14,6 +14,7 @@ public protocol MosaicLayoutDelegate: UICollectionViewDelegateFlowLayout {
 }
 
 open class MosaicLayoutPlugin: Plugin {
+    public typealias Parameters = FlowSectionParameters
     public weak var delegate: MosaicLayoutDelegate?
     public required init(delegate: MosaicLayoutDelegate) {
         self.delegate = delegate

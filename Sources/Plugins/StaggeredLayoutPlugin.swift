@@ -15,6 +15,7 @@ public protocol StaggeredLayoutDelegate: UICollectionViewDelegateFlowLayout {
 }
 
 open class StaggeredLayoutPlugin: Plugin {
+    public typealias Parameters = FlowSectionParameters
     public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
         
         guard let collectionView = layout.collectionView,

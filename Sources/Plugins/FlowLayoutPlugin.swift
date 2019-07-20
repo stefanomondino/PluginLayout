@@ -11,8 +11,29 @@ import UIKit
 
 public typealias FlowLayoutDelegate = UICollectionViewDelegateFlowLayout
 
+open class FlowSectionParameters: SectionParameters {
+    public let insets: UIEdgeInsets
+    public let itemSpacing: CGFloat
+    public let lineSpacing: CGFloat
+    
+    public init(insets: UIEdgeInsets = .zero, itemSpacing: CGFloat = 0, lineSpacing: CGFloat = 0) {
+        self.insets = insets
+        self.itemSpacing = itemSpacing
+        self.lineSpacing = lineSpacing
+        
+    }
+}
+
+extension PluginLayout {
+    var contentBounds: CGRect {
+        guard let collectionView = self.collectionView else { return .zero }
+         return collectionView.frame.inset(by: collectionView.contentInset)
+    }
+}
+
 open class FlowLayoutPlugin: Plugin {
     
+    public typealias Parameters = FlowSectionParameters
     public var sectionHeadersPinToVisibleBounds: Bool = false
     public var sectionFootersPinToVisibleBounds: Bool = false
     
@@ -22,41 +43,69 @@ open class FlowLayoutPlugin: Plugin {
         self.delegate = delegate
     }
     
-    public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
-        
-        guard let collectionView = layout.collectionView,
-            let delegate = delegate else { return [] }
-        let insets = delegate.collectionView?(collectionView, layout: layout, insetForSectionAt: section) ?? .zero
-        let itemSpacing = delegate.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: section) ?? 0
-        let lineSpacing = delegate.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: section) ?? 0
-        
-        var header: UICollectionViewLayoutAttributes?
-        var footer: UICollectionViewLayoutAttributes?
-        let attributes: [UICollectionViewLayoutAttributes]
-        let contentBounds = collectionView.frame.inset(by: collectionView.contentInset)
-        if let headerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForHeaderInSection: section),
+    internal func header(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes? {
+        if
+            let collectionView = layout.collectionView,
+            let headerSize = delegate?.collectionView?(collectionView, layout: layout, referenceSizeForHeaderInSection: section),
             headerSize.height > 0 && headerSize.width > 0 {
-            header = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: IndexPath(item: 0, section: section))
+            let header = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: IndexPath(item: 0, section: section))
             switch layout.scrollDirection {
             case .horizontal:
-                header?.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: headerSize.width, height: contentBounds.height))
+                header.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: headerSize.width, height: layout.contentBounds.height))
                 offset.x += headerSize.width
             case .vertical:
-                header?.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: CGSize(width: contentBounds.width, height: headerSize.height))
+                header.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: CGSize(width: layout.contentBounds.width, height: headerSize.height))
                 offset.y += headerSize.height
             @unknown default:
                 break
             }
-          
+            return header
         }
+        return nil
+    }
+    
+    internal func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes? {
+        if
+            let collectionView = layout.collectionView,
+            let footerSize = delegate?.collectionView?(collectionView, layout: layout, referenceSizeForFooterInSection: section),
+            footerSize.height > 0 && footerSize.width > 0 {
+            let footer = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 0, section: section))
+            switch layout.scrollDirection {
+            case .horizontal:
+                footer.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: footerSize.width, height: layout.contentBounds.height))
+                offset.x += footerSize.width
+            case .vertical:
+                footer.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: CGSize(width: layout.contentBounds.width, height: footerSize.height))
+                offset.y += footerSize.height
+            @unknown default:
+                break
+            }
+            return footer
+        }
+        return nil
+    }
+    public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+        
+        guard let collectionView = layout.collectionView else { return [] }
+        
+//        let insets = delegate.collectionView?(collectionView, layout: layout, insetForSectionAt: section) ?? .zero
+//        let itemSpacing = delegate.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: section) ?? 0
+//        let lineSpacing = delegate.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: section) ?? 0
+//
+        let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
+        
+        let header: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
+        
+        let attributes: [UICollectionViewLayoutAttributes]
+        let contentBounds = layout.contentBounds
         
         var lineAttributes: [UICollectionViewLayoutAttributes] = []
         if layout.scrollDirection == .vertical {
-            offset.y += insets.top
+            offset.y += sectionParameters.insets.top
             var lineTop: CGFloat = offset.y
             var lineBottom = lineTop
             offset.x = max(offset.x, contentBounds.width)
-            let biggestWidth = contentBounds.width - insets.left - insets.right
+            let biggestWidth = contentBounds.width - sectionParameters.insets.left - sectionParameters.insets.right
             attributes = (0..<collectionView.numberOfItems(inSection: section))
                 .map { item in IndexPath(item: item, section: section) }
                 
@@ -65,11 +114,11 @@ open class FlowLayoutPlugin: Plugin {
                     let itemSize = self.itemSize(at: indexPath, collectionView: collectionView, layout: layout)
                     let origin: CGPoint
                     if let last = itemsAccumulator.last {
-                        let x = last.frame.maxX + itemSpacing
-                        if x + itemSize.width + insets.right > contentBounds.width {
+                        let x = last.frame.maxX + sectionParameters.itemSpacing
+                        if x + itemSize.width + sectionParameters.insets.right > contentBounds.width {
                             realignAttibutes(lineAttributes, inAvailableWidth: biggestWidth)
                             lineAttributes = [attribute]
-                            origin = CGPoint(x: insets.left, y: lineBottom + lineSpacing)
+                            origin = CGPoint(x: sectionParameters.insets.left, y: lineBottom + sectionParameters.lineSpacing)
                             lineTop = origin.y
                         } else {
                             lineAttributes += [attribute]
@@ -77,7 +126,7 @@ open class FlowLayoutPlugin: Plugin {
                         }
                     } else {
                         lineAttributes += [attribute]
-                        origin = CGPoint(x: insets.left, y: lineBottom)
+                        origin = CGPoint(x: sectionParameters.insets.left, y: lineBottom)
                     }
                     attribute.frame = CGRect(origin: origin, size: itemSize)
                     if attribute.frame.minY > lineTop {
@@ -90,12 +139,12 @@ open class FlowLayoutPlugin: Plugin {
                     return  itemsAccumulator + [attribute]
             }
             realignAttibutes(lineAttributes, inAvailableWidth: biggestWidth)
-            offset.y = lineBottom + insets.bottom
+            offset.y = lineBottom + sectionParameters.insets.bottom
         } else {
-            offset.x += insets.left
+            offset.x += sectionParameters.insets.left
             var lineTop: CGFloat = offset.x
             var lineBottom = lineTop
-            let biggestHeight = contentBounds.height - insets.top - insets.bottom
+            let biggestHeight = contentBounds.height - sectionParameters.insets.top - sectionParameters.insets.bottom
             offset.y = max(offset.y, contentBounds.height)
             
             attributes = (0..<collectionView.numberOfItems(inSection: section))
@@ -105,9 +154,9 @@ open class FlowLayoutPlugin: Plugin {
                     let itemSize = self.itemSize(at: indexPath, collectionView: collectionView, layout: layout)
                     let origin: CGPoint
                     if let last = itemsAccumulator.last {
-                        let y = last.frame.maxY + itemSpacing
-                        if y + itemSize.height + insets.bottom > contentBounds.height {
-                            origin = CGPoint(x: lineBottom + lineSpacing, y: insets.top )
+                        let y = last.frame.maxY + sectionParameters.itemSpacing
+                        if y + itemSize.height + sectionParameters.insets.bottom > contentBounds.height {
+                            origin = CGPoint(x: lineBottom + sectionParameters.lineSpacing, y: sectionParameters.insets.top )
 
                             realignAttibutes(lineAttributes, inAvailableHeight: biggestHeight)
                             lineAttributes = [attribute]
@@ -118,7 +167,7 @@ open class FlowLayoutPlugin: Plugin {
                         }
                     } else {
                          lineAttributes += [attribute]
-                        origin = CGPoint(x: lineBottom, y: insets.top)
+                        origin = CGPoint(x: lineBottom, y: sectionParameters.insets.top)
                     }
                     attribute.frame = CGRect(origin: origin, size: itemSize)
                     if attribute.frame.minX > lineTop {
@@ -131,23 +180,10 @@ open class FlowLayoutPlugin: Plugin {
                     return  itemsAccumulator + [attribute]
             }
             realignAttibutes(lineAttributes, inAvailableHeight: biggestHeight)
-            offset.x = lineBottom + insets.right
+            offset.x = lineBottom + sectionParameters.insets.right
         }
-        if let footerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForFooterInSection: section),
-            footerSize.height > 0 && footerSize.width > 0 {
-            footer = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 0, section: section))
-            switch layout.scrollDirection {
-            case .horizontal:
-                footer?.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: footerSize.width, height: contentBounds.height))
-                offset.x += footerSize.width
-            case .vertical:
-                footer?.frame = CGRect(origin: CGPoint(x: 0, y: offset.y), size: CGSize(width: contentBounds.width, height: footerSize.height))
-                offset.y += footerSize.height
-            @unknown default:
-                break
-            }
-         
-        }
+        
+        let footer: UICollectionViewLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
         return ([header] + attributes + [footer]).compactMap { $0 }
         
     }
@@ -222,6 +258,4 @@ open class FlowLayoutPlugin: Plugin {
     open func itemSize(at indexPath: IndexPath, collectionView: UICollectionView, layout: PluginLayout) -> CGSize {
         return delegate?.collectionView?(collectionView, layout: layout, sizeForItemAt: indexPath) ?? .zero
     }
-    
-    
 }
