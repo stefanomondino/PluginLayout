@@ -19,8 +19,10 @@ public protocol Plugin: PluginType {
     var delegate:Delegate? { get }
     init(delegate: Delegate)
     func sectionParameters(inSection section: Int, layout: PluginLayout) -> Parameters
-     func header(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes?
-     func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes? 
+    func header(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes?
+    func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes?
+    var sectionHeadersPinToVisibleBounds: Bool { get }
+    var sectionFootersPinToVisibleBounds: Bool { get }
 }
 
 public extension Plugin {

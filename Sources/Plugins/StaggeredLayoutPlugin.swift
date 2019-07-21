@@ -16,6 +16,22 @@ public protocol StaggeredLayoutDelegate: UICollectionViewDelegateFlowLayout {
 
 open class StaggeredLayoutPlugin: Plugin {
     public typealias Parameters = FlowSectionParameters
+    public typealias Delegate = StaggeredLayoutDelegate
+    public var sectionHeadersPinToVisibleBounds: Bool = false
+    public var sectionFootersPinToVisibleBounds: Bool = false
+    
+    public weak var delegate: Delegate?
+    
+    required public init(delegate: Delegate ) {
+        self.delegate = delegate
+    }
+    
+    public convenience init(delegate: StaggeredLayoutDelegate, pinSectionHeaders: Bool, pinSectionFooters: Bool) {
+        self.init(delegate: delegate)
+        self.sectionHeadersPinToVisibleBounds = pinSectionHeaders
+        self.sectionFootersPinToVisibleBounds = pinSectionFooters
+    }
+    
     public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
         
         guard let collectionView = layout.collectionView,
@@ -71,16 +87,21 @@ open class StaggeredLayoutPlugin: Plugin {
                 return  itemsAccumulator + [attribute]
         }
         offset.y = (lineBottom.sorted(by: >).first ?? offset.y) + insets.bottom
-        let footer: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
+        let footer: UICollectionViewLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
         return ([header] + attributes + [footer]).compactMap { $0 }
     }
-    
-    public weak var delegate: StaggeredLayoutDelegate?
-    
-    required public init(delegate: StaggeredLayoutDelegate ) {
-        self.delegate = delegate
+
+    public func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+        
+        let defaultAttributes = attributes.filter { $0.frame.intersects(rect) }
+        
+        if sectionFootersPinToVisibleBounds == false && sectionHeadersPinToVisibleBounds == false { return defaultAttributes }
+        
+        let supplementary: [UICollectionViewLayoutAttributes] = pinSectionHeadersAndFooters(from: attributes, layout: layout, section: section)
+        
+        return defaultAttributes + supplementary
     }
-    
+
     func columnWidth(for section: Int, collectionView: UICollectionView, layout: PluginLayout) -> CGFloat {
         let n = delegate?.collectionView(collectionView, layout: layout, columnsForSectionAt: section) ?? 1
         

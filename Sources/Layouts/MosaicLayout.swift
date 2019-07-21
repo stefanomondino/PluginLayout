@@ -8,4 +8,18 @@
 
 import UIKit
 
-open class MosaicLayout: SingleLayout<MosaicLayoutPlugin> { }
+open class MosaicLayout: SingleLayout<MosaicLayoutPlugin> {
+    public var sectionHeadersPinToVisibleBounds: Bool = false {
+        didSet { invalidateLayout() }
+    }
+    
+    public var sectionFootersPinToVisibleBounds: Bool = false {
+        didSet { invalidateLayout() }
+    }
+    
+    open override func prepare() {
+        super.prepare()
+        plugin?.sectionHeadersPinToVisibleBounds = sectionHeadersPinToVisibleBounds
+        plugin?.sectionFootersPinToVisibleBounds = sectionFootersPinToVisibleBounds
+    }
+}

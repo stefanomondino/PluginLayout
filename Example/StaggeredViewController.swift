@@ -21,6 +21,8 @@ class StaggeredViewController: UIViewController {
         collectionView.delegate = self
         
         let layout = StaggeredLayout()
+        layout.sectionFootersPinToVisibleBounds = true
+        layout.sectionHeadersPinToVisibleBounds = true
         self.collectionView.setCollectionViewLayout(layout, animated: false)
         
         self.collectionView.reloadData()

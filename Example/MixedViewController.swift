@@ -13,9 +13,9 @@ class MixedViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     lazy var plugins: [PluginType] = {
         return [
-            FlowLayoutPlugin(delegate: self),
-            StaggeredLayoutPlugin(delegate: self),
-            MosaicLayoutPlugin(delegate: self),
+            FlowLayoutPlugin(delegate: self, pinSectionHeaders: true, pinSectionFooters: true),
+            StaggeredLayoutPlugin(delegate: self, pinSectionHeaders: true, pinSectionFooters: true),
+            MosaicLayoutPlugin(delegate: self, pinSectionHeaders: true, pinSectionFooters: true),
             GridLayoutPlugin(delegate: self)
         ]
     }()
