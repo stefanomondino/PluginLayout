@@ -13,9 +13,9 @@ class MixedViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     lazy var plugins: [PluginType] = {
         return [
-            FlowLayoutPlugin(delegate: self),
-            StaggeredLayoutPlugin(delegate: self),
-            MosaicLayoutPlugin(delegate: self),
+            FlowLayoutPlugin(delegate: self, pinSectionHeaders: true, pinSectionFooters: true),
+            StaggeredLayoutPlugin(delegate: self, pinSectionHeaders: true, pinSectionFooters: true),
+            MosaicLayoutPlugin(delegate: self, pinSectionHeaders: true, pinSectionFooters: true),
             GridLayoutPlugin(delegate: self)
         ]
     }()
@@ -63,7 +63,8 @@ extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, Gr
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
         switch indexPath.item {
         case  0..<4: return 2
-        case  0..<16: return 4
+        case  0..<7: return 4
+        case 0..<16: return 5
         default: return 3
         }
         

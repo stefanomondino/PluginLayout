@@ -26,7 +26,9 @@ class GridViewController: UIViewController {
         collectionView.delegate = self
         
         layout.scrollDirection = .horizontal
-        layout.defaultPlugin = GridLayoutPlugin(delegate: self)
+        let gridPlugin = GridLayoutPlugin(delegate: self)
+        gridPlugin.alignment = .center
+        layout.defaultPlugin = gridPlugin
         self.collectionView.setCollectionViewLayout(layout, animated: false)
         
         self.collectionView.reloadData()

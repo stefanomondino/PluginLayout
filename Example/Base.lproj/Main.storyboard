@@ -261,44 +261,6 @@
             </objects>
             <point key="canvasLocation" x="1064" y="1227"/>
         </scene>
-        <!--Staggered View Controller-->
-        <scene sceneID="PcM-Qx-aNe">
-            <objects>
-                <viewController id="YZf-1N-oHo" customClass="StaggeredViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ym1-6l-HTj">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KkG-QT-W7N">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="H4E-kC-Wpi">
-                                    <size key="itemSize" width="145" height="103"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                            </collectionView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="UmM-Mw-le4" firstAttribute="trailing" secondItem="KkG-QT-W7N" secondAttribute="trailing" id="167-im-Ooz"/>
-                            <constraint firstItem="KkG-QT-W7N" firstAttribute="leading" secondItem="UmM-Mw-le4" secondAttribute="leading" id="BxM-ev-DTg"/>
-                            <constraint firstItem="UmM-Mw-le4" firstAttribute="bottom" secondItem="KkG-QT-W7N" secondAttribute="bottom" id="nTH-Q4-PBN"/>
-                            <constraint firstItem="KkG-QT-W7N" firstAttribute="top" secondItem="UmM-Mw-le4" secondAttribute="top" id="tdP-aH-zZm"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="UmM-Mw-le4"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="IPh-Ve-SLg"/>
-                    <connections>
-                        <outlet property="collectionView" destination="KkG-QT-W7N" id="VK5-H1-067"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GX7-Ct-OJ4" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1948" y="461"/>
-        </scene>
         <!--Mosaic View Controller-->
         <scene sceneID="8v3-S7-ID9">
             <objects>
