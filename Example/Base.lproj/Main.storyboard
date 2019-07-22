@@ -60,10 +60,11 @@
                     </tabBar>
                     <connections>
                         <segue destination="0Hi-YP-w44" kind="relationship" relationship="viewControllers" id="dKI-OR-5O0"/>
-                        <segue destination="cxQ-tW-6CA" kind="relationship" relationship="viewControllers" id="B0n-nH-H8g"/>
                         <segue destination="ho9-AS-9Yd" kind="relationship" relationship="viewControllers" id="uSI-EA-3Z1"/>
                         <segue destination="GIg-JX-JXQ" kind="relationship" relationship="viewControllers" id="AnW-4r-NWs"/>
                         <segue destination="2zy-WY-XZq" kind="relationship" relationship="viewControllers" id="06t-U8-dfM"/>
+                        <segue destination="cxQ-tW-6CA" kind="relationship" relationship="viewControllers" id="B0n-nH-H8g"/>
+                        <segue destination="Hyu-9z-moM" kind="relationship" relationship="viewControllers" id="a5J-IL-4Hw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TDe-VA-BEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -334,7 +335,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z7B-TB-10g" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3923.188405797102" y="628.125"/>
+            <point key="canvasLocation" x="3875" y="676"/>
         </scene>
         <!--Mosaic-->
         <scene sceneID="F0d-bv-9Ii">
@@ -354,6 +355,63 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T9y-Oc-OpY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3011.594202898551" y="628.79464285714278"/>
+        </scene>
+        <!--Custom View Controller-->
+        <scene sceneID="rLZ-VK-C1y">
+            <objects>
+                <viewController id="hdv-F1-09E" customClass="CustomViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Nmc-MM-BZQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4uV-km-x8k">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6f6-pg-Bsf">
+                                    <size key="itemSize" width="145" height="103"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="4uV-km-x8k" firstAttribute="leading" secondItem="bv1-7Q-Fr8" secondAttribute="leading" id="3T1-jK-xdg"/>
+                            <constraint firstItem="4uV-km-x8k" firstAttribute="top" secondItem="bv1-7Q-Fr8" secondAttribute="top" id="YXm-7D-0e8"/>
+                            <constraint firstItem="bv1-7Q-Fr8" firstAttribute="trailing" secondItem="4uV-km-x8k" secondAttribute="trailing" id="Zce-iT-CLK"/>
+                            <constraint firstItem="bv1-7Q-Fr8" firstAttribute="bottom" secondItem="4uV-km-x8k" secondAttribute="bottom" id="wLV-cl-XcB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="bv1-7Q-Fr8"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="U5y-5b-UxI"/>
+                    <connections>
+                        <outlet property="collectionView" destination="4uV-km-x8k" id="Aqj-OT-aRs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YKP-rA-9QV" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4784.057971014493" y="1704.2410714285713"/>
+        </scene>
+        <!--Custom-->
+        <scene sceneID="fWi-pY-SgK">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hyu-9z-moM" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Custom" id="Unc-Hh-93S"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NTW-PH-ZbM">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hdv-F1-09E" kind="relationship" relationship="rootViewController" id="Og9-68-S8Z"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I8P-iB-kp2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3873.913043478261" y="1703.5714285714284"/>
         </scene>
     </scenes>
 </document>
