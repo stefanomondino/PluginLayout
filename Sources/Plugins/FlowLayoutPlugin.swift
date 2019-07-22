@@ -27,8 +27,15 @@ open class FlowSectionParameters: SectionParameters {
 extension PluginLayout {
     var contentBounds: CGRect {
         guard let collectionView = self.collectionView else { return .zero }
-         return collectionView.frame.inset(by: collectionView.contentInset)
+        return collectionView.frame.inset(by: collectionView.contentInset)
     }
+}
+
+public enum FlowLayoutAlignment: Int {
+    case start
+    case center
+    case end
+    case `default`
 }
 
 open class FlowLayoutPlugin: Plugin {
@@ -38,22 +45,25 @@ open class FlowLayoutPlugin: Plugin {
     public var sectionHeadersPinToVisibleBounds: Bool = false
     public var sectionFootersPinToVisibleBounds: Bool = false
     
+    public var alignment: FlowLayoutAlignment = .default
+    
     public private(set) weak var delegate: FlowLayoutDelegate?
     
     required public init(delegate: Delegate) {
         self.delegate = delegate
     }
     
-    convenience public init(delegate: Delegate, pinSectionHeaders: Bool, pinSectionFooters: Bool) {
+    convenience public init(delegate: Delegate, pinSectionHeaders: Bool, pinSectionFooters: Bool, alignment: FlowLayoutAlignment = .default) {
         self.init(delegate: delegate)
         self.sectionHeadersPinToVisibleBounds = pinSectionHeaders
         self.sectionFootersPinToVisibleBounds = pinSectionFooters
+        self.alignment = alignment
     }
     
     public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
         
         guard let collectionView = layout.collectionView else { return [] }
-
+        
         let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
         
         //Create the header if available
@@ -77,9 +87,9 @@ open class FlowLayoutPlugin: Plugin {
             var lineEnd = lineStart
             
             /*  Since layout is vertical, we need to "inflate" the offset horizontally.
-                This plugin handles line that have same width as encapsulating collection view, but other plugins previously evaluated could have inflated
-                the layout to higher values. For this reason, we are keeping that value if already bigger than bounds, otherwise we are inflating it.
-            */
+             This plugin handles line that have same width as encapsulating collection view, but other plugins previously evaluated could have inflated
+             the layout to higher values. For this reason, we are keeping that value if already bigger than bounds, otherwise we are inflating it.
+             */
             offset.x = max(offset.x, contentBounds.width)
             
             //Maximum width of each line. Should take into account section insets.
@@ -138,7 +148,9 @@ open class FlowLayoutPlugin: Plugin {
             }
             
             //Realign last line. Note: UICollectionViewFlowLayout seems to NOT do this.
-            realignAttibutes(lastLineAttributes, inAvailableWidth: lineMaxWidth)
+            if alignment != .default {
+                realignAttibutes(lastLineAttributes, inAvailableWidth: lineMaxWidth)
+            }
             
             //Update the offset with insets
             offset.y = lineEnd + sectionParameters.insets.bottom
@@ -160,7 +172,7 @@ open class FlowLayoutPlugin: Plugin {
                         let y = last.frame.maxY + sectionParameters.itemSpacing
                         if y + itemSize.height + sectionParameters.insets.bottom > contentBounds.height {
                             origin = CGPoint(x: lineEnd + sectionParameters.lineSpacing, y: sectionParameters.insets.top )
-
+                            
                             realignAttibutes(lastLineAttributes, inAvailableHeight: lineMaxHeight)
                             lastLineAttributes = [attribute]
                             lineStart = origin.x
@@ -169,7 +181,7 @@ open class FlowLayoutPlugin: Plugin {
                             origin = CGPoint(x: lineStart, y: y)
                         }
                     } else {
-                         lastLineAttributes += [attribute]
+                        lastLineAttributes += [attribute]
                         origin = CGPoint(x: lineEnd, y: sectionParameters.insets.top)
                     }
                     attribute.frame = CGRect(origin: origin, size: itemSize)
@@ -182,7 +194,10 @@ open class FlowLayoutPlugin: Plugin {
                     
                     return  itemsAccumulator + [attribute]
             }
-            realignAttibutes(lastLineAttributes, inAvailableHeight: lineMaxHeight)
+            
+            if alignment != .default {
+                realignAttibutes(lastLineAttributes, inAvailableHeight: lineMaxHeight)
+            }
             offset.x = lineEnd + sectionParameters.insets.right
         }
         //Create a footer if possible
@@ -211,23 +226,52 @@ open class FlowLayoutPlugin: Plugin {
     private func realignAttibutes(_ attributes: [UICollectionViewLayoutAttributes], inAvailableHeight height: CGFloat ) {
         let maxX = attributes.map { $0.frame.maxX }.sorted(by: >).first ?? 0
         let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? height
-        attributes.forEach {
-            var f = $0.frame
+        let totalDelta = height - maxY
+        
+        let singleSpacing = totalDelta / CGFloat(max(1,attributes.count - 1))
+        attributes.enumerated().forEach { tuple in
+            let (index, attribute) = tuple
+            var f = attribute.frame
+            
             f.origin.x += (maxX - f.maxX) / 2
-            f.origin.y += (height - maxY) / 2
-            $0.frame = f
+            switch self.alignment {
+            case .start: break
+            case .center: f.origin.y += (height - maxY) / 2
+            case .end: f.origin.y += (height - maxY)
+            default:
+                if attributes.count < 2 {
+                    f.origin.y += (height - maxY) / 2
+                } else {
+                    f.origin.y += CGFloat(index) * singleSpacing 
+                }
+            }
+            attribute.frame = f
         }
     }
     
     private func realignAttibutes(_ attributes: [UICollectionViewLayoutAttributes], inAvailableWidth width: CGFloat ) {
         let maxX = attributes.map { $0.frame.maxX }.sorted(by: >).first ?? width
         let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? 0
-        attributes.forEach {
-            var f = $0.frame
-            f.origin.x += (width - maxX) / 2
+        let totalDelta = width - maxX
+        let singleSpacing = totalDelta / CGFloat(max(1,attributes.count - 1))
+        attributes.enumerated().forEach { tuple in
+            let (index, attribute) = tuple
+            var f = attribute.frame
+            switch self.alignment {
+            case .start: break
+            case .center: f.origin.x += (width - maxX) / 2
+            case .end: f.origin.x += (width - maxX)
+            default:
+                if attributes.count < 2 {
+                    f.origin.x += (width - maxX) / 2
+                } else {
+                    f.origin.x += CGFloat(index) * singleSpacing
+                }
+            }
+            
             f.origin.y += (maxY - f.maxY) / 2
-            $0.frame = f
+            attribute.frame = f
         }
     }
-
+    
 }
