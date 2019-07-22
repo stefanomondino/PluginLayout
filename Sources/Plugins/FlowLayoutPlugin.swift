@@ -60,14 +60,14 @@ open class FlowLayoutPlugin: Plugin {
         let attributes: [UICollectionViewLayoutAttributes]
         let contentBounds = layout.contentBounds
         
-        var lineAttributes: [UICollectionViewLayoutAttributes] = []
+        var lastLineAttributes: [UICollectionViewLayoutAttributes] = []
         
         if layout.scrollDirection == .vertical {
             offset.y += sectionParameters.insets.top
-            var lineTop: CGFloat = offset.y
-            var lineBottom = lineTop
+            var lineStart: CGFloat = offset.y
+            var lineEnd = lineStart
             offset.x = max(offset.x, contentBounds.width)
-            let biggestWidth = contentBounds.width - sectionParameters.insets.left - sectionParameters.insets.right
+            let lineMaxWidth = contentBounds.width - sectionParameters.insets.left - sectionParameters.insets.right
             attributes = (0..<collectionView.numberOfItems(inSection: section))
                 .map { item in IndexPath(item: item, section: section) }
                 
@@ -78,35 +78,35 @@ open class FlowLayoutPlugin: Plugin {
                     if let last = itemsAccumulator.last {
                         let x = last.frame.maxX + sectionParameters.itemSpacing
                         if x + itemSize.width + sectionParameters.insets.right > contentBounds.width {
-                            realignAttibutes(lineAttributes, inAvailableWidth: biggestWidth)
-                            lineAttributes = [attribute]
-                            origin = CGPoint(x: sectionParameters.insets.left, y: lineBottom + sectionParameters.lineSpacing)
-                            lineTop = origin.y
+                            realignAttibutes(lastLineAttributes, inAvailableWidth: lineMaxWidth)
+                            lastLineAttributes = [attribute]
+                            origin = CGPoint(x: sectionParameters.insets.left, y: lineEnd + sectionParameters.lineSpacing)
+                            lineStart = origin.y
                         } else {
-                            lineAttributes += [attribute]
-                            origin = CGPoint(x: x, y: lineTop)
+                            lastLineAttributes += [attribute]
+                            origin = CGPoint(x: x, y: lineStart)
                         }
                     } else {
-                        lineAttributes += [attribute]
-                        origin = CGPoint(x: sectionParameters.insets.left, y: lineBottom)
+                        lastLineAttributes += [attribute]
+                        origin = CGPoint(x: sectionParameters.insets.left, y: lineEnd)
                     }
                     attribute.frame = CGRect(origin: origin, size: itemSize)
-                    if attribute.frame.minY > lineTop {
-                        lineTop = attribute.frame.minY
+                    if attribute.frame.minY > lineStart {
+                        lineStart = attribute.frame.minY
                     }
-                    if attribute.frame.maxY > lineBottom {
-                        lineBottom = attribute.frame.maxY
+                    if attribute.frame.maxY > lineEnd {
+                        lineEnd = attribute.frame.maxY
                     }
                     
                     return  itemsAccumulator + [attribute]
             }
-            realignAttibutes(lineAttributes, inAvailableWidth: biggestWidth)
-            offset.y = lineBottom + sectionParameters.insets.bottom
+            realignAttibutes(lastLineAttributes, inAvailableWidth: lineMaxWidth)
+            offset.y = lineEnd + sectionParameters.insets.bottom
         } else {
             offset.x += sectionParameters.insets.left
-            var lineTop: CGFloat = offset.x
-            var lineBottom = lineTop
-            let biggestHeight = contentBounds.height - sectionParameters.insets.top - sectionParameters.insets.bottom
+            var lineStart: CGFloat = offset.x
+            var lineEnd = lineStart
+            let lineMaxHeight = contentBounds.height - sectionParameters.insets.top - sectionParameters.insets.bottom
             offset.y = max(offset.y, contentBounds.height)
             
             attributes = (0..<collectionView.numberOfItems(inSection: section))
@@ -118,31 +118,31 @@ open class FlowLayoutPlugin: Plugin {
                     if let last = itemsAccumulator.last {
                         let y = last.frame.maxY + sectionParameters.itemSpacing
                         if y + itemSize.height + sectionParameters.insets.bottom > contentBounds.height {
-                            origin = CGPoint(x: lineBottom + sectionParameters.lineSpacing, y: sectionParameters.insets.top )
+                            origin = CGPoint(x: lineEnd + sectionParameters.lineSpacing, y: sectionParameters.insets.top )
 
-                            realignAttibutes(lineAttributes, inAvailableHeight: biggestHeight)
-                            lineAttributes = [attribute]
-                            lineTop = origin.x
+                            realignAttibutes(lastLineAttributes, inAvailableHeight: lineMaxHeight)
+                            lastLineAttributes = [attribute]
+                            lineStart = origin.x
                         } else {
-                            lineAttributes += [attribute]
-                            origin = CGPoint(x: lineTop, y: y)
+                            lastLineAttributes += [attribute]
+                            origin = CGPoint(x: lineStart, y: y)
                         }
                     } else {
-                         lineAttributes += [attribute]
-                        origin = CGPoint(x: lineBottom, y: sectionParameters.insets.top)
+                         lastLineAttributes += [attribute]
+                        origin = CGPoint(x: lineEnd, y: sectionParameters.insets.top)
                     }
                     attribute.frame = CGRect(origin: origin, size: itemSize)
-                    if attribute.frame.minX > lineTop {
-                        lineTop = attribute.frame.minX
+                    if attribute.frame.minX > lineStart {
+                        lineStart = attribute.frame.minX
                     }
-                    if attribute.frame.maxX > lineBottom {
-                        lineBottom = attribute.frame.maxX
+                    if attribute.frame.maxX > lineEnd {
+                        lineEnd = attribute.frame.maxX
                     }
                     
                     return  itemsAccumulator + [attribute]
             }
-            realignAttibutes(lineAttributes, inAvailableHeight: biggestHeight)
-            offset.x = lineBottom + sectionParameters.insets.right
+            realignAttibutes(lastLineAttributes, inAvailableHeight: lineMaxHeight)
+            offset.x = lineEnd + sectionParameters.insets.right
         }
         
         let footer: UICollectionViewLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
