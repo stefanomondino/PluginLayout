@@ -12,7 +12,7 @@ import PluginLayout
 class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let dataSource = DataSource(count: 6, sections: 2)
+    let dataSource = DataSource(count: 26, sections: 2)
     let layout = FlowLayout()
     let flow = UICollectionViewFlowLayout()
     override func viewDidLoad() {
@@ -73,9 +73,17 @@ class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let w: CGFloat = collectionView.frame.size.width - 4
-        let h = w / dataSource.picture(at: indexPath).ratio
-        return CGSize(width: w, height: h)
+        switch flow.scrollDirection {
+        case .vertical :
+            let w: CGFloat = collectionView.frame.size.width - 4
+            let h = w / dataSource.picture(at: indexPath).ratio
+            return CGSize(width: w, height: h)
+        case .horizontal:
+            let h: CGFloat = max((collectionView.frame.size.height  - CGFloat(indexPath.item * 55)), 60)
+            let w = h * dataSource.picture(at: indexPath).ratio
+            return CGSize(width: w, height: h)
+        }
+
     }
     
 }

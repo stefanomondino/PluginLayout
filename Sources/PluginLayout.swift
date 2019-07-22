@@ -84,7 +84,17 @@ open class PluginLayout: UICollectionViewLayout {
     open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return attributesCache.all().filter { $0.indexPath == indexPath && $0.representedElementKind == elementKind }.first
     }
+    
+    //This is propably very inefficient at the moment, as it's completely invalidating the layout for each scroll
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
+    }
+    open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
+        
+        var context = super.invalidationContext(forBoundsChange: newBounds)
+        //This is where the optimization should happen. Needs investigation
+//        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader, at: [IndexPath(item: 0, section: 1)])
+//        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionFooter, at: [IndexPath(item: 0, section: 0)])
+        return context
     }
 }

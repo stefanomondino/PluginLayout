@@ -33,6 +33,8 @@
 		7B57C35222DB864F00E9EBF8 /* MosaicLayoutPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C35122DB864F00E9EBF8 /* MosaicLayoutPlugin.swift */; };
 		7B57C35422DB8AF800E9EBF8 /* MosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C35322DB8AF700E9EBF8 /* MosaicLayout.swift */; };
 		7B57C35622DB9AF800E9EBF8 /* MosaicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C35522DB9AF800E9EBF8 /* MosaicViewController.swift */; };
+		7B57C35922E3573E00E9EBF8 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C35722E3573A00E9EBF8 /* Plugin.swift */; };
+		7B57C35C22E3578400E9EBF8 /* Plugin+Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C35A22E3577100E9EBF8 /* Plugin+Section.swift */; };
 		7BB795C922D92D6100733085 /* SupplementaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB795C722D92D6100733085 /* SupplementaryCollectionViewCell.swift */; };
 		7BB795CA22D92D6100733085 /* SupplementaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BB795C822D92D6100733085 /* SupplementaryCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -91,6 +93,8 @@
 		7B57C35122DB864F00E9EBF8 /* MosaicLayoutPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MosaicLayoutPlugin.swift; sourceTree = "<group>"; };
 		7B57C35322DB8AF700E9EBF8 /* MosaicLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MosaicLayout.swift; sourceTree = "<group>"; };
 		7B57C35522DB9AF800E9EBF8 /* MosaicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MosaicViewController.swift; sourceTree = "<group>"; };
+		7B57C35722E3573A00E9EBF8 /* Plugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
+		7B57C35A22E3577100E9EBF8 /* Plugin+Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plugin+Section.swift"; sourceTree = "<group>"; };
 		7BB795C722D92D6100733085 /* SupplementaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BB795C822D92D6100733085 /* SupplementaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SupplementaryCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,6 +175,8 @@
 				2F00D2B222CCD181006E132E /* Plugins */,
 				70E71E6E22C8F9F7005674CD /* PluginLayout.h */,
 				2F00D2B322CCD194006E132E /* PluginLayoutDelegate.swift */,
+				7B57C35722E3573A00E9EBF8 /* Plugin.swift */,
+				7B57C35A22E3577100E9EBF8 /* Plugin+Section.swift */,
 				70E71E7222C8FA11005674CD /* PluginLayout.swift */,
 				70E71E6F22C8F9F7005674CD /* Info.plist */,
 			);
@@ -339,12 +345,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B57C35C22E3578400E9EBF8 /* Plugin+Section.swift in Sources */,
 				7B57C34C22DB742D00E9EBF8 /* GridLayout.swift in Sources */,
 				7B57C35022DB795200E9EBF8 /* StaggeredLayout.swift in Sources */,
 				70E71E8422C9248C005674CD /* StaggeredLayoutPlugin.swift in Sources */,
 				7B57C34A22DB73D200E9EBF8 /* FlowLayout.swift in Sources */,
 				7B57C35222DB864F00E9EBF8 /* MosaicLayoutPlugin.swift in Sources */,
 				2F00D2B522CCD199006E132E /* PluginLayoutDelegate.swift in Sources */,
+				7B57C35922E3573E00E9EBF8 /* Plugin.swift in Sources */,
 				70E71E7D22C910FE005674CD /* FlowLayoutPlugin.swift in Sources */,
 				70E71E8022C91255005674CD /* GridLayoutPlugin.swift in Sources */,
 				7B57C35422DB8AF800E9EBF8 /* MosaicLayout.swift in Sources */,

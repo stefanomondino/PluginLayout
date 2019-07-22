@@ -14,10 +14,23 @@ public protocol MosaicLayoutDelegate: UICollectionViewDelegateFlowLayout {
 }
 
 open class MosaicLayoutPlugin: Plugin {
-    public weak var delegate: MosaicLayoutDelegate?
-    public required init(delegate: MosaicLayoutDelegate) {
+    public typealias Parameters = FlowSectionParameters
+    public typealias Delegate = MosaicLayoutDelegate
+    public weak var delegate: Delegate?
+    
+    public var sectionHeadersPinToVisibleBounds: Bool = false
+    public var sectionFootersPinToVisibleBounds: Bool = false
+    
+    public required init(delegate: Delegate) {
         self.delegate = delegate
     }
+    
+    convenience public init(delegate: Delegate, pinSectionHeaders: Bool, pinSectionFooters: Bool) {
+        self.init(delegate: delegate)
+        self.sectionHeadersPinToVisibleBounds = pinSectionHeaders
+        self.sectionFootersPinToVisibleBounds = pinSectionFooters
+    }
+    
     private var chances: [Int: Int] = [:]
     func chanceForBig(at index: Int) -> Int {
         guard let chance = chances[index] else {
@@ -34,6 +47,9 @@ open class MosaicLayoutPlugin: Plugin {
         let insets = delegate.collectionView?(collectionView, layout: layout, insetForSectionAt: section) ?? .zero
         let itemSpacing = delegate.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: section) ?? 0
         let lineSpacing = delegate.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: section) ?? 0
+        
+        let header: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
+        
         offset.y += insets.top
         let contentBounds = collectionView.frame.inset(by: collectionView.contentInset)
         offset.x = max(offset.x, contentBounds.width)
@@ -89,8 +105,17 @@ open class MosaicLayoutPlugin: Plugin {
             offset.y = finalY
         }
         offset.y += insets.bottom
-        
-        return attributes
+        let footer: UICollectionViewLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
+        return ([header] + attributes + [footer]).compactMap { $0 }
     }
-    
+    public func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+        
+        let defaultAttributes = attributes.filter { $0.frame.intersects(rect) }
+        
+        if sectionFootersPinToVisibleBounds == false && sectionHeadersPinToVisibleBounds == false { return defaultAttributes }
+        
+        let supplementary: [UICollectionViewLayoutAttributes] = pinSectionHeadersAndFooters(from: attributes, layout: layout, section: section)
+        
+        return defaultAttributes + supplementary
+    }
 }
