@@ -22,13 +22,13 @@
 		70E71E7B22C9087C005674CD /* PictureCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E71E7922C9087C005674CD /* PictureCollectionViewCell.xib */; };
 		70E71E7D22C910FE005674CD /* FlowLayoutPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */; };
 		70E71E8022C91255005674CD /* GridLayoutPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E7F22C91255005674CD /* GridLayoutPlugin.swift */; };
-		70E71E8222C920A3005674CD /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8122C920A2005674CD /* GridViewController.swift */; };
 		70E71E8422C9248C005674CD /* StaggeredLayoutPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8322C9248C005674CD /* StaggeredLayoutPlugin.swift */; };
 		70E71E8822C9428C005674CD /* MixedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E8722C9428C005674CD /* MixedViewController.swift */; };
 		7B157B3C22E79FCB001A7BCF /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B157B3B22E79FCB001A7BCF /* TabViewController.swift */; };
 		7B157B4722E7A9CA001A7BCF /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B157B4622E7A9CA001A7BCF /* Scene.swift */; };
 		7B157B4922E7AA67001A7BCF /* StaggeredDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B157B4822E7AA67001A7BCF /* StaggeredDelegate.swift */; };
 		7B157B4B22E7AE5F001A7BCF /* MosaicDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B157B4A22E7AE5F001A7BCF /* MosaicDelegate.swift */; };
+		7B157B4D22E7B0F2001A7BCF /* GridDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B157B4C22E7B0F2001A7BCF /* GridDelegate.swift */; };
 		7B57C34A22DB73D200E9EBF8 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C34622DB719D00E9EBF8 /* FlowLayout.swift */; };
 		7B57C34C22DB742D00E9EBF8 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C34B22DB742D00E9EBF8 /* GridLayout.swift */; };
 		7B57C34E22DB771500E9EBF8 /* SingleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C34D22DB771500E9EBF8 /* SingleLayout.swift */; };
@@ -88,13 +88,13 @@
 		70E71E7922C9087C005674CD /* PictureCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PictureCollectionViewCell.xib; sourceTree = "<group>"; };
 		70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayoutPlugin.swift; sourceTree = "<group>"; };
 		70E71E7F22C91255005674CD /* GridLayoutPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutPlugin.swift; sourceTree = "<group>"; };
-		70E71E8122C920A2005674CD /* GridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
 		70E71E8322C9248C005674CD /* StaggeredLayoutPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredLayoutPlugin.swift; sourceTree = "<group>"; };
 		70E71E8722C9428C005674CD /* MixedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixedViewController.swift; sourceTree = "<group>"; };
 		7B157B3B22E79FCB001A7BCF /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		7B157B4622E7A9CA001A7BCF /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		7B157B4822E7AA67001A7BCF /* StaggeredDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredDelegate.swift; sourceTree = "<group>"; };
 		7B157B4A22E7AE5F001A7BCF /* MosaicDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MosaicDelegate.swift; sourceTree = "<group>"; };
+		7B157B4C22E7B0F2001A7BCF /* GridDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridDelegate.swift; sourceTree = "<group>"; };
 		7B57C34622DB719D00E9EBF8 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		7B57C34B22DB742D00E9EBF8 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		7B57C34D22DB771500E9EBF8 /* SingleLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLayout.swift; sourceTree = "<group>"; };
@@ -209,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				7BA30DA622E6653F00AAF618 /* FlowDelegate.swift */,
+				7B157B4C22E7B0F2001A7BCF /* GridDelegate.swift */,
 				7B157B4A22E7AE5F001A7BCF /* MosaicDelegate.swift */,
 				7B157B4822E7AA67001A7BCF /* StaggeredDelegate.swift */,
 			);
@@ -229,7 +230,6 @@
 				7B157B4222E7A953001A7BCF /* Tab */,
 				7B157B4022E7A916001A7BCF /* Generic */,
 				70E71E4422C8F91C005674CD /* SimpleViewController.swift */,
-				70E71E8122C920A2005674CD /* GridViewController.swift */,
 				70E71E8722C9428C005674CD /* MixedViewController.swift */,
 				7BA30D9F22E663C600AAF618 /* CustomViewController.swift */,
 			);
@@ -427,13 +427,13 @@
 				70E71E7522C9064E005674CD /* Picture.swift in Sources */,
 				70E71E8822C9428C005674CD /* MixedViewController.swift in Sources */,
 				7B157B4922E7AA67001A7BCF /* StaggeredDelegate.swift in Sources */,
+				7B157B4D22E7B0F2001A7BCF /* GridDelegate.swift in Sources */,
 				7B157B3C22E79FCB001A7BCF /* TabViewController.swift in Sources */,
 				7B157B4722E7A9CA001A7BCF /* Scene.swift in Sources */,
 				7BA30DA122E663C600AAF618 /* CustomViewController.swift in Sources */,
 				7BAF754C22E78067007F0835 /* CollectionViewController.swift in Sources */,
 				70E71E4522C8F91C005674CD /* SimpleViewController.swift in Sources */,
 				7BA30DA022E663C600AAF618 /* TableLayoutPlugin.swift in Sources */,
-				70E71E8222C920A3005674CD /* GridViewController.swift in Sources */,
 				7BA30DA722E6653F00AAF618 /* FlowDelegate.swift in Sources */,
 				70E71E7A22C9087C005674CD /* PictureCollectionViewCell.swift in Sources */,
 				7BB795C922D92D6100733085 /* SupplementaryCollectionViewCell.swift in Sources */,
