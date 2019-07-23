@@ -1,46 +1,19 @@
 //
-//  ViewController.swift
-//  PluginLayout
+//  DefaultViewController.swift
+//  Example
 //
-//  Created by Stefano Mondino on 30/06/2019.
+//  Created by Stefano Mondino on 22/07/2019.
 //  Copyright © 2019 Stefano Mondino. All rights reserved.
 //
 
 import UIKit
 import PluginLayout
 
-class GridViewController: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    let dataSource = DataSource(count: 160, contentType: .cats)
-    
-    let layout = PluginLayout()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let toggleDirection = UIBarButtonItem(title: "Toggle Direction", style: .done, target: self, action: #selector(toggleDirection(_:)))
-        self.navigationItem.rightBarButtonItem = toggleDirection
-        
-        collectionView.dataSource = dataSource
-        collectionView.delegate = self
-        
-        layout.scrollDirection = .horizontal
-        let gridPlugin = GridLayoutPlugin(delegate: self)
-        gridPlugin.alignment = .center
-        layout.defaultPlugin = gridPlugin
-        self.collectionView.setCollectionViewLayout(layout, animated: false)
-        
-        self.collectionView.reloadData()
+class GridDelegate: NSObject, GridLayoutDelegate {
+    let dataSource: DataSource
+    init(dataSource: DataSource) {
+        self.dataSource = dataSource
     }
-    
-    @objc func toggleDirection(_ sender: Any) {
-        layout.scrollDirection = layout.scrollDirection == .horizontal ? .vertical : .horizontal
-    }
- 
-}
-
-extension GridViewController: GridLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
         return 3
     }
