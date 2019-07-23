@@ -38,8 +38,6 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
             collectionView.backgroundColor = .clear
             if #available(iOS 11.0, *) {
                 collectionView.contentInsetAdjustmentBehavior = .automatic
-            } else {
-                // Fallback on earlier versions
             }
             self.view.addSubview(collectionView)
             collectionView.translatesAutoresizingMaskIntoConstraints = false

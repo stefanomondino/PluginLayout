@@ -32,7 +32,7 @@ class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout {
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let dimension: CGFloat = 160
+        let dimension: CGFloat = 60
         
         switch direction(from: collectionViewLayout) {
         case .horizontal:  return CGSize(width: dimension, height: collectionView.frame.width)
