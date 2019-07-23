@@ -28,7 +28,7 @@ struct Picture {
         var max: Int {
             switch self {
             case .nature: return 6
-            case .people: return 8
+            case .people: return 13
             case .cats: return 11
             default: return 7
             }
