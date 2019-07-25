@@ -9,11 +9,16 @@
 import UIKit
 import PluginLayout
 
-class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout {
+class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout, PluginLayoutDelegate {
     let dataSource: DataSource
     init(dataSource: DataSource) {
         self.dataSource = dataSource
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForSectionAt section: Int) -> [PluginEffect] {
+        return [FadeEffect(), ElasticEffect()]
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }

@@ -33,6 +33,7 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        
         if self.collectionView == nil {
             let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
             collectionView.backgroundColor = .clear
@@ -57,5 +58,5 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
         super.viewDidAppear(animated)
         collectionView.reloadData()
     }
-    
+ 
 }

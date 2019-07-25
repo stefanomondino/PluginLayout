@@ -8,8 +8,9 @@
 
 import UIKit
 
-class FadeEffect<T: UICollectionViewLayoutAttributes> {
-    static func apply(layout: PluginLayout, to originalAttribute: T) -> T {
+public class FadeEffect<T: UICollectionViewLayoutAttributes>: PluginEffect {
+    public init() {}
+    public func apply<T: UICollectionViewLayoutAttributes>(to originalAttribute: T, layout: PluginLayout) -> T {
         guard originalAttribute.representedElementKind == nil else { return originalAttribute }
         guard
             let collectionView = layout.collectionView,
@@ -17,15 +18,15 @@ class FadeEffect<T: UICollectionViewLayoutAttributes> {
         let offset:CGFloat = collectionView.contentOffset.y
         
         let height = collectionView.bounds.height
-        let percentage = (offset - attribute.frame.origin.y + height ) / 200
+        let percentage = (offset - attribute.frame.origin.y + height ) / 400
 
         attribute.alpha = percentage
         return attribute
     }
 }
 
-class TiltEffect<T: UICollectionViewLayoutAttributes> {
-    static func apply(layout: PluginLayout, to originalAttribute: T) -> T {
+public class TiltEffect<T: UICollectionViewLayoutAttributes> {
+    public func apply<T: UICollectionViewLayoutAttributes>(to originalAttribute: T, layout: PluginLayout) -> T {
         guard originalAttribute.representedElementKind == nil else { return originalAttribute }
         guard let attribute = originalAttribute.copy() as? T else { return originalAttribute }
         let offset = layout.collectionView?.contentOffset.y ?? 0
@@ -38,8 +39,9 @@ class TiltEffect<T: UICollectionViewLayoutAttributes> {
     }
 }
 
-class ElasticEffect<T: UICollectionViewLayoutAttributes> {
-    static func apply(layout: PluginLayout, to originalAttribute: T) -> T {
+public class ElasticEffect<T: UICollectionViewLayoutAttributes>: PluginEffect {
+    public init() {}
+    public func apply<T: UICollectionViewLayoutAttributes>(to originalAttribute: T, layout: PluginLayout) -> T {
         guard originalAttribute.representedElementKind == nil else { return originalAttribute }
         guard
             let collectionView = layout.collectionView,

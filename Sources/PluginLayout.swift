@@ -7,31 +7,38 @@
 //
 
 import UIKit
-
+public protocol PluginEffect {
+//    associatedtype T: UICollectionViewLayoutAttributes
+    func apply<T: UICollectionViewLayoutAttributes>(to originalAttribute: T, layout: PluginLayout) -> T
+}
 open class PluginLayout: UICollectionViewLayout {
     
-    class Cache {
-        private var items: [Int: [UICollectionViewLayoutAttributes]] = [:]
+    class Cache<T> {
+        private var items: [Int: [T]] = [:]
         
         init() {}
         
         func clear() {
             self.items = [:]
         }
-        func all() -> [UICollectionViewLayoutAttributes] {
+        func all() -> [T] {
             return items.flatMap { $0.value }
         }
-        func set(items: [UICollectionViewLayoutAttributes]?, forSection section: Int) {
+        func set(items: [T]?, forSection section: Int) {
             self.items[section] = items
         }
-        func items(forSection section: Int) -> [UICollectionViewLayoutAttributes]? {
+        func add(item: T, forSection section: Int) {
+            self.items[section] = (self.items[section] ?? []) + [item]
+        }
+        func items(forSection section: Int) -> [T]? {
             return self.items[section]
         }
     }
     
     private var contentSize: CGSize = .zero
-    private let attributesCache = Cache()
-
+    private let attributesCache = Cache<UICollectionViewLayoutAttributes>()
+    private let effectsCache = Cache<PluginEffect>()
+    
     private var delegate: PluginLayoutDelegate? {
         return self.collectionView?.delegate as? PluginLayoutDelegate
     }
@@ -48,9 +55,14 @@ open class PluginLayout: UICollectionViewLayout {
     public func plugin(for section: Int) -> PluginType? {
         guard let delegate = self.delegate,
             let collectionView = collectionView else { return defaultPlugin }
-        return delegate.collectionView(collectionView, layout: self, pluginForSectionAt: section)
+        return delegate.collectionView(collectionView, layout: self, pluginForSectionAt: section) ?? defaultPlugin
     }
-    
+    public func effects(for section: Int) -> [PluginEffect] {
+        guard let delegate = self.delegate,
+            let collectionView = collectionView else { return [] }
+        return delegate.collectionView(collectionView, layout: self, effectsForSectionAt: section)
+    }
+
     open override var flipsHorizontallyInOppositeLayoutDirection: Bool {
         return true
     }
@@ -74,9 +86,13 @@ open class PluginLayout: UICollectionViewLayout {
         return (0..<collectionView.numberOfSections).flatMap { section  -> [UICollectionViewLayoutAttributes] in
             let attributes = self.attributesCache.items(forSection: section)
             let plugin = self.plugin(for: section)
+            let effects = self.effects(for: section)
             let results = plugin?
-                .layoutAttributesForElements(in: rect, from: attributes ?? [], section: section, layout: self)
-                .map { ElasticEffect.apply(layout: self, to: $0) }
+                .layoutAttributesForElements(in: rect, from: attributes ?? [], section: section, layout: self )
+                .map { attribute in
+                    effects.reduce(attribute) { $1.apply(to: $0, layout: self)
+                    }
+            }
             return results ?? []
         }
     }
