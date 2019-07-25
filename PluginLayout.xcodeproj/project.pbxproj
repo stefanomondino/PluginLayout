@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2F00D2B522CCD199006E132E /* PluginLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F00D2B322CCD194006E132E /* PluginLayoutDelegate.swift */; };
+		2F0C065A22E9F1CB00CE1676 /* HorizontalFlowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C065922E9F1CB00CE1676 /* HorizontalFlowRenderer.swift */; };
+		2F0C065C22E9F1F900CE1676 /* VerticalFlowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C065B22E9F1F900CE1676 /* VerticalFlowRenderer.swift */; };
+		2F0C065E22E9F43800CE1676 /* FlowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C065D22E9F43800CE1676 /* FlowRenderer.swift */; };
 		70E71E4322C8F91C005674CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E4222C8F91C005674CD /* AppDelegate.swift */; };
 		70E71E4522C8F91C005674CD /* SimpleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E4422C8F91C005674CD /* SimpleViewController.swift */; };
 		70E71E4822C8F91C005674CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70E71E4622C8F91C005674CD /* Main.storyboard */; };
@@ -71,6 +74,9 @@
 
 /* Begin PBXFileReference section */
 		2F00D2B322CCD194006E132E /* PluginLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginLayoutDelegate.swift; sourceTree = "<group>"; };
+		2F0C065922E9F1CB00CE1676 /* HorizontalFlowRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalFlowRenderer.swift; sourceTree = "<group>"; };
+		2F0C065B22E9F1F900CE1676 /* VerticalFlowRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalFlowRenderer.swift; sourceTree = "<group>"; };
+		2F0C065D22E9F43800CE1676 /* FlowRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowRenderer.swift; sourceTree = "<group>"; };
 		70E71E3F22C8F91C005674CD /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70E71E4222C8F91C005674CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70E71E4422C8F91C005674CD /* SimpleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleViewController.swift; sourceTree = "<group>"; };
@@ -136,12 +142,23 @@
 		2F00D2B222CCD181006E132E /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */,
+				2F0C065822E9F1A800CE1676 /* FlowLayoutPlugin */,
 				70E71E7F22C91255005674CD /* GridLayoutPlugin.swift */,
 				70E71E8322C9248C005674CD /* StaggeredLayoutPlugin.swift */,
 				7B57C35122DB864F00E9EBF8 /* MosaicLayoutPlugin.swift */,
 			);
 			path = Plugins;
+			sourceTree = "<group>";
+		};
+		2F0C065822E9F1A800CE1676 /* FlowLayoutPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				70E71E7C22C910FE005674CD /* FlowLayoutPlugin.swift */,
+				2F0C065922E9F1CB00CE1676 /* HorizontalFlowRenderer.swift */,
+				2F0C065B22E9F1F900CE1676 /* VerticalFlowRenderer.swift */,
+				2F0C065D22E9F43800CE1676 /* FlowRenderer.swift */,
+			);
+			path = FlowLayoutPlugin;
 			sourceTree = "<group>";
 		};
 		70E71E3622C8F91C005674CD = {
@@ -449,14 +466,17 @@
 			files = (
 				7B57C35C22E3578400E9EBF8 /* Plugin+Section.swift in Sources */,
 				7B57C34C22DB742D00E9EBF8 /* GridLayout.swift in Sources */,
+				2F0C065A22E9F1CB00CE1676 /* HorizontalFlowRenderer.swift in Sources */,
 				7B57C35022DB795200E9EBF8 /* StaggeredLayout.swift in Sources */,
 				70E71E8422C9248C005674CD /* StaggeredLayoutPlugin.swift in Sources */,
 				7B57C34A22DB73D200E9EBF8 /* FlowLayout.swift in Sources */,
+				2F0C065C22E9F1F900CE1676 /* VerticalFlowRenderer.swift in Sources */,
 				7B57C35222DB864F00E9EBF8 /* MosaicLayoutPlugin.swift in Sources */,
 				2F00D2B522CCD199006E132E /* PluginLayoutDelegate.swift in Sources */,
 				7B57C35922E3573E00E9EBF8 /* Plugin.swift in Sources */,
 				70E71E7D22C910FE005674CD /* FlowLayoutPlugin.swift in Sources */,
 				70E71E8022C91255005674CD /* GridLayoutPlugin.swift in Sources */,
+				2F0C065E22E9F43800CE1676 /* FlowRenderer.swift in Sources */,
 				7B57C35422DB8AF800E9EBF8 /* MosaicLayout.swift in Sources */,
 				70E71E7322C8FA11005674CD /* PluginLayout.swift in Sources */,
 				7B57C34E22DB771500E9EBF8 /* SingleLayout.swift in Sources */,

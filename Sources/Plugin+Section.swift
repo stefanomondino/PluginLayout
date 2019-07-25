@@ -35,9 +35,11 @@ extension Plugin {
 
 public extension Plugin where Parameters == FlowSectionParameters {
     func sectionParameters(inSection section: Int, layout: PluginLayout) -> Parameters {
-        return Parameters(insets: insets(inSection: section, layout: layout),
+        return Parameters(section: section,
+                          insets: insets(inSection: section, layout: layout),
                           itemSpacing: itemSpacing(inSection: section, layout: layout),
-                          lineSpacing: lineSpacing(inSection: section, layout: layout))
+                          lineSpacing: lineSpacing(inSection: section, layout: layout),
+                          contentBounds: layout.contentBounds)
     }
     //}
     //
