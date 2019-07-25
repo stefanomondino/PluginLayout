@@ -22,7 +22,7 @@ open class GridLayoutPlugin: FlowLayoutPlugin {
     required public init(delegate: FlowLayoutDelegate) {
         super.init(delegate: delegate)
     }
-    open override func itemSize(at indexPath: IndexPath, collectionView: UICollectionView, layout: PluginLayout) -> CGSize {
+    open func itemSize(at indexPath: IndexPath, collectionView: UICollectionView, layout: PluginLayout) -> CGSize {
         let n = (delegate as? GridLayoutDelegate)?.collectionView(collectionView, layout: layout, itemsPerLineAt: indexPath) ?? 1
         let ratio = (delegate as? GridLayoutDelegate)?.collectionView(collectionView, layout: layout, aspectRatioAt: indexPath) ?? 1
         let itemsPerLine = max(n, 1)
