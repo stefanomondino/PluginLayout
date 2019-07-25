@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HorizontalFlowRenderer: FlowRenderer {
+class HorizontalFlowCalculator: LayoutCalculator {
     
     var collectionView: UICollectionView
     var layout: PluginLayout
@@ -22,7 +22,7 @@ class HorizontalFlowRenderer: FlowRenderer {
         self.parameters = parameters
     }
     
-    func renderItems(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes] {
+    func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes] {
         //Please refer to vertical explanation (this is just a copy of it, flipped for horizontal flow)
         offset.x += self.parameters.insets.left
         var lineStart: CGFloat = offset.x

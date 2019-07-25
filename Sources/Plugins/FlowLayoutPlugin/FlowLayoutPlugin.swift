@@ -71,7 +71,7 @@ open class FlowLayoutPlugin: Plugin {
         let header: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
         
         let renderer = self.getRenderer(layout: layout, section: section)
-        let attributes = renderer?.renderItems(offset: &offset, alignment: self.alignment) ?? []
+        let attributes = renderer?.calculateLayoutAttributes(offset: &offset, alignment: self.alignment) ?? []
         
         //Create a footer if possible
         let footer: UICollectionViewLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
@@ -80,17 +80,17 @@ open class FlowLayoutPlugin: Plugin {
         return ([header] + attributes + [footer]).compactMap { $0 }
     }
     
-    func getRenderer(layout: PluginLayout, section: Int) -> FlowRenderer? {
+    func getRenderer(layout: PluginLayout, section: Int) -> LayoutCalculator? {
         guard let collectionView = layout.collectionView else { return nil }
         let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
         
         switch layout.scrollDirection {
-        case .vertical: return VerticalFlowRenderer(collectionView: collectionView,
+        case .vertical: return VerticalFlowCalculator(collectionView: collectionView,
                                                     layout: layout,
                                                     delegate: self.delegate,
                                                     parameters: sectionParameters)
             
-        case .horizontal: return HorizontalFlowRenderer(collectionView: collectionView,
+        case .horizontal: return HorizontalFlowCalculator(collectionView: collectionView,
                                                         layout: layout,
                                                         delegate: self.delegate,
                                                         parameters: sectionParameters)

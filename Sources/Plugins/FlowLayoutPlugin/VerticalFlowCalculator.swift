@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VerticalFlowRenderer: FlowRenderer {
+class VerticalFlowCalculator: LayoutCalculator {
     
     var collectionView: UICollectionView
     var layout: PluginLayout
@@ -22,7 +22,7 @@ class VerticalFlowRenderer: FlowRenderer {
         self.parameters = parameters
     }
     
-    func renderItems(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes] {
+    func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes] {
         //Offset should be incremented by insets top, to create padding between header (if present) or previous section.
         offset.y += self.parameters.insets.top
         

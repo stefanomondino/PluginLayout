@@ -53,6 +53,9 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
         
         collectionView.reloadData()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.reloadData()
+    }
     
 }

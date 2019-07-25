@@ -22,6 +22,25 @@ open class GridLayoutPlugin: FlowLayoutPlugin {
     required public init(delegate: FlowLayoutDelegate) {
         super.init(delegate: delegate)
     }
+    
+    override func getRenderer(layout: PluginLayout, section: Int) -> LayoutCalculator? {
+        guard let collectionView = layout.collectionView else { return nil }
+        let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
+        
+        switch layout.scrollDirection {
+        case .vertical: return VerticalGridCalculator(collectionView: collectionView,
+                                                    layout: layout,
+                                                    delegate: self.delegate,
+                                                    parameters: sectionParameters)
+            
+        case .horizontal: return HorizontalGridCalculator(collectionView: collectionView,
+                                                        layout: layout,
+                                                        delegate: self.delegate,
+                                                        parameters: sectionParameters)
+        @unknown default: return nil
+        }
+    }
+    
     open func itemSize(at indexPath: IndexPath, collectionView: UICollectionView, layout: PluginLayout) -> CGSize {
         let n = (delegate as? GridLayoutDelegate)?.collectionView(collectionView, layout: layout, itemsPerLineAt: indexPath) ?? 1
         let ratio = (delegate as? GridLayoutDelegate)?.collectionView(collectionView, layout: layout, aspectRatioAt: indexPath) ?? 1

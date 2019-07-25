@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol FlowRenderer {
-    func renderItems(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes]
+protocol LayoutCalculator {
+    func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes]
 }
 
-extension FlowRenderer {
+extension LayoutCalculator {
     func realignAttibutes(_ attributes: [UICollectionViewLayoutAttributes], inAvailableWidth width: CGFloat, alignment: FlowLayoutAlignment) {
         let maxX = attributes.map { $0.frame.maxX }.sorted(by: >).first ?? width
         let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? 0
