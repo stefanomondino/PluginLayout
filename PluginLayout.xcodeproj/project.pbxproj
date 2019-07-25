@@ -34,6 +34,7 @@
 		7B157B4D22E7B0F2001A7BCF /* GridDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B157B4C22E7B0F2001A7BCF /* GridDelegate.swift */; };
 		7B157B5422EA3BC8001A7BCF /* HorizontalGridCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B157B5322EA3BC8001A7BCF /* HorizontalGridCalculator.swift */; };
 		7B157B5622EA3BD2001A7BCF /* VerticalGridCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B157B5522EA3BD2001A7BCF /* VerticalGridCalculator.swift */; };
+		7B157B5922EA3FC7001A7BCF /* FadeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B157B5822EA3FC7001A7BCF /* FadeEffect.swift */; };
 		7B57C34A22DB73D200E9EBF8 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C34622DB719D00E9EBF8 /* FlowLayout.swift */; };
 		7B57C34C22DB742D00E9EBF8 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C34B22DB742D00E9EBF8 /* GridLayout.swift */; };
 		7B57C34E22DB771500E9EBF8 /* SingleLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B57C34D22DB771500E9EBF8 /* SingleLayout.swift */; };
@@ -105,6 +106,7 @@
 		7B157B4C22E7B0F2001A7BCF /* GridDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridDelegate.swift; sourceTree = "<group>"; };
 		7B157B5322EA3BC8001A7BCF /* HorizontalGridCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalGridCalculator.swift; sourceTree = "<group>"; };
 		7B157B5522EA3BD2001A7BCF /* VerticalGridCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalGridCalculator.swift; sourceTree = "<group>"; };
+		7B157B5822EA3FC7001A7BCF /* FadeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeEffect.swift; sourceTree = "<group>"; };
 		7B57C34622DB719D00E9EBF8 /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		7B57C34B22DB742D00E9EBF8 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		7B57C34D22DB771500E9EBF8 /* SingleLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLayout.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			children = (
 				7B57C34522DB716E00E9EBF8 /* Layouts */,
 				2F00D2B222CCD181006E132E /* Plugins */,
+				7B157B5722EA3FAA001A7BCF /* Effects */,
 				70E71E6E22C8F9F7005674CD /* PluginLayout.h */,
 				2F00D2B322CCD194006E132E /* PluginLayoutDelegate.swift */,
 				7B57C35722E3573A00E9EBF8 /* Plugin.swift */,
@@ -307,6 +310,14 @@
 				7B157B5522EA3BD2001A7BCF /* VerticalGridCalculator.swift */,
 			);
 			path = GridLayoutPlugin;
+			sourceTree = "<group>";
+		};
+		7B157B5722EA3FAA001A7BCF /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				7B157B5822EA3FC7001A7BCF /* FadeEffect.swift */,
+			);
+			path = Effects;
 			sourceTree = "<group>";
 		};
 		7B57C34522DB716E00E9EBF8 /* Layouts */ = {
@@ -496,6 +507,7 @@
 				7B57C35422DB8AF800E9EBF8 /* MosaicLayout.swift in Sources */,
 				70E71E7322C8FA11005674CD /* PluginLayout.swift in Sources */,
 				7B57C34E22DB771500E9EBF8 /* SingleLayout.swift in Sources */,
+				7B157B5922EA3FC7001A7BCF /* FadeEffect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -74,7 +74,9 @@ open class PluginLayout: UICollectionViewLayout {
         return (0..<collectionView.numberOfSections).flatMap { section  -> [UICollectionViewLayoutAttributes] in
             let attributes = self.attributesCache.items(forSection: section)
             let plugin = self.plugin(for: section)
-            let results = plugin?.layoutAttributesForElements(in: rect, from: attributes ?? [], section: section, layout: self)
+            let results = plugin?
+                .layoutAttributesForElements(in: rect, from: attributes ?? [], section: section, layout: self)
+                .map { ElasticEffect.apply(layout: self, to: $0) }
             return results ?? []
         }
     }
