@@ -8,9 +8,19 @@
 
 import UIKit
 public protocol PluginEffect {
-    //    associatedtype T: UICollectionViewLayoutAttributes
-    func apply<T: UICollectionViewLayoutAttributes>(to originalAttribute: T, layout: PluginLayout) -> T
+    func apply(to originalAttribute: UICollectionViewLayoutAttributes, layout: PluginLayout) -> UICollectionViewLayoutAttributes
+    func percentage(from originalAttribute: UICollectionViewLayoutAttributes, layout: PluginLayout, span: CGFloat) -> CGPoint
 }
+
+public extension PluginEffect {
+    func percentage(from attribute: UICollectionViewLayoutAttributes, layout: PluginLayout, span: CGFloat) -> CGPoint {
+        guard let collectionView = layout.collectionView else { return .zero }
+        let offset = collectionView.contentOffset
+        return CGPoint( x: (offset.x - attribute.frame.origin.x + collectionView.bounds.width - span) / span,
+                        y: (offset.y - attribute.frame.origin.y + collectionView.bounds.height - span ) / span)
+    }
+}
+
 open class PluginLayout: UICollectionViewLayout {
     
     class Cache<K: Hashable,T> {

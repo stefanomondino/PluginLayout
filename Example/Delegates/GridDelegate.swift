@@ -19,6 +19,7 @@ class GridDelegate: NSObject, GridLayoutDelegate, PluginLayoutDelegate {
 //        return [ElasticEffect()]
 //    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
+        if kind != nil { return [] }
         let columns = self.collectionView(collectionView, layout: collectionViewLayout, itemsPerLineAt: indexPath)
         let spacing: CGFloat = 75 * (CGFloat(indexPath.item % columns) + 1)
         return [ElasticEffect(spacing: spacing, span: 100)]
