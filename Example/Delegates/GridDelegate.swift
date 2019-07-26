@@ -9,11 +9,23 @@
 import UIKit
 import PluginLayout
 
-class GridDelegate: NSObject, GridLayoutDelegate {
+class GridDelegate: NSObject, GridLayoutDelegate, PluginLayoutDelegate {
     let dataSource: DataSource
     init(dataSource: DataSource) {
         self.dataSource = dataSource
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForSectionAt section: Int) -> [PluginEffect] {
+//        return [ElasticEffect()]
+//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
+        let columns = self.collectionView(collectionView, layout: collectionViewLayout, itemsPerLineAt: indexPath)
+        let spacing: CGFloat = 70 * (CGFloat(indexPath.item % columns) + 1)
+        return [ElasticEffect(spacing: spacing, span: 100)]
+    }
+    
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
         return 3
     }

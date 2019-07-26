@@ -40,7 +40,12 @@ public class TiltEffect<T: UICollectionViewLayoutAttributes> {
 }
 
 public class ElasticEffect<T: UICollectionViewLayoutAttributes>: PluginEffect {
-    public init() {}
+    public let spacing: CGFloat
+    public let span: CGFloat
+    public init(spacing: CGFloat = 90, span: CGFloat = 200) {
+        self.spacing = spacing
+        self.span = span
+    }
     public func apply<T: UICollectionViewLayoutAttributes>(to originalAttribute: T, layout: PluginLayout) -> T {
         guard originalAttribute.representedElementKind == nil else { return originalAttribute }
         guard
@@ -53,7 +58,7 @@ public class ElasticEffect<T: UICollectionViewLayoutAttributes>: PluginEffect {
             offset = collectionView.contentOffset.y
         }
         let height = collectionView.bounds.height
-        let percentage = (offset - attribute.frame.origin.y + height - 200 ) / 200
+        let percentage = (offset - attribute.frame.origin.y + height - span ) / span
 //        if attribute.indexPath.item == 0 {
 //        print ("\(attribute.indexPath.item): offset: \(offset) - attribute's origin: \(attribute.frame.origin.y) - percentage: \(percentage)")
         
@@ -61,7 +66,7 @@ public class ElasticEffect<T: UICollectionViewLayoutAttributes>: PluginEffect {
 //        }
         var frame = attribute.frame
         
-        let spacing: CGFloat = 90 * (attribute.frame.size.height / attribute.frame.size.width)
+        let spacing: CGFloat = self.spacing * (attribute.frame.size.height / attribute.frame.size.width)
         frame.origin.y += max(0, min((1 - percentage) * spacing, spacing))
         attribute.frame = frame
         return attribute

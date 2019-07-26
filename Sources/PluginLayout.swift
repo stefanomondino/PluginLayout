@@ -8,13 +8,13 @@
 
 import UIKit
 public protocol PluginEffect {
-//    associatedtype T: UICollectionViewLayoutAttributes
+    //    associatedtype T: UICollectionViewLayoutAttributes
     func apply<T: UICollectionViewLayoutAttributes>(to originalAttribute: T, layout: PluginLayout) -> T
 }
 open class PluginLayout: UICollectionViewLayout {
     
-    class Cache<T> {
-        private var items: [Int: [T]] = [:]
+    class Cache<K: Hashable,T> {
+        private var items: [K: [T]] = [:]
         
         init() {}
         
@@ -24,20 +24,25 @@ open class PluginLayout: UICollectionViewLayout {
         func all() -> [T] {
             return items.flatMap { $0.value }
         }
-        func set(items: [T]?, forSection section: Int) {
-            self.items[section] = items
+        func set(items: [T]?, forKey key: K) {
+            self.items[key] = items
         }
-        func add(item: T, forSection section: Int) {
-            self.items[section] = (self.items[section] ?? []) + [item]
+        func add(item: T, forKey key: K) {
+            self.items[key] = (self.items[key] ?? []) + [item]
         }
-        func items(forSection section: Int) -> [T]? {
-            return self.items[section]
+        func items(forKey key: K) -> [T]? {
+            return self.items[key]
         }
+    }
+    private struct EffectIndex: Hashable {
+        let indexPath: IndexPath
+        let kind: String?
     }
     
     private var contentSize: CGSize = .zero
-    private let attributesCache = Cache<UICollectionViewLayoutAttributes>()
-    private let effectsCache = Cache<PluginEffect>()
+    private let attributesCache = Cache<Int,UICollectionViewLayoutAttributes>()
+    private let effectsCacheBySection = Cache<Int, PluginEffect>()
+    private let effectsCacheByIndex = Cache<EffectIndex, PluginEffect>()
     
     private var delegate: PluginLayoutDelegate? {
         return self.collectionView?.delegate as? PluginLayoutDelegate
@@ -51,7 +56,7 @@ open class PluginLayout: UICollectionViewLayout {
     public var defaultPlugin: PluginType? {
         didSet { invalidateLayout() }
     }
-        
+    
     public func plugin(for section: Int) -> PluginType? {
         guard let delegate = self.delegate,
             let collectionView = collectionView else { return defaultPlugin }
@@ -62,18 +67,31 @@ open class PluginLayout: UICollectionViewLayout {
             let collectionView = collectionView else { return [] }
         return delegate.collectionView(collectionView, layout: self, effectsForSectionAt: section)
     }
-
+    public func effects(at indexPath: IndexPath, kind: String? = nil) -> [PluginEffect] {
+        guard let delegate = self.delegate,
+            let collectionView = collectionView else { return [] }
+        return delegate.collectionView(collectionView, layout: self, effectsForItemAt: indexPath, kind: kind)
+    }
+    
     open override var flipsHorizontallyInOppositeLayoutDirection: Bool {
         return true
     }
     open override func prepare() {
         super.prepare()
-        
+        self.attributesCache.clear()
+        self.effectsCacheByIndex.clear()
+        self.effectsCacheBySection.clear()
         var offset = CGPoint.zero
         let sections = collectionView?.numberOfSections ?? 0
         (0..<sections).forEach { section in
             let attributes = self.plugin(for: section)?.layoutAttributes(in: section, offset: &offset, layout: self)
-            self.attributesCache.set(items: attributes, forSection: section)
+            self.attributesCache.set(items: attributes, forKey: section)
+            self.effectsCacheBySection.set(items: effects(for: section), forKey: section)
+            attributes?.forEach {
+                let effects = self.effects(at: $0.indexPath, kind: $0.representedElementKind)
+                self.effectsCacheByIndex.set(items: effects, forKey: EffectIndex(indexPath: $0.indexPath, kind: $0.representedElementKind))
+                
+            }
         }
         self.contentSize = CGSize(width: offset.x, height: offset.y)
     }
@@ -84,13 +102,16 @@ open class PluginLayout: UICollectionViewLayout {
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = collectionView else { return nil }
         return (0..<collectionView.numberOfSections).flatMap { section  -> [UICollectionViewLayoutAttributes] in
-            let attributes = self.attributesCache.items(forSection: section)
+            let attributes = self.attributesCache.items(forKey: section)
             let plugin = self.plugin(for: section)
-            let effects = self.effects(for: section)
+            let sectionEffects = self.effectsCacheBySection.items(forKey: section) ?? []
             let results = plugin?
                 .layoutAttributesForElements(in: rect, from: attributes ?? [], section: section, layout: self )
-                .map { attribute in
-                    effects.reduce(attribute) { $1.apply(to: $0, layout: self)
+                .map { attribute -> UICollectionViewLayoutAttributes in
+                    let indexEffects = self.effectsCacheByIndex.items(forKey: EffectIndex(indexPath: attribute.indexPath, kind: attribute.representedElementKind)) ?? []
+                    return (sectionEffects + indexEffects)
+                        .compactMap { $0 }
+                        .reduce(attribute) { $1.apply(to: $0, layout: self)
                     }
             }
             return results ?? []
@@ -111,8 +132,8 @@ open class PluginLayout: UICollectionViewLayout {
         
         var context = super.invalidationContext(forBoundsChange: newBounds)
         //This is where the optimization should happen. Needs investigation
-//        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader, at: [IndexPath(item: 0, section: 1)])
-//        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionFooter, at: [IndexPath(item: 0, section: 0)])
+        //        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader, at: [IndexPath(item: 0, section: 1)])
+        //        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionFooter, at: [IndexPath(item: 0, section: 0)])
         return context
     }
 }
