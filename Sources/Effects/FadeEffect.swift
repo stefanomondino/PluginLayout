@@ -59,15 +59,13 @@ public class ElasticEffect<T: UICollectionViewLayoutAttributes>: PluginEffect {
         }
         let height = collectionView.bounds.height
         let percentage = (offset - attribute.frame.origin.y + height - span ) / span
-//        if attribute.indexPath.item == 0 {
-//        print ("\(attribute.indexPath.item): offset: \(offset) - attribute's origin: \(attribute.frame.origin.y) - percentage: \(percentage)")
-        
-//            print(percentage)
-//        }
         var frame = attribute.frame
         
-        let spacing: CGFloat = self.spacing * (attribute.frame.size.height / attribute.frame.size.width)
-        frame.origin.y += max(0, min((1 - percentage) * spacing, spacing))
+        //Pow is for some naive easeout effect, to smooth out the acceleration as the item reaches final position.
+        //To keep distances coherent with external spacing parameter, we have to root the spacing
+        let power: CGFloat = 4
+        let spacing: CGFloat = pow(self.spacing, 1/power)
+        frame.origin.y += pow(max(0, min((1 - percentage) * spacing, spacing)), power)
         attribute.frame = frame
         return attribute
     }
