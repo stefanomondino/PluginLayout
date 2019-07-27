@@ -28,6 +28,7 @@ class HorizontalFlowCalculator: LayoutCalculator {
         var lineStart: CGFloat = offset.x
         var lineEnd = lineStart
         let lineMaxHeight = self.parameters.contentBounds.height - self.parameters.insets.top - self.parameters.insets.bottom
+        
         offset.y = max(offset.y, self.parameters.contentBounds.height)
         
         let section = self.parameters.section

@@ -47,13 +47,14 @@ open class GridLayoutPlugin: FlowLayoutPlugin {
         let itemsPerLine = max(n, 1)
         let insets = delegate?.collectionView?(collectionView, layout: layout, insetForSectionAt: indexPath.section) ?? .zero
         let spacing = delegate?.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: indexPath.section) ?? 0
+        let parameters = self.sectionParameters(inSection: indexPath.section, layout: layout)
         switch layout.scrollDirection {
         case .vertical:
-            let availableWidth = collectionView.bounds.width - collectionView.contentInset.left - collectionView.contentInset.right - insets.left - insets.right
+            let availableWidth = parameters.contentBounds.width - insets.left - insets.right
             let itemWidth = (availableWidth - (CGFloat(itemsPerLine - 1) * spacing)) / CGFloat(itemsPerLine)
             return CGSize(width: itemWidth, height: itemWidth / ratio)
         case .horizontal:
-            let availableHeight = collectionView.bounds.height - collectionView.contentInset.top - collectionView.contentInset.bottom - insets.top - insets.bottom
+            let availableHeight = parameters.contentBounds.height - insets.top - insets.bottom
             let itemHeight = (availableHeight - (CGFloat(itemsPerLine - 1) * spacing)) / CGFloat(itemsPerLine)
             return CGSize(width: itemHeight * ratio, height: itemHeight)
         @unknown default:

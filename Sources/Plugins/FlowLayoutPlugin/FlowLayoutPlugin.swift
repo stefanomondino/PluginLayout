@@ -32,7 +32,13 @@ open class FlowSectionParameters: SectionParameters {
 extension PluginLayout {
     var contentBounds: CGRect {
         guard let collectionView = self.collectionView else { return .zero }
-        return collectionView.frame.inset(by: collectionView.contentInset)
+        let insets: UIEdgeInsets
+        if #available(iOS 11.0, *) {
+             insets = collectionView.adjustedContentInset
+        } else {
+            insets = collectionView.contentInset
+        }
+        return collectionView.frame.inset(by: insets)
     }
 }
 
