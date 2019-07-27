@@ -12,7 +12,7 @@ import PluginLayout
 
 enum Scene {
     case flow(pinned: Bool)
-    case grid
+    case grid(horizontal: Bool)
     case staggered
     case mixed
     case mosaic(columns: Int)
@@ -22,12 +22,13 @@ enum Scene {
     static var all: [Scene] {
         return [
             .flow(pinned: false),
-            .grid,
+            .grid(horizontal: false),
             .staggered,
             .mosaic(columns: 4),
             .mixed,
             .mosaic(columns: 3),
             .flow(pinned: false),
+            .grid(horizontal: true),
             .comparison,
             .customPlugin
         ]
@@ -36,7 +37,7 @@ enum Scene {
     var title: String {
         switch self {
         case .flow (let pinned): return "Flow" + (pinned ? " Pinned" : "")
-        case .grid: return "Grid"
+        case .grid(let horizontal): return "Grid \(horizontal ? "Horizontal" : "Vertical")"
         case .staggered: return "Staggered"
         case .mosaic(let columns): return "Mosaic (\(columns) cols)"
         case .mixed: return "Mixed"
@@ -76,10 +77,11 @@ enum Scene {
             layout.sectionHeadersPinToVisibleBounds = pinHeaders
             return CollectionViewController(dataSource: dataSource, delegate: delegate, layout: layout)
             
-        case .grid :
+        case .grid(let horizontal) :
             let dataSource = DataSource(count: 40, contentType: .cats, sections: 2)
             let delegate = GridDelegate(dataSource: dataSource)
             let layout = GridLayout()
+            layout.scrollDirection = horizontal ? .horizontal : .vertical
             layout.sectionFootersPinToVisibleBounds = pinHeaders
             layout.sectionHeadersPinToVisibleBounds = pinHeaders
             return CollectionViewController(dataSource: dataSource, delegate: delegate, layout: layout)
