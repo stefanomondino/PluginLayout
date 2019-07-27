@@ -51,6 +51,7 @@
 		7BAF754C22E78067007F0835 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAF754B22E78067007F0835 /* CollectionViewController.swift */; };
 		7BB795C922D92D6100733085 /* SupplementaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB795C722D92D6100733085 /* SupplementaryCollectionViewCell.swift */; };
 		7BB795CA22D92D6100733085 /* SupplementaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BB795C822D92D6100733085 /* SupplementaryCollectionViewCell.xib */; };
+		7BE9E6B522EC7B7C005017F5 /* StickyEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9E6B322EC7B62005017F5 /* StickyEffect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,7 @@
 		7BAF754B22E78067007F0835 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		7BB795C722D92D6100733085 /* SupplementaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BB795C822D92D6100733085 /* SupplementaryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SupplementaryCollectionViewCell.xib; sourceTree = "<group>"; };
+		7BE9E6B322EC7B62005017F5 /* StickyEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyEffect.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +323,7 @@
 			children = (
 				7B157B5822EA3FC7001A7BCF /* FadeEffect.swift */,
 				7B157B5A22EBAAA7001A7BCF /* ElasticEffect.swift */,
+				7BE9E6B322EC7B62005017F5 /* StickyEffect.swift */,
 				7B157B5C22EBAAD0001A7BCF /* TiltEffect.swift */,
 			);
 			path = Effects;
@@ -504,6 +507,7 @@
 				7B157B5422EA3BC8001A7BCF /* HorizontalGridCalculator.swift in Sources */,
 				7B57C34A22DB73D200E9EBF8 /* FlowLayout.swift in Sources */,
 				7B157B5B22EBAAA7001A7BCF /* ElasticEffect.swift in Sources */,
+				7BE9E6B522EC7B7C005017F5 /* StickyEffect.swift in Sources */,
 				2F0C065C22E9F1F900CE1676 /* VerticalFlowCalculator.swift in Sources */,
 				7B57C35222DB864F00E9EBF8 /* MosaicLayoutPlugin.swift in Sources */,
 				2F00D2B522CCD199006E132E /* PluginLayoutDelegate.swift in Sources */,
@@ -671,6 +675,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2922HW8568;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -689,6 +694,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2922HW8568;
 				INFOPLIST_FILE = "$(SRCROOT)/Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -705,10 +711,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -738,6 +745,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

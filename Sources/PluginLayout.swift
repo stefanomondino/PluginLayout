@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 public protocol PluginEffect {
     func apply(to originalAttribute: UICollectionViewLayoutAttributes, layout: PluginLayout) -> UICollectionViewLayoutAttributes
     func percentage(from originalAttribute: UICollectionViewLayoutAttributes, layout: PluginLayout, span: CGFloat) -> CGPoint
@@ -23,9 +24,11 @@ public extension PluginEffect {
 
 open class PluginLayout: UICollectionViewLayout {
     
+    private class PluginLayoutInvalidationContext: UICollectionViewLayoutInvalidationContext {}
+    
     class Cache<K: Hashable,T> {
-        private var items: [K: [T]] = [:]
-        
+        private(set) var items: [K: [T]] = [:]
+        var isEmpty: Bool { return all().count == 0}
         init() {}
         
         func clear() {
@@ -47,6 +50,10 @@ open class PluginLayout: UICollectionViewLayout {
     private struct EffectIndex: Hashable {
         let indexPath: IndexPath
         let kind: String?
+    }
+    
+    override open class var invalidationContextClass: AnyClass {
+        return PluginLayoutInvalidationContext.self
     }
     
     private var contentSize: CGSize = .zero
@@ -86,11 +93,20 @@ open class PluginLayout: UICollectionViewLayout {
     open override var flipsHorizontallyInOppositeLayoutDirection: Bool {
         return true
     }
+    
+    private var oldBounds: CGSize = .zero
+    
     open override func prepare() {
-        super.prepare()
+
+        if oldBounds != collectionView?.bounds.size {
+            attributesCache.clear()
+        }
+        if !attributesCache.isEmpty { return }
+        self.oldBounds = collectionView?.bounds.size ?? .zero
         self.attributesCache.clear()
         self.effectsCacheByIndex.clear()
         self.effectsCacheBySection.clear()
+        
         var offset = CGPoint.zero
         let sections = collectionView?.numberOfSections ?? 0
         (0..<sections).forEach { section in
@@ -133,14 +149,33 @@ open class PluginLayout: UICollectionViewLayout {
     open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return attributesCache.all().filter { $0.indexPath == indexPath && $0.representedElementKind == elementKind }.first
     }
-    
     //This is propably very inefficient at the moment, as it's completely invalidating the layout for each scroll
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        if oldBounds != newBounds.size {
+            attributesCache.clear()
+        }
         return true
     }
+
+    open override func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {
+//        self.effectsCacheByIndex.items.forEach { pair in
+//            let index = pair.key
+//            if let kind = index.kind {
+//                context.invalidateSupplementaryElements(ofKind: kind, at: [index.indexPath])
+//            } else {
+//                print ("Invalidating: \(index.indexPath)")
+//                context.invalidateItems(at: [index.indexPath])
+//            }
+//
+//        }
+        super.invalidateLayout(with: context)
+    }
     open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
+
+        let context = super.invalidationContext(forBoundsChange: newBounds)
         
-        var context = super.invalidationContext(forBoundsChange: newBounds)
+      
+        
         //This is where the optimization should happen. Needs investigation
         //        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader, at: [IndexPath(item: 0, section: 1)])
         //        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionFooter, at: [IndexPath(item: 0, section: 0)])

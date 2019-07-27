@@ -21,7 +21,7 @@ enum Scene {
     
     static var all: [Scene] {
         return [
-            .flow(pinned: true),
+            .flow(pinned: false),
             .grid,
             .staggered,
             .mosaic(columns: 4),
