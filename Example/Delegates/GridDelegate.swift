@@ -19,10 +19,8 @@ class GridDelegate: NSObject, GridLayoutDelegate, PluginLayoutDelegate {
         if let kind = kind { return  [StickyEffect(kind: kind)].compactMap { $0 }  }
         let columns = self.collectionView(collectionView, layout: collectionViewLayout, itemsPerLineAt: indexPath)
         let spacing: CGFloat = 75 * (CGFloat(indexPath.item % columns) + 1)
-        return [ElasticEffect(spacing: spacing, span: 100)]
+        return [ElasticEffect(spacing: spacing, span: 150)]
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
         return 3

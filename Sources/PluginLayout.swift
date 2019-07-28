@@ -124,24 +124,33 @@ open class PluginLayout: UICollectionViewLayout {
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = collectionView else { return nil }
         return (0..<collectionView.numberOfSections).flatMap { section  -> [UICollectionViewLayoutAttributes] in
-            guard let plugin = self.plugin(for: section) else { return [] }
-            let attributes = self.attributesCache.items(forKey: section)
+            guard let plugin = self.plugin(for: section),
+                 let attributes = self.attributesCache.items(forKey: section) else { return [] }
+           
             
-            let inRect = Set(plugin.layoutAttributesForElements(in: rect, from: attributes ?? [], section: section, layout: self ))
+            var inRect = plugin.layoutAttributesForElements(in: rect, from: attributes , section: section, layout: self )
+                .reduce([EffectIndex: PluginLayoutAttributes]()) { acc, element in
+                var accumulator = acc
+                accumulator[EffectIndex(indexPath: element.indexPath, kind: element.representedElementKind)] = element
+                return accumulator
+            }
             
-            let results = inRect
-                .map { attribute -> PluginLayoutAttributes in
-                    let effects = self.effectsCacheByIndex.items(forKey: EffectIndex(indexPath: attribute.indexPath, kind: attribute.representedElementKind)) ?? []
+            return attributes
+                .compactMap { attribute -> PluginLayoutAttributes? in
+                    let index = EffectIndex(indexPath: attribute.indexPath, kind: attribute.representedElementKind)
+                    let effects = self.effectsCacheByIndex.items(forKey: index) ?? []
+                    if effects.count == 0 { return inRect[index] }
+                    let properAttribute: PluginLayoutAttributes = inRect[index] ?? attribute
                     return effects
                         .compactMap { $0 }
-                        .reduce(attribute) {
+                        .reduce(properAttribute) {
                             $1.apply(to: $0,
                                      layout: self,
                                      plugin: plugin,
-                                     sectionAttributes: attributes ?? [])
+                                     sectionAttributes: attributes)
                     }
             }
-            return results
+            
         }
     }
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
