@@ -60,7 +60,7 @@ extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, Gr
         return dataSource.picture(at: indexPath).ratio
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineFractionAt indexPath: IndexPath) -> Int {
         switch indexPath.item {
         case  0..<4: return 2
         case  0..<7: return 4

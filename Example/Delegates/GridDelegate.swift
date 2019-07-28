@@ -17,12 +17,12 @@ class GridDelegate: NSObject, GridLayoutDelegate, PluginLayoutDelegate {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
         if let kind = kind { return  [StickyEffect(kind: kind)].compactMap { $0 }  }
-        let columns = self.collectionView(collectionView, layout: collectionViewLayout, itemsPerLineAt: indexPath)
+        let columns = self.collectionView(collectionView, layout: collectionViewLayout, lineFractionAt: indexPath)
         let spacing: CGFloat = 75 * (CGFloat(indexPath.item % columns) + 1)
         return [ElasticEffect(spacing: spacing, span: 150)]
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineFractionAt indexPath: IndexPath) -> Int {
         return 3
     }
     

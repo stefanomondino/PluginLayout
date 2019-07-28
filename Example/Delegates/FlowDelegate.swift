@@ -59,7 +59,7 @@ class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout, PluginLayoutDe
         case .vertical :
             let width: CGFloat = collectionView.frame.size.width - 4
             let height = width / dataSource.picture(at: indexPath).ratio
-            return CGSize(width: w, height: h)
+            return CGSize(width: width, height: height)
         case .horizontal:
             let height: CGFloat = max((collectionView.frame.size.height  - CGFloat(indexPath.item * 55)), 60)
             let width = height * dataSource.picture(at: indexPath).ratio
