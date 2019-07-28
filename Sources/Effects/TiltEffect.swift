@@ -13,7 +13,7 @@ public class TiltEffect: PluginEffect {
     
     public init() {}
     
-    public func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout) -> PluginLayoutAttributes {
+    public func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout, plugin: PluginType, sectionAttributes attributes: [PluginLayoutAttributes]) -> PluginLayoutAttributes {
         guard originalAttribute.representedElementKind == nil else { return originalAttribute }
         guard let attribute = originalAttribute.copy() as? PluginLayoutAttributes else { return originalAttribute }
         let offset = layout.collectionView?.contentOffset.y ?? 0

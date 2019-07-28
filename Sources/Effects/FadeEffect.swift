@@ -18,7 +18,7 @@ public class FadeEffect: PluginEffect {
         self.span = span
     }
     
-    public func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout) -> PluginLayoutAttributes {
+    public func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout, plugin: PluginType, sectionAttributes attributes: [PluginLayoutAttributes]) -> PluginLayoutAttributes {
         guard originalAttribute.representedElementKind == nil else { return originalAttribute }
         guard
             let collectionView = layout.collectionView,

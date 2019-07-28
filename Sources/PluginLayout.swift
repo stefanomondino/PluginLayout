@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol PluginEffect {
-    func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout) -> PluginLayoutAttributes
+func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout, plugin: PluginType, sectionAttributes attributes: [PluginLayoutAttributes]) -> PluginLayoutAttributes
     func percentage(from originalAttribute: PluginLayoutAttributes, layout: PluginLayout, span: CGFloat) -> CGPoint
 }
 
@@ -58,7 +58,7 @@ open class PluginLayout: UICollectionViewLayout {
     
     private var contentSize: CGSize = .zero
     private let attributesCache = Cache<Int,PluginLayoutAttributes>()
-    private let effectsCacheBySection = Cache<Int, PluginEffect>()
+    
     private let effectsCacheByIndex = Cache<EffectIndex, PluginEffect>()
     
     private var delegate: PluginLayoutDelegate? {
@@ -79,11 +79,7 @@ open class PluginLayout: UICollectionViewLayout {
             let collectionView = collectionView else { return defaultPlugin }
         return delegate.collectionView(collectionView, layout: self, pluginForSectionAt: section) ?? defaultPlugin
     }
-    public func effects(for section: Int) -> [PluginEffect] {
-        guard let delegate = self.delegate,
-            let collectionView = collectionView else { return [] }
-        return delegate.collectionView(collectionView, layout: self, effectsForSectionAt: section)
-    }
+
     public func effects(at indexPath: IndexPath, kind: String? = nil) -> [PluginEffect] {
         guard let delegate = self.delegate,
             let collectionView = collectionView else { return [] }
@@ -105,14 +101,14 @@ open class PluginLayout: UICollectionViewLayout {
         self.oldBounds = collectionView?.bounds.size ?? .zero
         self.attributesCache.clear()
         self.effectsCacheByIndex.clear()
-        self.effectsCacheBySection.clear()
+        
         
         var offset = CGPoint.zero
         let sections = collectionView?.numberOfSections ?? 0
         (0..<sections).forEach { section in
             let attributes = self.plugin(for: section)?.layoutAttributes(in: section, offset: &offset, layout: self)
             self.attributesCache.set(items: attributes, forKey: section)
-            self.effectsCacheBySection.set(items: effects(for: section), forKey: section)
+            
             attributes?.forEach {
                 let effects = self.effects(at: $0.indexPath, kind: $0.representedElementKind)
                 self.effectsCacheByIndex.set(items: effects, forKey: EffectIndex(indexPath: $0.indexPath, kind: $0.representedElementKind))
@@ -128,19 +124,24 @@ open class PluginLayout: UICollectionViewLayout {
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = collectionView else { return nil }
         return (0..<collectionView.numberOfSections).flatMap { section  -> [UICollectionViewLayoutAttributes] in
+            guard let plugin = self.plugin(for: section) else { return [] }
             let attributes = self.attributesCache.items(forKey: section)
-            let plugin = self.plugin(for: section)
-            let sectionEffects = self.effectsCacheBySection.items(forKey: section) ?? []
-            let results = plugin?
-                .layoutAttributesForElements(in: rect, from: attributes ?? [], section: section, layout: self )
-                .map { attribute -> UICollectionViewLayoutAttributes in
-                    let indexEffects = self.effectsCacheByIndex.items(forKey: EffectIndex(indexPath: attribute.indexPath, kind: attribute.representedElementKind)) ?? []
-                    return (sectionEffects + indexEffects)
+            
+            let inRect = Set(plugin.layoutAttributesForElements(in: rect, from: attributes ?? [], section: section, layout: self ))
+            
+            let results = inRect
+                .map { attribute -> PluginLayoutAttributes in
+                    let effects = self.effectsCacheByIndex.items(forKey: EffectIndex(indexPath: attribute.indexPath, kind: attribute.representedElementKind)) ?? []
+                    return effects
                         .compactMap { $0 }
-                        .reduce(attribute) { $1.apply(to: $0, layout: self)
+                        .reduce(attribute) {
+                            $1.apply(to: $0,
+                                     layout: self,
+                                     plugin: plugin,
+                                     sectionAttributes: attributes ?? [])
                     }
             }
-            return results ?? []
+            return results
         }
     }
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {

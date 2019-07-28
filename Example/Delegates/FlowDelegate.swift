@@ -15,7 +15,7 @@ class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout, PluginLayoutDe
         self.dataSource = dataSource
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForSectionAt section: Int) -> [PluginEffect] {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
         return [FadeEffect(), ElasticEffect()]
     }
     

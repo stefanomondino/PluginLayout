@@ -14,12 +14,9 @@ class GridDelegate: NSObject, GridLayoutDelegate, PluginLayoutDelegate {
     init(dataSource: DataSource) {
         self.dataSource = dataSource
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForSectionAt section: Int) -> [PluginEffect] {
-//        return [ElasticEffect()]
-//    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
-        if kind != nil { return [] }
+        if let kind = kind { return  [StickyEffect(kind: kind)].compactMap { $0 }  }
         let columns = self.collectionView(collectionView, layout: collectionViewLayout, itemsPerLineAt: indexPath)
         let spacing: CGFloat = 75 * (CGFloat(indexPath.item % columns) + 1)
         return [ElasticEffect(spacing: spacing, span: 100)]

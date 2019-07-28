@@ -30,7 +30,7 @@ public class ElasticEffect: PluginEffect {
         self.span = span
     }
     
-    public func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout) -> PluginLayoutAttributes {
+    public func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout, plugin: PluginType, sectionAttributes attributes: [PluginLayoutAttributes]) -> PluginLayoutAttributes {
         guard originalAttribute.representedElementKind == nil,
             let attribute = originalAttribute.copy() as? PluginLayoutAttributes else { return originalAttribute }
         let percentage = self.percentage(from: attribute, layout: layout, span: span)
