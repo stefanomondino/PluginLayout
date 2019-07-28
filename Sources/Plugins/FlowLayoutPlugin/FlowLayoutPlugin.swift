@@ -72,16 +72,16 @@ open class FlowLayoutPlugin: Plugin {
         self.alignment = alignment
     }
     
-    public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+    public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
         //Create the header if available
-        let header: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
+        let header: PluginLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
         
         let renderer = self.getRenderer(layout: layout, section: section)
         let attributes = renderer?.calculateLayoutAttributes(offset: &offset, alignment: self.alignment) ?? []
         
         //Create a footer if possible
-        let footer: UICollectionViewLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
+        let footer: PluginLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
 
         //Return header + attributes + footer. If header or footer are not available (== nil), compactMap strips them away
         return ([header] + attributes + [footer]).compactMap { $0 }
@@ -105,13 +105,13 @@ open class FlowLayoutPlugin: Plugin {
         }
     }
 
-    public func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+    public func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
         let defaultAttributes = attributes.filter { $0.frame.intersects(rect) }
         
         if sectionFootersPinToVisibleBounds == false && sectionHeadersPinToVisibleBounds == false { return defaultAttributes }
         
-        let supplementary: [UICollectionViewLayoutAttributes] = pinSectionHeadersAndFooters(from: attributes, layout: layout, section: section)
+        let supplementary: [PluginLayoutAttributes] = pinSectionHeadersAndFooters(from: attributes, layout: layout, section: section)
         
         return defaultAttributes + supplementary
     }

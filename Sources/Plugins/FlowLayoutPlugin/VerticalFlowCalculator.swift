@@ -14,16 +14,16 @@ class VerticalFlowCalculator: LayoutCalculator {
     let layout: PluginLayout
     let parameters: FlowSectionParameters
     weak var delegate: FlowLayoutDelegate?
-    let attributesClass: UICollectionViewLayoutAttributes.Type
+    let attributesClass: PluginLayoutAttributes.Type
     
-    init(layout: PluginLayout, attributesClass: UICollectionViewLayoutAttributes.Type, delegate: FlowLayoutDelegate?, parameters: FlowSectionParameters) {
+    init(layout: PluginLayout, attributesClass: PluginLayoutAttributes.Type, delegate: FlowLayoutDelegate?, parameters: FlowSectionParameters) {
         self.layout = layout
         self.delegate = delegate
         self.parameters = parameters
         self.attributesClass = attributesClass
     }
     
-    func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes] {
+    func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [PluginLayoutAttributes] {
         guard let collectionView = layout.collectionView else { return [] }
         
         //Offset should be incremented by insets top, to create padding between header (if present) or previous section.
@@ -47,14 +47,14 @@ class VerticalFlowCalculator: LayoutCalculator {
         let lineMaxWidth = self.parameters.contentBounds.width - self.parameters.insets.left - self.parameters.insets.right
         
         //Accumulates attributes for last line.
-        var lastLineAttributes: [UICollectionViewLayoutAttributes] = []
+        var lastLineAttributes: [PluginLayoutAttributes] = []
 
         //Iterate through all items in current section
         let attributes = (0..<collectionView.numberOfItems(inSection: self.parameters.section))
             //convert each item into an IndexPath
             .map { item in IndexPath(item: item, section: self.parameters.section) }
             //We use reduce to have access to last attribute's values
-            .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
+            .reduce([]) { itemsAccumulator, indexPath -> [PluginLayoutAttributes] in
                 //Create new attribute
                 let attribute = attributesClass.init(forCellWith: indexPath)
                 //Fetch attribute's size

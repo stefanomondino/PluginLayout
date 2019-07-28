@@ -9,14 +9,14 @@
 import UIKit
 
 public protocol PluginType {
-    func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes]
-    func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int,  layout: PluginLayout) -> [UICollectionViewLayoutAttributes]
-    var attributesClass: UICollectionViewLayoutAttributes.Type { get }
+    func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes]
+    func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int,  layout: PluginLayout) -> [PluginLayoutAttributes]
+    var attributesClass: PluginLayoutAttributes.Type { get }
 }
 
 public extension PluginType {
-    var attributesClass: UICollectionViewLayoutAttributes.Type {
-        return UICollectionViewLayoutAttributes.self
+    var attributesClass: PluginLayoutAttributes.Type {
+        return PluginLayoutAttributes.self
     }
 }
 
@@ -26,15 +26,15 @@ public protocol Plugin: PluginType {
     var delegate:Delegate? { get }
     init(delegate: Delegate)
     func sectionParameters(inSection section: Int, layout: PluginLayout) -> Parameters
-    func header(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes?
-    func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes?
+    func header(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> PluginLayoutAttributes?
+    func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> PluginLayoutAttributes?
     var sectionHeadersPinToVisibleBounds: Bool { get }
     var sectionFootersPinToVisibleBounds: Bool { get }
     
 }
 
 public extension Plugin {
-    func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+    func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
         return attributes.filter { $0.frame.intersects(rect) }
     }
     

@@ -40,7 +40,7 @@ open class MosaicLayoutPlugin: Plugin {
         }
         return chance
     }
-    public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+    public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
         guard let collectionView = layout.collectionView,
             let delegate = delegate else { return [] }
         let columnsCount = delegate.collectionView(collectionView, layout: layout, columnsForSectionAt: section)
@@ -48,7 +48,7 @@ open class MosaicLayoutPlugin: Plugin {
         let itemSpacing = delegate.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: section) ?? 0
         let lineSpacing = delegate.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: section) ?? 0
         
-        let header: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
+        let header: PluginLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
         
         offset.y += insets.top
         let contentBounds = collectionView.frame.inset(by: collectionView.contentInset)
@@ -57,10 +57,10 @@ open class MosaicLayoutPlugin: Plugin {
         let columnWidth = (availableWidth - (CGFloat(columnsCount - 1) * itemSpacing)) / CGFloat(columnsCount)
         var columns = (0..<columnsCount).map { _ in offset.y }
         let heightMultiple: CGFloat = 50
-        let attributes: [UICollectionViewLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: section))
+        let attributes: [PluginLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: section))
             .map { item in IndexPath(item: item, section: section) }
-            .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
-                let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            .reduce([]) { itemsAccumulator, indexPath -> [PluginLayoutAttributes] in
+                let attribute = PluginLayoutAttributes(forCellWith: indexPath)
                 let ratio = delegate.collectionView(collectionView, layout: layout, aspectRatioAt: indexPath)
                 
                 let sortedColumns = columns.enumerated().sorted(by: { $0.element < $1.element })
@@ -105,16 +105,16 @@ open class MosaicLayoutPlugin: Plugin {
             offset.y = finalY
         }
         offset.y += insets.bottom
-        let footer: UICollectionViewLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
+        let footer: PluginLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
         return ([header] + attributes + [footer]).compactMap { $0 }
     }
-    public func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+    public func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
         let defaultAttributes = attributes.filter { $0.frame.intersects(rect) }
         
         if sectionFootersPinToVisibleBounds == false && sectionHeadersPinToVisibleBounds == false { return defaultAttributes }
         
-        let supplementary: [UICollectionViewLayoutAttributes] = pinSectionHeadersAndFooters(from: attributes, layout: layout, section: section)
+        let supplementary: [PluginLayoutAttributes] = pinSectionHeadersAndFooters(from: attributes, layout: layout, section: section)
         
         return defaultAttributes + supplementary
     }

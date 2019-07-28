@@ -54,10 +54,7 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
         
         collectionView.reloadData()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        collectionView.reloadData()
-    }
+
 //    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 //        super.viewWillTransition(to: size, with: coordinator)
 //        guard let collectionView = self.collectionView else { return }

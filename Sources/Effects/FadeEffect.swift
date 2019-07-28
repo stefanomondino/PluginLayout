@@ -18,11 +18,11 @@ public class FadeEffect: PluginEffect {
         self.span = span
     }
     
-    public func apply(to originalAttribute: UICollectionViewLayoutAttributes, layout: PluginLayout) -> UICollectionViewLayoutAttributes {
+    public func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout) -> PluginLayoutAttributes {
         guard originalAttribute.representedElementKind == nil else { return originalAttribute }
         guard
             let collectionView = layout.collectionView,
-            let attribute = originalAttribute.copy() as? UICollectionViewLayoutAttributes else { return originalAttribute }
+            let attribute = originalAttribute.copy() as? PluginLayoutAttributes else { return originalAttribute }
         let offset:CGFloat = collectionView.contentOffset.y
         
         let height = collectionView.bounds.height

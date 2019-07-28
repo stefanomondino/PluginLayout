@@ -13,9 +13,9 @@ public class TiltEffect: PluginEffect {
     
     public init() {}
     
-    public func apply(to originalAttribute: UICollectionViewLayoutAttributes, layout: PluginLayout) -> UICollectionViewLayoutAttributes {
+    public func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout) -> PluginLayoutAttributes {
         guard originalAttribute.representedElementKind == nil else { return originalAttribute }
-        guard let attribute = originalAttribute.copy() as? UICollectionViewLayoutAttributes else { return originalAttribute }
+        guard let attribute = originalAttribute.copy() as? PluginLayoutAttributes else { return originalAttribute }
         let offset = layout.collectionView?.contentOffset.y ?? 0
         let height = (layout.collectionView?.bounds.height ?? 0)
         let percentage = 1 - (offset - attribute.frame.minY + height) / (height - attribute.frame.height)

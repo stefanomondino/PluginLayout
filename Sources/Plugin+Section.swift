@@ -44,13 +44,13 @@ public extension Plugin where Parameters == FlowSectionParameters {
     //}
     //
     //public extension Plugin {
-    func header(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes? {
+    func header(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> PluginLayoutAttributes? {
         if
             let delegate = self.delegate as? UICollectionViewDelegateFlowLayout,
             let collectionView = layout.collectionView,
             let headerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForHeaderInSection: section),
             headerSize.height > 0 && headerSize.width > 0 {
-            let header = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: IndexPath(item: 0, section: section))
+            let header = PluginLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: IndexPath(item: 0, section: section))
             switch layout.scrollDirection {
             case .horizontal:
                 header.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: headerSize.width, height: layout.contentBounds.height))
@@ -66,13 +66,13 @@ public extension Plugin where Parameters == FlowSectionParameters {
         return nil
     }
     
-    func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes? {
+    func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> PluginLayoutAttributes? {
         if
             let delegate = self.delegate as? UICollectionViewDelegateFlowLayout,
             let collectionView = layout.collectionView,
             let footerSize = delegate.collectionView?(collectionView, layout: layout, referenceSizeForFooterInSection: section),
             footerSize.height > 0 && footerSize.width > 0 {
-            let footer = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 0, section: section))
+            let footer = PluginLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 0, section: section))
             switch layout.scrollDirection {
             case .horizontal:
                 footer.frame = CGRect(origin: CGPoint(x: offset.x, y: 0), size: CGSize(width: footerSize.width, height: layout.contentBounds.height))
@@ -88,10 +88,10 @@ public extension Plugin where Parameters == FlowSectionParameters {
         return nil
     }
     
-    func pinSectionHeadersAndFooters(from attributes:[UICollectionViewLayoutAttributes], layout: PluginLayout, section: Int) -> [UICollectionViewLayoutAttributes] {
+    func pinSectionHeadersAndFooters(from attributes:[PluginLayoutAttributes], layout: PluginLayout, section: Int) -> [PluginLayoutAttributes] {
         guard let collectionView = layout.collectionView else { return [] }
         let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
-        var supplementary: [UICollectionViewLayoutAttributes] = []
+        var supplementary: [PluginLayoutAttributes] = []
         let safeArea: UIEdgeInsets
         if #available(iOS 11.0, *) {
             safeArea = collectionView.adjustedContentInset

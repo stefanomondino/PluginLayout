@@ -9,8 +9,23 @@
 import Foundation
 import UIKit
 
+fileprivate class ImageCache {
+    private var cache = NSCache<NSURL, UIImage>()
+    subscript(key: URL) -> UIImage? {
+        get {
+            return cache.object(forKey: key as NSURL)
+        }
+        set {
+            if let image = newValue {
+                cache.setObject(image, forKey: key as NSURL)
+            }
+            
+        }
+    }
+}
+
 struct Picture {
-    private static var cache: [URL: UIImage] = [:]
+    private static var cache = ImageCache()
     enum ContentType: String {
         case cats
         case food
@@ -38,7 +53,7 @@ struct Picture {
     var id: Int
     var type: ContentType
     var ratio: CGFloat
-
+    
     init(id: Int, type: ContentType = .food) {
         self.id = id
         self.ratio = type.ratio
@@ -62,6 +77,7 @@ struct Picture {
                     Picture.cache[self.url] = image
                     completion(image)
                 } else {
+//                    Picture.cache.removeObject(forKey: self.url as NSURL)
                     completion(UIImage())
                 }
             }
