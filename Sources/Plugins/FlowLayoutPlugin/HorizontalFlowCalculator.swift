@@ -22,7 +22,6 @@ class HorizontalFlowCalculator: LayoutCalculator {
         self.attributesClass = attributesClass
     }
     
-    
     func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [PluginLayoutAttributes] {
         
         guard let collectionView = layout.collectionView else { return [] }
@@ -84,4 +83,3 @@ class HorizontalFlowCalculator: LayoutCalculator {
         return delegate?.collectionView?(collectionView, layout: layout, sizeForItemAt: indexPath) ?? .zero
     }
 }
-

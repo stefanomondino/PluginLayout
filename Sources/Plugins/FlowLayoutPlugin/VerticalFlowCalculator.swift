@@ -10,7 +10,6 @@ import UIKit
 
 class VerticalFlowCalculator: LayoutCalculator {
     
-    
     let layout: PluginLayout
     let parameters: FlowSectionParameters
     weak var delegate: FlowLayoutDelegate?
@@ -115,4 +114,3 @@ class VerticalFlowCalculator: LayoutCalculator {
         return delegate?.collectionView?(collectionView, layout: layout, sizeForItemAt: indexPath) ?? .zero
     }
 }
-

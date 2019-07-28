@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 public class ElasticEffect: PluginEffect {
     
     /**
@@ -50,4 +49,3 @@ public class ElasticEffect: PluginEffect {
         return attribute
     }
 }
-

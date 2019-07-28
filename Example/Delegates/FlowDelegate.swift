@@ -29,7 +29,7 @@ class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout, PluginLayoutDe
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     }
-    private func direction(from layout: UICollectionViewLayout) -> UICollectionView.ScrollDirection{
+    private func direction(from layout: UICollectionViewLayout) -> UICollectionView.ScrollDirection {
         switch layout {
         case let flow as UICollectionViewFlowLayout: return flow.scrollDirection
         case let plugin as PluginLayout: return plugin.scrollDirection
@@ -48,7 +48,7 @@ class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout, PluginLayoutDe
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         let dimension: CGFloat = 60
-        switch direction(from: collectionViewLayout)  {
+        switch direction(from: collectionViewLayout) {
         case .horizontal:  return CGSize(width: dimension, height: collectionView.frame.width)
         default:  return CGSize(width: collectionView.frame.width, height: dimension)
         }

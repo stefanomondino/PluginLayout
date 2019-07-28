@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public protocol StaggeredLayoutDelegate: UICollectionViewDelegateFlowLayout {
+public protocol StaggeredLayoutDelegate: AnyObject, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat
 }

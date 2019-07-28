@@ -74,10 +74,7 @@ public class StickyEffect: PluginEffect {
             attribute.frame = frame
             return attribute
         }
-        return originalAttribute
+        
     }
-    
-    
-    
     
 }

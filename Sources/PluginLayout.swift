@@ -26,7 +26,7 @@ open class PluginLayout: UICollectionViewLayout {
     
     private class PluginLayoutInvalidationContext: UICollectionViewLayoutInvalidationContext {}
     
-    class Cache<K: Hashable,T> {
+    class Cache<K: Hashable, T> {
         private(set) var items: [K: [T]] = [:]
         var isEmpty: Bool { return all().count == 0}
         init() {}
@@ -57,7 +57,7 @@ open class PluginLayout: UICollectionViewLayout {
     }
     
     private var contentSize: CGSize = .zero
-    private let attributesCache = Cache<Int,PluginLayoutAttributes>()
+    private let attributesCache = Cache<Int, PluginLayoutAttributes>()
     
     private let effectsCacheByIndex = Cache<EffectIndex, PluginEffect>()
     
@@ -65,7 +65,6 @@ open class PluginLayout: UICollectionViewLayout {
         return self.collectionView?.delegate as? PluginLayoutDelegate
     }
     
-    @IBInspectable
     public var scrollDirection: UICollectionView.ScrollDirection = .vertical {
         didSet { invalidateLayout() }
     }
@@ -102,7 +101,6 @@ open class PluginLayout: UICollectionViewLayout {
         self.attributesCache.clear()
         self.effectsCacheByIndex.clear()
         
-        
         var offset = CGPoint.zero
         let sections = collectionView?.numberOfSections ?? 0
         (0..<sections).forEach { section in
@@ -126,9 +124,8 @@ open class PluginLayout: UICollectionViewLayout {
         return (0..<collectionView.numberOfSections).flatMap { section  -> [UICollectionViewLayoutAttributes] in
             guard let plugin = self.plugin(for: section),
                  let attributes = self.attributesCache.items(forKey: section) else { return [] }
-           
             
-            var inRect = plugin.layoutAttributesForElements(in: rect, from: attributes , section: section, layout: self )
+            var inRect = plugin.layoutAttributesForElements(in: rect, from: attributes, section: section, layout: self )
                 .reduce([EffectIndex: PluginLayoutAttributes]()) { acc, element in
                 var accumulator = acc
                 accumulator[EffectIndex(indexPath: element.indexPath, kind: element.representedElementKind)] = element
@@ -183,8 +180,6 @@ open class PluginLayout: UICollectionViewLayout {
     open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
 
         let context = super.invalidationContext(forBoundsChange: newBounds)
-        
-      
         
         //This is where the optimization should happen. Needs investigation
         //        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader, at: [IndexPath(item: 0, section: 1)])

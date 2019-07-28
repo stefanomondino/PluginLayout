@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-fileprivate class ImageCache {
+private class ImageCache {
     private var cache = NSCache<NSURL, UIImage>()
     subscript(key: URL) -> UIImage? {
         get {
@@ -36,7 +36,7 @@ struct Picture {
         var ratio: CGFloat {
             switch self {
             case .cats: return 4/3
-            case .nature, .people: return CGFloat([16.0/9.0 ,4.0/3.0, 9.0/16.0, 3.0/4.0, 21.0/9.0 , 9.0/21.0].randomElement() ?? 1)
+            case .nature, .people: return CGFloat([16.0/9.0, 4.0/3.0, 9.0/16.0, 3.0/4.0, 21.0/9.0, 9.0/21.0].randomElement() ?? 1)
             default: return 1
             }
         }
@@ -62,16 +62,16 @@ struct Picture {
     var url: URL {
         let width = 600
         let height = Int(round(CGFloat(width) / ratio))
-        return URL(string:"http://lorempixel.com/\(width)/\(height)/\(type.rawValue)/\(id % type.max)")!
+        return URL(string: "http://lorempixel.com/\(width)/\(height)/\(type.rawValue)/\(id % type.max)")!
     }
     
-    func download(_ completion: @escaping (UIImage) -> ()) -> URLSessionTask? {
+    func download(_ completion: @escaping (UIImage) -> Void) -> URLSessionTask? {
         print (url)
         if let cached = Picture.cache[url] {
             completion(cached)
             return nil
         }
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
             DispatchQueue.main.async {
                 if let data = data, let image = UIImage(data: data) {
                     Picture.cache[self.url] = image

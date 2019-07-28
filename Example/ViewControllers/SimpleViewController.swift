@@ -87,4 +87,3 @@ class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout
     }
     
 }
-

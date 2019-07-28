@@ -43,5 +43,4 @@ class MosaicDelegate: NSObject, MosaicLayoutDelegate, PluginLayoutDelegate {
         return dataSource.picture(at: indexPath).ratio
     }
     
-    
 }

@@ -11,8 +11,6 @@ import UIKit
 
 public typealias FlowLayoutDelegate = UICollectionViewDelegateFlowLayout
 
-
-
 open class FlowSectionParameters: SectionParameters {
     public let section: Int
     public let insets: UIEdgeInsets
@@ -111,4 +109,3 @@ open class FlowLayoutPlugin: Plugin {
 
     }
 }
-

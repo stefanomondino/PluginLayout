@@ -23,7 +23,7 @@ public class FadeEffect: PluginEffect {
         guard
             let collectionView = layout.collectionView,
             let attribute = originalAttribute.copy() as? PluginLayoutAttributes else { return originalAttribute }
-        let offset:CGFloat = collectionView.contentOffset.y
+        let offset: CGFloat = collectionView.contentOffset.y
         
         let height = collectionView.bounds.height
         let percentage = (offset - attribute.frame.origin.y + height ) / span

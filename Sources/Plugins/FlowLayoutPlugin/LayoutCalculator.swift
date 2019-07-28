@@ -17,7 +17,7 @@ extension LayoutCalculator {
         let maxX = attributes.map { $0.frame.maxX }.sorted(by: >).first ?? width
         let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? 0
         let totalDelta = width - maxX
-        let singleSpacing = totalDelta / CGFloat(max(1,attributes.count - 1))
+        let singleSpacing = totalDelta / CGFloat(max(1, attributes.count - 1))
         attributes.enumerated().forEach { tuple in
             let (index, attribute) = tuple
             var f = attribute.frame
@@ -43,7 +43,7 @@ extension LayoutCalculator {
         let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? height
         let totalDelta = height - maxY
         
-        let singleSpacing = totalDelta / CGFloat(max(1,attributes.count - 1))
+        let singleSpacing = totalDelta / CGFloat(max(1, attributes.count - 1))
         attributes.enumerated().forEach { tuple in
             let (index, attribute) = tuple
             var f = attribute.frame

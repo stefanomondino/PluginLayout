@@ -11,14 +11,15 @@
 import UIKit
 import PluginLayout
 
-
-protocol TableLayoutDelegate: UICollectionViewDelegateFlowLayout {
+protocol TableLayoutDelegate: AnyObject, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, rowHeightAt indexPath: IndexPath) -> CGFloat
 }
 
 class TableLayoutPlugin: Plugin {
     typealias Delegate = TableLayoutDelegate
     typealias Parameters = FlowSectionParameters
+    
+    // / swiftlint:disable weak_delegate
     var delegate: Delegate?
     
     required init(delegate: Delegate) {

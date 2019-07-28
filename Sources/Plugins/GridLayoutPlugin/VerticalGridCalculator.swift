@@ -20,4 +20,3 @@ class VerticalGridCalculator: VerticalFlowCalculator {
         return CGSize(width: itemWidth, height: itemWidth / ratio)
     }
 }
-

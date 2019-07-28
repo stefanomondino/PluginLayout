@@ -12,7 +12,10 @@ import PluginLayout
 class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UIViewController {
     
     let dataSource: DataSource
+    
+    // swiftlint:disable weak_delegate
     let delegate: Delegate?
+    
     let layout: PluginLayout
     @IBOutlet var collectionView: UICollectionView!
     

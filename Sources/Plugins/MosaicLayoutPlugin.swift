@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol MosaicLayoutDelegate: UICollectionViewDelegateFlowLayout {
+public protocol MosaicLayoutDelegate: AnyObject, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat
 }
@@ -81,8 +81,7 @@ open class MosaicLayoutPlugin: Plugin {
                 let odds = isLandscape ? 10 : 60
                 if self.chanceForBig(at: indexPath.item) < odds ||
                     (itemsAccumulator.last?.frame.width ?? 0) > columnWidth ||
-                    (!isLandscape && properColumns.count == columnsCount)
-                    {
+                    (!isLandscape && properColumns.count == columnsCount) {
                     properColumns = [properColumn]
                 }
                 let x = CGFloat(properColumn) * (columnWidth + itemSpacing) + insets.left
