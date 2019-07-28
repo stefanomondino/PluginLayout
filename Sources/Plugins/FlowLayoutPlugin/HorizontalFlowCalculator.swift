@@ -10,19 +10,23 @@ import UIKit
 
 class HorizontalFlowCalculator: LayoutCalculator {
     
-    var collectionView: UICollectionView
-    var layout: PluginLayout
-    var delegate: FlowLayoutDelegate?
-    var parameters: FlowSectionParameters
+    let layout: PluginLayout
+    let parameters: FlowSectionParameters
+    weak var delegate: FlowLayoutDelegate?
+    let attributesClass: UICollectionViewLayoutAttributes.Type
     
-    init(collectionView: UICollectionView, layout: PluginLayout, delegate: FlowLayoutDelegate?, parameters: FlowSectionParameters) {
-        self.collectionView = collectionView
+    init(layout: PluginLayout, attributesClass: UICollectionViewLayoutAttributes.Type, delegate: FlowLayoutDelegate?, parameters: FlowSectionParameters) {
         self.layout = layout
         self.delegate = delegate
         self.parameters = parameters
+        self.attributesClass = attributesClass
     }
     
+    
     func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes] {
+        
+        guard let collectionView = layout.collectionView else { return [] }
+        
         //Please refer to vertical explanation (this is just a copy of it, flipped for horizontal flow)
         offset.x += self.parameters.insets.left
         var lineStart: CGFloat = offset.x
@@ -36,10 +40,10 @@ class HorizontalFlowCalculator: LayoutCalculator {
         //Accumulates attributes for last line.
         var lastLineAttributes: [UICollectionViewLayoutAttributes] = []
 
-        let attributes = (0 ..< self.collectionView.numberOfItems(inSection: section))
+        let attributes = (0 ..< collectionView.numberOfItems(inSection: section))
             .map { item in IndexPath(item: item, section: section) }
             .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
-                let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+                let attribute = attributesClass.init(forCellWith: indexPath)
                 let itemSize = self.itemSize(at: indexPath, collectionView: collectionView, layout: layout)
                 let origin: CGPoint
                 if let last = itemsAccumulator.last {

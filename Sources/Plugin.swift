@@ -11,6 +11,13 @@ import UIKit
 public protocol PluginType {
     func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes]
     func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int,  layout: PluginLayout) -> [UICollectionViewLayoutAttributes]
+    var attributesClass: UICollectionViewLayoutAttributes.Type { get }
+}
+
+public extension PluginType {
+    var attributesClass: UICollectionViewLayoutAttributes.Type {
+        return UICollectionViewLayoutAttributes.self
+    }
 }
 
 public protocol Plugin: PluginType {
@@ -23,10 +30,12 @@ public protocol Plugin: PluginType {
     func footer(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> UICollectionViewLayoutAttributes?
     var sectionHeadersPinToVisibleBounds: Bool { get }
     var sectionFootersPinToVisibleBounds: Bool { get }
+    
 }
 
 public extension Plugin {
     func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
         return attributes.filter { $0.frame.intersects(rect) }
     }
+    
 }

@@ -50,6 +50,7 @@ public enum FlowLayoutAlignment: Int {
 }
 
 open class FlowLayoutPlugin: Plugin {
+    
     public typealias Delegate = FlowLayoutDelegate
     public typealias Parameters = FlowSectionParameters
     
@@ -87,17 +88,17 @@ open class FlowLayoutPlugin: Plugin {
     }
     
     func getRenderer(layout: PluginLayout, section: Int) -> LayoutCalculator? {
-        guard let collectionView = layout.collectionView else { return nil }
+//        guard let collectionView = layout.collectionView else { return nil }
         let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
         
         switch layout.scrollDirection {
-        case .vertical: return VerticalFlowCalculator(collectionView: collectionView,
-                                                    layout: layout,
+        case .vertical: return VerticalFlowCalculator(layout: layout,
+                                                      attributesClass: self.attributesClass,
                                                     delegate: self.delegate,
                                                     parameters: sectionParameters)
             
-        case .horizontal: return HorizontalFlowCalculator(collectionView: collectionView,
-                                                        layout: layout,
+        case .horizontal: return HorizontalFlowCalculator(layout: layout,
+                                                          attributesClass: self.attributesClass,
                                                         delegate: self.delegate,
                                                         parameters: sectionParameters)
         @unknown default: return nil
