@@ -6,6 +6,20 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		7B9160C922EDE8D000661A72 /* SwiftLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 7B9160CA22EDE8D000661A72 /* Build configuration list for PBXAggregateTarget "SwiftLint" */;
+			buildPhases = (
+				7B9160CD22EDE8DF00661A72 /* Autocorrect */,
+			);
+			dependencies = (
+			);
+			name = SwiftLint;
+			productName = SwiftLint;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		2F00D2B522CCD199006E132E /* PluginLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F00D2B322CCD194006E132E /* PluginLayoutDelegate.swift */; };
 		2F0C065A22E9F1CB00CE1676 /* HorizontalFlowCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0C065922E9F1CB00CE1676 /* HorizontalFlowCalculator.swift */; };
@@ -122,6 +136,7 @@
 		7B57C35722E3573A00E9EBF8 /* Plugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
 		7B57C35A22E3577100E9EBF8 /* Plugin+Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plugin+Section.swift"; sourceTree = "<group>"; };
 		7B9160C422ED97D600661A72 /* PluginLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginLayoutAttributes.swift; sourceTree = "<group>"; };
+		7B9160C822EDE80800661A72 /* config.swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.swiftlint.yml; sourceTree = "<group>"; };
 		7BA30D9E22E663C500AAF618 /* TableLayoutPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableLayoutPlugin.swift; sourceTree = "<group>"; };
 		7BA30D9F22E663C600AAF618 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		7BA30DA322E663DE00AAF618 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -349,6 +364,7 @@
 			children = (
 				7BA30DA422E663DE00AAF618 /* LICENSE.md */,
 				7BA30DA522E663DE00AAF618 /* PluginLayout.podspec */,
+				7B9160C822EDE80800661A72 /* config.swiftlint.yml */,
 				7BA30DA322E663DE00AAF618 /* README.md */,
 			);
 			name = Extras;
@@ -399,6 +415,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 70E71E6422C8F9B0005674CD /* Build configuration list for PBXNativeTarget "PluginLayout" */;
 			buildPhases = (
+				7B9160C722EDE70700661A72 /* SwiftLint */,
 				70E71E5622C8F9B0005674CD /* Headers */,
 				70E71E5722C8F9B0005674CD /* Sources */,
 				70E71E5822C8F9B0005674CD /* Frameworks */,
@@ -430,6 +447,9 @@
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1020;
 					};
+					7B9160C922EDE8D000661A72 = {
+						CreatedOnToolsVersion = 10.3;
+					};
 				};
 			};
 			buildConfigurationList = 70E71E3A22C8F91C005674CD /* Build configuration list for PBXProject "PluginLayout" */;
@@ -447,6 +467,7 @@
 			targets = (
 				70E71E3E22C8F91C005674CD /* Example */,
 				70E71E5A22C8F9B0005674CD /* PluginLayout */,
+				7B9160C922EDE8D000661A72 /* SwiftLint */,
 			);
 		};
 /* End PBXProject section */
@@ -472,6 +493,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7B9160C722EDE70700661A72 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint --config \"${SRCROOT}/config.swiftlint.yml\" --path \"${SRCROOT}\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		7B9160CD22EDE8DF00661A72 /* Autocorrect */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Autocorrect;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\nswiftlint autocorrect --config \"${SRCROOT}/config.swiftlint.yml\" \nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		70E71E3B22C8F91C005674CD /* Sources */ = {
@@ -770,6 +830,22 @@
 			};
 			name = Release;
 		};
+		7B9160CB22EDE8D000661A72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7B9160CC22EDE8D000661A72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -796,6 +872,15 @@
 			buildConfigurations = (
 				70E71E6522C8F9B0005674CD /* Debug */,
 				70E71E6622C8F9B0005674CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7B9160CA22EDE8D000661A72 /* Build configuration list for PBXAggregateTarget "SwiftLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7B9160CB22EDE8D000661A72 /* Debug */,
+				7B9160CC22EDE8D000661A72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

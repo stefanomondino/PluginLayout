@@ -61,7 +61,7 @@ open class StaggeredLayoutPlugin: Plugin {
                         lineBottom[0] = origin.y + itemSize.height
                         currentColumn = 0
                     } else {
-                        currentColumn = currentColumn + 1
+                        currentColumn += 1
                         origin = CGPoint(x: x, y: lineBottom[currentColumn] + lineSpacing)
                         lineBottom[currentColumn] = origin.y + itemSize.height
                     }
@@ -74,7 +74,7 @@ open class StaggeredLayoutPlugin: Plugin {
                     }
                     origin = CGPoint(x: x, y: lineBottom[currentColumn])
                     lineBottom[currentColumn] = origin.y + itemSize.height
-                    currentColumn = currentColumn + 1
+                    currentColumn += 1
                 }
                 attribute.frame = CGRect(origin: origin, size: itemSize)
 //                if attribute.frame.minY > lineTop {
@@ -93,13 +93,7 @@ open class StaggeredLayoutPlugin: Plugin {
 
     public func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
-        let defaultAttributes = attributes.filter { $0.frame.intersects(rect) }
-        
-        if sectionFootersPinToVisibleBounds == false && sectionHeadersPinToVisibleBounds == false { return defaultAttributes }
-        
-        let supplementary: [PluginLayoutAttributes] = pinSectionHeadersAndFooters(from: attributes, layout: layout, section: section)
-        
-        return defaultAttributes + supplementary
+        return attributes.filter { $0.frame.intersects(rect) }
     }
 
     func columnWidth(for section: Int, collectionView: UICollectionView, layout: PluginLayout) -> CGFloat {

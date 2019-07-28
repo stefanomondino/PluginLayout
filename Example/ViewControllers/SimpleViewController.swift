@@ -75,12 +75,12 @@ class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch flow.scrollDirection {
         case .vertical :
-            let w: CGFloat = collectionView.frame.size.width - 4
-            let h = w / dataSource.picture(at: indexPath).ratio
+            let width: CGFloat = collectionView.frame.size.width - 4
+            let height = width / dataSource.picture(at: indexPath).ratio
             return CGSize(width: w, height: h)
         case .horizontal:
-            let h: CGFloat = max((collectionView.frame.size.height  - CGFloat(indexPath.item * 55)), 60)
-            let w = h * dataSource.picture(at: indexPath).ratio
+            let height: CGFloat = max((collectionView.frame.size.height  - CGFloat(indexPath.item * 55)), 60)
+            let width = height * dataSource.picture(at: indexPath).ratio
             return CGSize(width: w, height: h)
         }
 

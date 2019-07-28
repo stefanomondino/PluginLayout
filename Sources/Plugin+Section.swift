@@ -88,52 +88,52 @@ public extension Plugin where Parameters == FlowSectionParameters {
         return nil
     }
     
-    func pinSectionHeadersAndFooters(from attributes:[PluginLayoutAttributes], layout: PluginLayout, section: Int) -> [PluginLayoutAttributes] {
-        guard let collectionView = layout.collectionView else { return [] }
-        let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
-        var supplementary: [PluginLayoutAttributes] = []
-        let safeArea: UIEdgeInsets
-        if #available(iOS 11.0, *) {
-            safeArea = collectionView.adjustedContentInset
-        } else {
-            safeArea = .zero
-        }
-        
-        let itemsRect = attributes
-            .filter { $0.representedElementKind == nil }
-            .map { $0.frame }
-            .reduce(nil) { a, i -> CGRect in
-                a?.union(i) ?? i
-            } ?? .zero
-        if
-            self.sectionHeadersPinToVisibleBounds == true,
-            let header = attributes.filter ({ $0.representedElementKind == UICollectionView.elementKindSectionHeader }).first {
-            var frame = header.frame
-            
-            switch layout.scrollDirection {
-            case .horizontal: frame.origin.x = max(itemsRect.minX - frame.width - sectionParameters.insets.left, min(itemsRect.maxX - frame.width, collectionView.contentOffset.x + safeArea.left))
-            default: frame.origin.y = max(itemsRect.minY - frame.height - sectionParameters.insets.top, min(itemsRect.maxY - frame.height, collectionView.contentOffset.y + safeArea.top))
-            }
-            
-            header.zIndex = 900 + section + 1
-            header.frame = frame
-            supplementary += [header]
-        }
-        
-        if
-            self.sectionFootersPinToVisibleBounds == true,
-            let footer = attributes.filter ({ $0.representedElementKind == UICollectionView.elementKindSectionFooter }).first {
-            var frame = footer.frame
-            switch layout.scrollDirection {
-            case .horizontal: frame.origin.x = max(itemsRect.minX - sectionParameters.insets.left, min(itemsRect.maxX + sectionParameters.insets.right, collectionView.contentOffset.x + collectionView.bounds.width - frame.width - safeArea.right ))
-            default: frame.origin.y = max(itemsRect.minY - sectionParameters.insets.top, min(itemsRect.maxY + sectionParameters.insets.bottom, collectionView.contentOffset.y + collectionView.bounds.height - frame.height - safeArea.bottom ))
-            }
-            
-            footer.zIndex = 900 + section
-            footer.frame = frame
-            supplementary += [footer]
-        }
-        return supplementary
-    }
+//    func pinSectionHeadersAndFooters(from attributes:[PluginLayoutAttributes], layout: PluginLayout, section: Int) -> [PluginLayoutAttributes] {
+//        guard let collectionView = layout.collectionView else { return [] }
+//        let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
+//        var supplementary: [PluginLayoutAttributes] = []
+//        let safeArea: UIEdgeInsets
+//        if #available(iOS 11.0, *) {
+//            safeArea = collectionView.adjustedContentInset
+//        } else {
+//            safeArea = .zero
+//        }
+//        
+//        let itemsRect = attributes
+//            .filter { $0.representedElementKind == nil }
+//            .map { $0.frame }
+//            .reduce(nil) { a, i -> CGRect in
+//                a?.union(i) ?? i
+//            } ?? .zero
+//        if
+//            self.sectionHeadersPinToVisibleBounds == true,
+//            let header = attributes.filter ({ $0.representedElementKind == UICollectionView.elementKindSectionHeader }).first {
+//            var frame = header.frame
+//            
+//            switch layout.scrollDirection {
+//            case .horizontal: frame.origin.x = max(itemsRect.minX - frame.width - sectionParameters.insets.left, min(itemsRect.maxX - frame.width, collectionView.contentOffset.x + safeArea.left))
+//            default: frame.origin.y = max(itemsRect.minY - frame.height - sectionParameters.insets.top, min(itemsRect.maxY - frame.height, collectionView.contentOffset.y + safeArea.top))
+//            }
+//            
+//            header.zIndex = 900 + section + 1
+//            header.frame = frame
+//            supplementary += [header]
+//        }
+//        
+//        if
+//            self.sectionFootersPinToVisibleBounds == true,
+//            let footer = attributes.filter ({ $0.representedElementKind == UICollectionView.elementKindSectionFooter }).first {
+//            var frame = footer.frame
+//            switch layout.scrollDirection {
+//            case .horizontal: frame.origin.x = max(itemsRect.minX - sectionParameters.insets.left, min(itemsRect.maxX + sectionParameters.insets.right, collectionView.contentOffset.x + collectionView.bounds.width - frame.width - safeArea.right ))
+//            default: frame.origin.y = max(itemsRect.minY - sectionParameters.insets.top, min(itemsRect.maxY + sectionParameters.insets.bottom, collectionView.contentOffset.y + collectionView.bounds.height - frame.height - safeArea.bottom ))
+//            }
+//            
+//            footer.zIndex = 900 + section
+//            footer.frame = frame
+//            supplementary += [footer]
+//        }
+//        return supplementary
+//    }
     
 }

@@ -110,12 +110,7 @@ open class MosaicLayoutPlugin: Plugin {
     }
     public func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
-        let defaultAttributes = attributes.filter { $0.frame.intersects(rect) }
-        
-        if sectionFootersPinToVisibleBounds == false && sectionHeadersPinToVisibleBounds == false { return defaultAttributes }
-        
-        let supplementary: [PluginLayoutAttributes] = pinSectionHeadersAndFooters(from: attributes, layout: layout, section: section)
-        
-        return defaultAttributes + supplementary
+        return attributes.filter { $0.frame.intersects(rect) }
+
     }
 }
