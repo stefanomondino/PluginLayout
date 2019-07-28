@@ -9,11 +9,15 @@
 import UIKit
 import PluginLayout
 
-class StaggeredDelegate: NSObject, StaggeredLayoutDelegate {
+class StaggeredDelegate: NSObject, StaggeredLayoutDelegate, PluginLayoutDelegate {
     let dataSource: DataSource
     
     init(dataSource: DataSource) {
         self.dataSource = dataSource
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForSectionAt section: Int) -> [PluginEffect] {
+        return [ElasticEffect()]
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

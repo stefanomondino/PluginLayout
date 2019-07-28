@@ -12,7 +12,10 @@ import PluginLayout
 class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UIViewController {
     
     let dataSource: DataSource
+    
+    // swiftlint:disable weak_delegate
     let delegate: Delegate?
+    
     let layout: PluginLayout
     @IBOutlet var collectionView: UICollectionView!
     
@@ -33,6 +36,7 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        
         if self.collectionView == nil {
             let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
             collectionView.backgroundColor = .clear
@@ -53,9 +57,10 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
         
         collectionView.reloadData()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        collectionView.reloadData()
-    }
-    
+
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        guard let collectionView = self.collectionView else { return }
+//        collectionView.collectionViewLayout.invalidateLayout()
+//    }
 }

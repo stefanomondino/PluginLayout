@@ -16,7 +16,6 @@ class CustomViewController: UIViewController, TableLayoutDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         collectionView.dataSource = dataSource
         collectionView.delegate = self
         layout.defaultPlugin = TableLayoutPlugin(delegate: self)

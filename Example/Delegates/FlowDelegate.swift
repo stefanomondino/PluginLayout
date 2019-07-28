@@ -9,11 +9,16 @@
 import UIKit
 import PluginLayout
 
-class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout {
+class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout, PluginLayoutDelegate {
     let dataSource: DataSource
     init(dataSource: DataSource) {
         self.dataSource = dataSource
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
+        return [FadeEffect(), ElasticEffect()]
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
@@ -24,7 +29,7 @@ class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     }
-    private func direction(from layout: UICollectionViewLayout) -> UICollectionView.ScrollDirection{
+    private func direction(from layout: UICollectionViewLayout) -> UICollectionView.ScrollDirection {
         switch layout {
         case let flow as UICollectionViewFlowLayout: return flow.scrollDirection
         case let plugin as PluginLayout: return plugin.scrollDirection
@@ -43,7 +48,7 @@ class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         let dimension: CGFloat = 60
-        switch direction(from: collectionViewLayout)  {
+        switch direction(from: collectionViewLayout) {
         case .horizontal:  return CGSize(width: dimension, height: collectionView.frame.width)
         default:  return CGSize(width: collectionView.frame.width, height: dimension)
         }
@@ -52,13 +57,13 @@ class FlowDelegate: NSObject, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch direction(from: collectionViewLayout) {
         case .vertical :
-            let w: CGFloat = collectionView.frame.size.width - 4
-            let h = w / dataSource.picture(at: indexPath).ratio
+            let width: CGFloat = collectionView.frame.size.width - 4
+            let height = width / dataSource.picture(at: indexPath).ratio
             return CGSize(width: w, height: h)
         case .horizontal:
-            let h: CGFloat = max((collectionView.frame.size.height  - CGFloat(indexPath.item * 55)), 60)
-            let w = h * dataSource.picture(at: indexPath).ratio
-            return CGSize(width: w, height: h)
+            let height: CGFloat = max((collectionView.frame.size.height  - CGFloat(indexPath.item * 55)), 60)
+            let width = height * dataSource.picture(at: indexPath).ratio
+            return CGSize(width: width, height: height)
         }
         
     }

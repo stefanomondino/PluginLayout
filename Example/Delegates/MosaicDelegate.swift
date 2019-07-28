@@ -9,14 +9,16 @@
 import UIKit
 import PluginLayout
 
-class MosaicDelegate: NSObject, MosaicLayoutDelegate {
+class MosaicDelegate: NSObject, MosaicLayoutDelegate, PluginLayoutDelegate {
     let dataSource: DataSource
     let columns: Int
     init(dataSource: DataSource, columns: Int = 4) {
         self.dataSource = dataSource
         self.columns = columns
     }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForSectionAt section: Int) -> [PluginEffect] {
+        return [ElasticEffect()]
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
@@ -40,6 +42,5 @@ class MosaicDelegate: NSObject, MosaicLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
         return dataSource.picture(at: indexPath).ratio
     }
-    
     
 }

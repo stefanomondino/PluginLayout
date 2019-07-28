@@ -92,4 +92,3 @@ extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, Gr
         return CGSize(width: collectionView.frame.width, height: 60)
     }
 }
-

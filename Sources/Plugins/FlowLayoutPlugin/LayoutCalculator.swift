@@ -9,15 +9,15 @@
 import UIKit
 
 protocol LayoutCalculator {
-    func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes]
+    func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [PluginLayoutAttributes]
 }
 
 extension LayoutCalculator {
-    func realignAttibutes(_ attributes: [UICollectionViewLayoutAttributes], inAvailableWidth width: CGFloat, alignment: FlowLayoutAlignment) {
+    func realignAttibutes(_ attributes: [PluginLayoutAttributes], inAvailableWidth width: CGFloat, alignment: FlowLayoutAlignment) {
         let maxX = attributes.map { $0.frame.maxX }.sorted(by: >).first ?? width
         let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? 0
         let totalDelta = width - maxX
-        let singleSpacing = totalDelta / CGFloat(max(1,attributes.count - 1))
+        let singleSpacing = totalDelta / CGFloat(max(1, attributes.count - 1))
         attributes.enumerated().forEach { tuple in
             let (index, attribute) = tuple
             var f = attribute.frame
@@ -38,12 +38,12 @@ extension LayoutCalculator {
         }
     }
     
-    func realignAttibutes(_ attributes: [UICollectionViewLayoutAttributes], inAvailableHeight height: CGFloat, alignment: FlowLayoutAlignment) {
+    func realignAttibutes(_ attributes: [PluginLayoutAttributes], inAvailableHeight height: CGFloat, alignment: FlowLayoutAlignment) {
         let maxX = attributes.map { $0.frame.maxX }.sorted(by: >).first ?? 0
         let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? height
         let totalDelta = height - maxY
         
-        let singleSpacing = totalDelta / CGFloat(max(1,attributes.count - 1))
+        let singleSpacing = totalDelta / CGFloat(max(1, attributes.count - 1))
         attributes.enumerated().forEach { tuple in
             let (index, attribute) = tuple
             var f = attribute.frame

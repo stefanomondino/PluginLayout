@@ -11,14 +11,15 @@
 import UIKit
 import PluginLayout
 
-
-protocol TableLayoutDelegate: UICollectionViewDelegateFlowLayout {
+protocol TableLayoutDelegate: AnyObject, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, rowHeightAt indexPath: IndexPath) -> CGFloat
 }
 
 class TableLayoutPlugin: Plugin {
     typealias Delegate = TableLayoutDelegate
     typealias Parameters = FlowSectionParameters
+    
+    // / swiftlint:disable weak_delegate
     var delegate: Delegate?
     
     required init(delegate: Delegate) {
@@ -29,14 +30,14 @@ class TableLayoutPlugin: Plugin {
     
     var sectionFootersPinToVisibleBounds: Bool = false
     
-    func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+    func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
         guard let collectionView = layout.collectionView else { return [] }
         let parameters = self.sectionParameters(inSection: section, layout: layout)
         offset.x = max(offset.x, collectionView.bounds.width)
         return (0..<collectionView.numberOfItems(inSection: section))
             .map { IndexPath(item: $0, section: section) }
             .map { indexPath in
-                let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+                let attribute = attributesClass.init(forCellWith: indexPath)
                 let height = delegate?.collectionView(collectionView, layout: layout, rowHeightAt: indexPath) ?? 0
                 let frame = CGRect(x: parameters.insets.left, y: offset.y, width: collectionView.bounds.width - parameters.insets.left - parameters.insets.right, height: height)
                 offset.y = frame.maxY

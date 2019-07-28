@@ -12,16 +12,16 @@ import UIKit
 class DataSource: NSObject, UICollectionViewDataSource {
 
     var pictures: [[Picture]] = []
-    init(pictures:[[Picture]]) {
+    init(pictures: [[Picture]]) {
         super.init()
         self.pictures = pictures
     }
-    convenience init(pictures:[Picture]) {
-        self.init(pictures:[pictures])
+    convenience init(pictures: [Picture]) {
+        self.init(pictures: [pictures])
     }
     convenience init(count: Int, contentType: Picture.ContentType = .food, sections: Int = 1) {
         let pictures = (0..<count).map { Picture(id: $0, type: contentType)}
-        self.init(pictures: (0..<sections).map { _ in pictures } )
+        self.init(pictures: (0..<sections).map { _ in pictures })
     }
     
     func picture(at indexPath: IndexPath) -> Picture {

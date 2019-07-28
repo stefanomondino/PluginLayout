@@ -10,20 +10,23 @@ import UIKit
 
 class VerticalFlowCalculator: LayoutCalculator {
     
-    var collectionView: UICollectionView
-    var layout: PluginLayout
-    var parameters: FlowSectionParameters
+    let layout: PluginLayout
+    let parameters: FlowSectionParameters
     weak var delegate: FlowLayoutDelegate?
+    let attributesClass: PluginLayoutAttributes.Type
     
-    init(collectionView: UICollectionView, layout: PluginLayout, delegate: FlowLayoutDelegate?, parameters: FlowSectionParameters) {
-        self.collectionView = collectionView
+    init(layout: PluginLayout, attributesClass: PluginLayoutAttributes.Type, delegate: FlowLayoutDelegate?, parameters: FlowSectionParameters) {
         self.layout = layout
         self.delegate = delegate
         self.parameters = parameters
+        self.attributesClass = attributesClass
     }
     
-    func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [UICollectionViewLayoutAttributes] {
+    func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [PluginLayoutAttributes] {
+        guard let collectionView = layout.collectionView else { return [] }
+        
         //Offset should be incremented by insets top, to create padding between header (if present) or previous section.
+        
         offset.y += self.parameters.insets.top
         
         //First line should start from current offset. It's the proper point (y) where the new attribute's origin should be placed
@@ -43,18 +46,18 @@ class VerticalFlowCalculator: LayoutCalculator {
         let lineMaxWidth = self.parameters.contentBounds.width - self.parameters.insets.left - self.parameters.insets.right
         
         //Accumulates attributes for last line.
-        var lastLineAttributes: [UICollectionViewLayoutAttributes] = []
+        var lastLineAttributes: [PluginLayoutAttributes] = []
 
         //Iterate through all items in current section
-        var attributes = (0..<collectionView.numberOfItems(inSection: self.parameters.section))
+        let attributes = (0..<collectionView.numberOfItems(inSection: self.parameters.section))
             //convert each item into an IndexPath
             .map { item in IndexPath(item: item, section: self.parameters.section) }
             //We use reduce to have access to last attribute's values
-            .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
+            .reduce([]) { itemsAccumulator, indexPath -> [PluginLayoutAttributes] in
                 //Create new attribute
-                let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+                let attribute = attributesClass.init(forCellWith: indexPath)
                 //Fetch attribute's size
-                let itemSize = self.itemSize(at: indexPath, collectionView: self.collectionView, layout: self.layout)
+                let itemSize = self.itemSize(at: indexPath, collectionView: collectionView, layout: self.layout)
                 let origin: CGPoint
                 //If a previous item exists (from second item in iteration on)
                 if let last = itemsAccumulator.last {
@@ -111,4 +114,3 @@ class VerticalFlowCalculator: LayoutCalculator {
         return delegate?.collectionView?(collectionView, layout: layout, sizeForItemAt: indexPath) ?? .zero
     }
 }
-
