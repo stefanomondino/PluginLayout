@@ -4,6 +4,14 @@ Plugin layout is a `UICollectionViewLayout` designed to have a specific layout c
 
 For each section, the layout asks it's `delegate` for a proper `Plugin` that will create proper `UICollectionViewLayoutAttributes` and contribute determining the final size of contents.
 
+## TLDR
+
+`PluginLayout` offers the possibility to combine different way of laying out objects for each section of its collection view.
+
+It also offers some really neat `UICollectionViewLayout` implementations out of the box, ready to be used and fully compatible with `UICollectionViewFlowLayout` and `UICollectionViewDelegateFlowLayout`.
+
+This means that you can swap your current flow layout with one of those provided, implement some additional delegates methods if needed and be ready to go. 
+
 ## Key concepts
 
 As normal `UICollectionViewLayout`, `PluginLayout` follows the usual 3 steps phases to calculate each of resulting `UICollectionViewLayoutAttributes` that will be used to place (and reuse) each cell inside availble content space.
@@ -11,7 +19,8 @@ As normal `UICollectionViewLayout`, `PluginLayout` follows the usual 3 steps pha
 During the layout's `prepare()` phase, the main layout ask every plugin available to create all attributes and give each one of them a proper `frame`.
 
 Each `Plugin` must implement 
-```
+
+```swift
 func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes]
 ```
 where the `offset` property (declared `inout`) stores current layout global content size.
@@ -27,6 +36,12 @@ All default attributes are internally cached for performance reasons until `UICo
 
 A `Plugin` is an object capable of generating and manipulating specific `UICollectionViewLayoutAttributes` elements inside a section.
 
+The Plugin is responsible of how those elements are placed inside its section and what class has to be used in order to generate them (as long as it's a `PluginLayoutAttributes` subclass.). This is usually done by setting a `frame` property on each attribute.
+
+The attributes can either represents normal cells, supplementary view or decoration views.
+
+A Plugin Is also responsible of any permutation on each attributes itself as the enclosing `UICollectionView` scrolls, if those kind of permutation can't be expressed inside and `Effect` object.
+
 ### Effect 
 
 An `Effect` is an object capable of manipulating a previously generated `UICollectionViewLayoutAttributes` during collection view scrolling, independently from whatever `Plugin` has originally generated it.
@@ -35,7 +50,7 @@ We can think the usual "sticky header / header pinning" of collection views and 
 
 Combining both `Plugin` and `Effect` objects can lead to completely new (and amazing) layouts that have "features" strictly isolated from each other and, more important, reusable in different contexts.
 
-When applying more than one effect to an attribute, **the order of application is important** (TBD)
+When applying more than one effect to an attribute, **the order of application is important**. 
 
 
 ## Included Layouts
