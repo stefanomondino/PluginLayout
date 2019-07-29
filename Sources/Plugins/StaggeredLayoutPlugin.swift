@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public protocol StaggeredLayoutDelegate: UICollectionViewDelegateFlowLayout {
+public protocol StaggeredLayoutDelegate: AnyObject, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat
 }
@@ -32,7 +32,7 @@ open class StaggeredLayoutPlugin: Plugin {
         self.sectionFootersPinToVisibleBounds = pinSectionFooters
     }
     
-    public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+    public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
         guard let collectionView = layout.collectionView,
             let delegate = delegate else { return [] }
@@ -41,17 +41,17 @@ open class StaggeredLayoutPlugin: Plugin {
         let itemSpacing = delegate.collectionView?(collectionView, layout: layout, minimumInteritemSpacingForSectionAt: section) ?? 0
         let lineSpacing = delegate.collectionView?(collectionView, layout: layout, minimumLineSpacingForSectionAt: section) ?? 0
         
-        let header: UICollectionViewLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
+        let header: PluginLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
         offset.y += insets.top
         //var lineTop: [CGFloat] = (0..<columns).map { _ in offset.y }
         var lineBottom = (0..<columns).map { _ in offset.y }
         let contentBounds = collectionView.frame.inset(by: collectionView.contentInset)
         offset.x = max(offset.x, contentBounds.width)
         var currentColumn = 0
-        let attributes: [UICollectionViewLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: section))
+        let attributes: [PluginLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: section))
             .map { item in IndexPath(item: item, section: section) }
-            .reduce([]) { itemsAccumulator, indexPath -> [UICollectionViewLayoutAttributes] in
-                let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            .reduce([]) { itemsAccumulator, indexPath -> [PluginLayoutAttributes] in
+                let attribute = PluginLayoutAttributes(forCellWith: indexPath)
                 let itemSize = self.itemSize(at: indexPath, collectionView: collectionView, layout: layout)
                 let origin: CGPoint
                 if let last = itemsAccumulator.last, itemsAccumulator.count >= columns {
@@ -61,7 +61,7 @@ open class StaggeredLayoutPlugin: Plugin {
                         lineBottom[0] = origin.y + itemSize.height
                         currentColumn = 0
                     } else {
-                        currentColumn = currentColumn + 1
+                        currentColumn += 1
                         origin = CGPoint(x: x, y: lineBottom[currentColumn] + lineSpacing)
                         lineBottom[currentColumn] = origin.y + itemSize.height
                     }
@@ -74,7 +74,7 @@ open class StaggeredLayoutPlugin: Plugin {
                     }
                     origin = CGPoint(x: x, y: lineBottom[currentColumn])
                     lineBottom[currentColumn] = origin.y + itemSize.height
-                    currentColumn = currentColumn + 1
+                    currentColumn += 1
                 }
                 attribute.frame = CGRect(origin: origin, size: itemSize)
 //                if attribute.frame.minY > lineTop {
@@ -87,19 +87,13 @@ open class StaggeredLayoutPlugin: Plugin {
                 return  itemsAccumulator + [attribute]
         }
         offset.y = (lineBottom.sorted(by: >).first ?? offset.y) + insets.bottom
-        let footer: UICollectionViewLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
+        let footer: PluginLayoutAttributes? = self.footer(in: section, offset: &offset, layout: layout)
         return ([header] + attributes + [footer]).compactMap { $0 }
     }
 
-    public func layoutAttributesForElements(in rect: CGRect, from attributes: [UICollectionViewLayoutAttributes], section: Int, layout: PluginLayout) -> [UICollectionViewLayoutAttributes] {
+    public func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
-        let defaultAttributes = attributes.filter { $0.frame.intersects(rect) }
-        
-        if sectionFootersPinToVisibleBounds == false && sectionHeadersPinToVisibleBounds == false { return defaultAttributes }
-        
-        let supplementary: [UICollectionViewLayoutAttributes] = pinSectionHeadersAndFooters(from: attributes, layout: layout, section: section)
-        
-        return defaultAttributes + supplementary
+        return attributes.filter { $0.frame.intersects(rect) }
     }
 
     func columnWidth(for section: Int, collectionView: UICollectionView, layout: PluginLayout) -> CGFloat {

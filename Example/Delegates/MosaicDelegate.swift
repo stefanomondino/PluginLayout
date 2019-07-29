@@ -1,33 +1,24 @@
 //
-//  ViewController.swift
-//  PluginLayout
+//  DefaultViewController.swift
+//  Example
 //
-//  Created by Stefano Mondino on 30/06/2019.
+//  Created by Stefano Mondino on 22/07/2019.
 //  Copyright © 2019 Stefano Mondino. All rights reserved.
 //
 
 import UIKit
 import PluginLayout
 
-class StaggeredViewController: UIViewController {
-
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    let dataSource = DataSource(count: 160, contentType: .nature)
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        collectionView.dataSource = dataSource
-        collectionView.delegate = self
-        
-        let layout = StaggeredLayout()
-        layout.sectionFootersPinToVisibleBounds = true
-        layout.sectionHeadersPinToVisibleBounds = true
-        self.collectionView.setCollectionViewLayout(layout, animated: false)
-        
-        self.collectionView.reloadData()
+class MosaicDelegate: NSObject, MosaicLayoutDelegate, PluginLayoutDelegate {
+    let dataSource: DataSource
+    let columns: Int
+    init(dataSource: DataSource, columns: Int = 4) {
+        self.dataSource = dataSource
+        self.columns = columns
     }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForSectionAt section: Int) -> [PluginEffect] {
+        return [ElasticEffect()]
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
@@ -44,11 +35,8 @@ class StaggeredViewController: UIViewController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 60)
     }
-}
-
-extension StaggeredViewController: StaggeredLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int {
-        return 3
+        return columns
     }
     
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {

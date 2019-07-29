@@ -1,47 +1,28 @@
 //
-//  ViewController.swift
-//  PluginLayout
+//  DefaultViewController.swift
+//  Example
 //
-//  Created by Stefano Mondino on 30/06/2019.
+//  Created by Stefano Mondino on 22/07/2019.
 //  Copyright © 2019 Stefano Mondino. All rights reserved.
 //
 
 import UIKit
 import PluginLayout
 
-class GridViewController: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    let dataSource = DataSource(count: 160, contentType: .cats)
-    
-    let layout = PluginLayout()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let toggleDirection = UIBarButtonItem(title: "Toggle Direction", style: .done, target: self, action: #selector(toggleDirection(_:)))
-        self.navigationItem.rightBarButtonItem = toggleDirection
-        
-        collectionView.dataSource = dataSource
-        collectionView.delegate = self
-        
-        layout.scrollDirection = .horizontal
-        let gridPlugin = GridLayoutPlugin(delegate: self)
-        gridPlugin.alignment = .center
-        layout.defaultPlugin = gridPlugin
-        self.collectionView.setCollectionViewLayout(layout, animated: false)
-        
-        self.collectionView.reloadData()
+class GridDelegate: NSObject, GridLayoutDelegate, PluginLayoutDelegate {
+    let dataSource: DataSource
+    init(dataSource: DataSource) {
+        self.dataSource = dataSource
     }
-    
-    @objc func toggleDirection(_ sender: Any) {
-        layout.scrollDirection = layout.scrollDirection == .horizontal ? .vertical : .horizontal
-    }
- 
-}
 
-extension GridViewController: GridLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, itemsPerLineAt indexPath: IndexPath) -> Int {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
+        if let kind = kind { return  [StickyEffect(kind: kind)].compactMap { $0 }  }
+        let columns = self.collectionView(collectionView, layout: collectionViewLayout, lineFractionAt: indexPath)
+        let spacing: CGFloat = 75 * (CGFloat(indexPath.item % columns) + 1)
+        return [ElasticEffect(spacing: spacing, span: 150)]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineFractionAt indexPath: IndexPath) -> Int {
         return 3
     }
     

@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import PluginLayout
 
 class PictureCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var number: UILabel!
     private var task: URLSessionTask?
-    
+    @IBOutlet weak var rightLabelConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomLabelConstraint: NSLayoutConstraint!
     var picture: Picture? {
         didSet {
             task?.cancel()
@@ -28,5 +30,7 @@ class PictureCollectionViewCell: UICollectionViewCell {
         self.image.contentMode = .scaleAspectFill
         self.image.clipsToBounds = true
     }
-
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+    }
 }

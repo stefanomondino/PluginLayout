@@ -43,8 +43,10 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="128" height="129"/>
             <connections>
+                <outlet property="bottomLabelConstraint" destination="Aw1-Wp-iuC" id="v8X-aJ-87G"/>
                 <outlet property="image" destination="GYQ-KQ-LAh" id="bQ4-Qc-hmp"/>
                 <outlet property="number" destination="odc-CF-pLt" id="KvL-tL-J6z"/>
+                <outlet property="rightLabelConstraint" destination="eDg-P1-qbg" id="Hoi-yi-Gvq"/>
             </connections>
             <point key="canvasLocation" x="181.15942028985509" y="146.31696428571428"/>
         </collectionViewCell>
