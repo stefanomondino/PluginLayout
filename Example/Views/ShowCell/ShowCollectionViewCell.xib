@@ -25,8 +25,16 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="753" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odc-CF-pLt">
-                        <rect key="frame" x="10" y="334.5" width="211" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="10" y="334.5" width="211" height="16"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="753" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f21-Qv-Aua">
+                        <rect key="frame" x="10" y="352.5" width="211" height="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                         <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -36,20 +44,23 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="odc-CF-pLt" secondAttribute="bottom" constant="10" id="Aw1-Wp-iuC"/>
+                <constraint firstItem="f21-Qv-Aua" firstAttribute="top" secondItem="odc-CF-pLt" secondAttribute="bottom" constant="2" id="Ceq-Oz-dI1"/>
                 <constraint firstItem="GYQ-KQ-LAh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="NfK-7X-MO2"/>
                 <constraint firstItem="GYQ-KQ-LAh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="P82-Aj-Ee0"/>
+                <constraint firstItem="f21-Qv-Aua" firstAttribute="trailing" secondItem="odc-CF-pLt" secondAttribute="trailing" id="TdX-vy-1La"/>
                 <constraint firstAttribute="trailing" secondItem="odc-CF-pLt" secondAttribute="trailing" constant="10" id="eDg-P1-qbg"/>
                 <constraint firstItem="odc-CF-pLt" firstAttribute="top" secondItem="GYQ-KQ-LAh" secondAttribute="bottom" constant="10" id="hVp-Jb-a8H"/>
                 <constraint firstItem="odc-CF-pLt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="mZ4-Gr-Aku"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="f21-Qv-Aua" secondAttribute="bottom" constant="10" id="oWa-f1-PSt"/>
                 <constraint firstAttribute="trailing" secondItem="GYQ-KQ-LAh" secondAttribute="trailing" id="qM5-Ct-q14"/>
+                <constraint firstItem="f21-Qv-Aua" firstAttribute="leading" secondItem="odc-CF-pLt" secondAttribute="leading" id="ycC-WO-7zd"/>
             </constraints>
             <size key="customSize" width="231" height="568"/>
             <connections>
-                <outlet property="bottomLabelConstraint" destination="Aw1-Wp-iuC" id="v8X-aJ-87G"/>
+                <outlet property="genre" destination="odc-CF-pLt" id="u1s-Ql-qIs"/>
                 <outlet property="image" destination="GYQ-KQ-LAh" id="bQ4-Qc-hmp"/>
-                <outlet property="number" destination="odc-CF-pLt" id="KvL-tL-J6z"/>
                 <outlet property="rightLabelConstraint" destination="eDg-P1-qbg" id="Hoi-yi-Gvq"/>
+                <outlet property="title" destination="f21-Qv-Aua" id="bb1-YT-Yac"/>
             </connections>
             <point key="canvasLocation" x="22.463768115942031" y="206.25"/>
         </collectionViewCell>

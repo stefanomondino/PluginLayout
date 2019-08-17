@@ -15,6 +15,10 @@ struct Show: Codable {
     }
     
     let name: String?
+    let genres: [String]?
+    var genre: String? {
+        return genres?.first
+    }
     var title: String { return name ?? "" }
     let image: Poster?
     var poster: Image? {

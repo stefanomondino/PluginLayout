@@ -11,7 +11,6 @@ import PluginLayout
 
 class ShowsViewController: UIViewController, StaggeredLayoutDelegate, MosaicLayoutDelegate {
  
-    
     @IBOutlet weak var collectionView: UICollectionView!
     let dataSource = ShowsDataSource()
     let layout = StaggeredLayout()

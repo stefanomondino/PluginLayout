@@ -12,7 +12,8 @@ import PluginLayout
 class ShowCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var number: UILabel!
+    @IBOutlet weak var genre: UILabel!
+      @IBOutlet weak var title: UILabel!
     private var task: URLSessionTask?
     @IBOutlet weak var rightLabelConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomLabelConstraint: NSLayoutConstraint!
@@ -20,7 +21,8 @@ class ShowCollectionViewCell: UICollectionViewCell {
         didSet {
             task?.cancel()
             self.image.image = nil
-            self.number.text = show?.title ?? ""
+            self.genre.text = show?.genre ?? ""
+            self.title.text = show?.title ?? ""
             task = show?.poster?.download { [weak self] in
                 self?.image.image = $0
             }
