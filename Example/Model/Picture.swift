@@ -66,9 +66,6 @@ struct Picture {
     }
     
     func download(_ completion: @escaping (UIImage) -> Void) -> URLSessionTask? {
-        print (url)
-        completion(UIImage())
-        return nil
         if let cached = Picture.cache[url] {
             completion(cached)
             return nil

@@ -29,6 +29,9 @@
 		70B8A3FE2307EBBC008BC2B9 /* VerticalStaggeredCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B8A3FD2307EBBC008BC2B9 /* VerticalStaggeredCalculator.swift */; };
 		70B8A4002307F24F008BC2B9 /* StaggeredLayoutCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B8A3FF2307F24F008BC2B9 /* StaggeredLayoutCalculator.swift */; };
 		70B8A4022307F266008BC2B9 /* HorizontalStaggeredCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B8A4012307F266008BC2B9 /* HorizontalStaggeredCalculator.swift */; };
+		70B8A40623080E39008BC2B9 /* VerticalMosaicCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B8A40423080E38008BC2B9 /* VerticalMosaicCalculator.swift */; };
+		70B8A40723080E39008BC2B9 /* MosaicLayoutCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B8A40523080E39008BC2B9 /* MosaicLayoutCalculator.swift */; };
+		70B8A40823080E39008BC2B9 /* HorizontalMosaicCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B8A40323080E38008BC2B9 /* HorizontalMosaicCalculator.swift */; };
 		70E71E4322C8F91C005674CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E4222C8F91C005674CD /* AppDelegate.swift */; };
 		70E71E4522C8F91C005674CD /* SimpleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E71E4422C8F91C005674CD /* SimpleViewController.swift */; };
 		70E71E4822C8F91C005674CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70E71E4622C8F91C005674CD /* Main.storyboard */; };
@@ -106,6 +109,9 @@
 		70B8A3FD2307EBBC008BC2B9 /* VerticalStaggeredCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStaggeredCalculator.swift; sourceTree = "<group>"; };
 		70B8A3FF2307F24F008BC2B9 /* StaggeredLayoutCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredLayoutCalculator.swift; sourceTree = "<group>"; };
 		70B8A4012307F266008BC2B9 /* HorizontalStaggeredCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalStaggeredCalculator.swift; sourceTree = "<group>"; };
+		70B8A40323080E38008BC2B9 /* HorizontalMosaicCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMosaicCalculator.swift; sourceTree = "<group>"; };
+		70B8A40423080E38008BC2B9 /* VerticalMosaicCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMosaicCalculator.swift; sourceTree = "<group>"; };
+		70B8A40523080E39008BC2B9 /* MosaicLayoutCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MosaicLayoutCalculator.swift; sourceTree = "<group>"; };
 		70E71E3F22C8F91C005674CD /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70E71E4222C8F91C005674CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70E71E4422C8F91C005674CD /* SimpleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleViewController.swift; sourceTree = "<group>"; };
@@ -214,6 +220,9 @@
 			isa = PBXGroup;
 			children = (
 				7B57C35122DB864F00E9EBF8 /* MosaicLayoutPlugin.swift */,
+				70B8A40523080E39008BC2B9 /* MosaicLayoutCalculator.swift */,
+				70B8A40323080E38008BC2B9 /* HorizontalMosaicCalculator.swift */,
+				70B8A40423080E38008BC2B9 /* VerticalMosaicCalculator.swift */,
 			);
 			path = MosaicLayoutPlugin;
 			sourceTree = "<group>";
@@ -611,7 +620,10 @@
 				7B57C35422DB8AF800E9EBF8 /* MosaicLayout.swift in Sources */,
 				70B8A3FC2307EB25008BC2B9 /* Extensions.swift in Sources */,
 				70B8A4002307F24F008BC2B9 /* StaggeredLayoutCalculator.swift in Sources */,
+				70B8A40623080E39008BC2B9 /* VerticalMosaicCalculator.swift in Sources */,
 				7B9160C622EDA8FA00661A72 /* PluginLayoutAttributes.swift in Sources */,
+				70B8A40823080E39008BC2B9 /* HorizontalMosaicCalculator.swift in Sources */,
+				70B8A40723080E39008BC2B9 /* MosaicLayoutCalculator.swift in Sources */,
 				70E71E7322C8FA11005674CD /* PluginLayout.swift in Sources */,
 				7B57C34E22DB771500E9EBF8 /* SingleLayout.swift in Sources */,
 				70B8A3FE2307EBBC008BC2B9 /* VerticalStaggeredCalculator.swift in Sources */,
