@@ -23,7 +23,7 @@ open class GridLayoutPlugin: FlowLayoutPlugin {
         super.init(delegate: delegate)
     }
     
-    override func getRenderer(layout: PluginLayout, section: Int) -> LayoutCalculator? {
+    override func getRenderer(layout: PluginLayout, section: Int) -> FlowLayoutCalculator? {
 //        guard let collectionView = layout.collectionView else { return nil }
         let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
         

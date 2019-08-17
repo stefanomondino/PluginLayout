@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol LayoutCalculator {
+protocol FlowLayoutCalculator {
     func calculateLayoutAttributes(offset: inout CGPoint, alignment: FlowLayoutAlignment) -> [PluginLayoutAttributes]
 }
 
-extension LayoutCalculator {
+extension FlowLayoutCalculator {
     func realignAttibutes(_ attributes: [PluginLayoutAttributes], inAvailableWidth width: CGFloat, alignment: FlowLayoutAlignment) {
         let maxX = attributes.map { $0.frame.maxX }.sorted(by: >).first ?? width
         let maxY = attributes.map { $0.frame.maxY }.sorted(by: >).first ?? 0

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VerticalFlowCalculator: LayoutCalculator {
+class VerticalFlowCalculator: FlowLayoutCalculator {
     
     let layout: PluginLayout
     let parameters: FlowSectionParameters

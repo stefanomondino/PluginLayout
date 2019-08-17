@@ -23,6 +23,7 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
         self.dataSource = dataSource
         self.delegate = delegate
         self.layout = layout
+        layout.scrollDirection = .horizontal
         super.init(nibName: nil, bundle: nil)
     }
     
