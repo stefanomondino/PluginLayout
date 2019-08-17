@@ -46,7 +46,7 @@ open class FlowLayoutPlugin: Plugin {
         //Create the header if available
         let header: PluginLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
         
-        let renderer = self.getRenderer(layout: layout, section: section)
+        let renderer = self.calculator(layout: layout, section: section)
         let attributes = renderer?.calculateLayoutAttributes(offset: &offset, alignment: self.alignment) ?? []
         
         //Create a footer if possible
@@ -56,7 +56,7 @@ open class FlowLayoutPlugin: Plugin {
         return ([header] + attributes + [footer]).compactMap { $0 }
     }
     
-    func getRenderer(layout: PluginLayout, section: Int) -> FlowLayoutCalculator? {
+    func calculator(layout: PluginLayout, section: Int) -> FlowLayoutCalculator? {
 //        guard let collectionView = layout.collectionView else { return nil }
         let sectionParameters = self.sectionParameters(inSection: section, layout: layout)
         
