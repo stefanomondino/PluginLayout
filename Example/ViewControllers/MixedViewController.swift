@@ -19,12 +19,12 @@ class MixedViewController: UIViewController {
             GridLayoutPlugin(delegate: self)
         ]
     }()
-    let dataSource: DataSource = {
+    let dataSource: PicturesDataSource = {
         let nature = (0..<100).map { Picture(id: $0, type: .nature)}
         let cats = (0..<10).map { Picture(id: $0, type: .cats)}
         let people = (0..<100).map { Picture(id: $0, type: .people)}
         let sports = (0..<30).map { Picture(id: $0, type: .sports)}
-        return DataSource(pictures: [
+        return PicturesDataSource(pictures: [
             cats,
             nature,
             people,

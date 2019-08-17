@@ -10,9 +10,9 @@ import UIKit
 import PluginLayout
 
 class MosaicDelegate: NSObject, MosaicLayoutDelegate, PluginLayoutDelegate {
-    let dataSource: DataSource
+    let dataSource: PicturesDataSource
     let columns: Int
-    init(dataSource: DataSource, columns: Int = 4) {
+    init(dataSource: PicturesDataSource, columns: Int = 4) {
         self.dataSource = dataSource
         self.columns = columns
     }

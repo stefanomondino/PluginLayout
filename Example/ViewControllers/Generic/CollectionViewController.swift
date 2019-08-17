@@ -11,7 +11,7 @@ import PluginLayout
 
 class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UIViewController {
     
-    let dataSource: DataSource
+    let dataSource: PicturesDataSource
     
     // swiftlint:disable weak_delegate
     let delegate: Delegate?
@@ -19,7 +19,7 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
     let layout: PluginLayout
     @IBOutlet var collectionView: UICollectionView!
     
-    init(dataSource: DataSource, delegate: Delegate, layout: PluginLayout) {
+    init(dataSource: PicturesDataSource, delegate: Delegate, layout: PluginLayout) {
         self.dataSource = dataSource
         self.delegate = delegate
         self.layout = layout
@@ -28,7 +28,7 @@ class CollectionViewController<Delegate: UICollectionViewDelegateFlowLayout>: UI
     
     required init?(coder aDecoder: NSCoder) {
         self.delegate = nil
-        self.dataSource = DataSource(count: 0)
+        self.dataSource = PicturesDataSource(count: 0)
         self.layout = PluginLayout()
         super.init(coder: aDecoder)
     }

@@ -9,23 +9,8 @@
 import Foundation
 import UIKit
 
-private class ImageCache {
-    private var cache = NSCache<NSURL, UIImage>()
-    subscript(key: URL) -> UIImage? {
-        get {
-            return cache.object(forKey: key as NSURL)
-        }
-        set {
-            if let image = newValue {
-                cache.setObject(image, forKey: key as NSURL)
-            }
-            
-        }
-    }
-}
-
 struct Picture {
-    private static var cache = ImageCache()
+    
     enum ContentType: String {
         case cats
         case food
@@ -66,22 +51,24 @@ struct Picture {
     }
     
     func download(_ completion: @escaping (UIImage) -> Void) -> URLSessionTask? {
-        if let cached = Picture.cache[url] {
-            completion(cached)
-            return nil
-        }
-        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
-            DispatchQueue.main.async {
-                if let data = data, let image = UIImage(data: data) {
-                    Picture.cache[self.url] = image
-                    completion(image)
-                } else {
-//                    Picture.cache.removeObject(forKey: self.url as NSURL)
-                    completion(UIImage())
-                }
-            }
-        }
-        task.resume()
-        return task
+            return Image(url: url).download(completion)
     }
+//        if let cached = Picture.cache[url] {
+//            completion(cached)
+//            return nil
+//        }
+//        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
+//            DispatchQueue.main.async {
+//                if let data = data, let image = UIImage(data: data) {
+//                    Picture.cache[self.url] = image
+//                    completion(image)
+//                } else {
+////                    Picture.cache.removeObject(forKey: self.url as NSURL)
+//                    completion(UIImage())
+//                }
+//            }
+//        }
+//        task.resume()
+//        return task
+//    }
 }

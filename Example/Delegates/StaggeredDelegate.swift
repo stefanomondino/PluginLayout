@@ -10,9 +10,9 @@ import UIKit
 import PluginLayout
 
 class StaggeredDelegate: NSObject, StaggeredLayoutDelegate, PluginLayoutDelegate {
-    let dataSource: DataSource
+    let dataSource: PicturesDataSource
     
-    init(dataSource: DataSource) {
+    init(dataSource: PicturesDataSource) {
         self.dataSource = dataSource
     }
     

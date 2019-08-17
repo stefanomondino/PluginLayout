@@ -10,8 +10,8 @@ import UIKit
 import PluginLayout
 
 class GridDelegate: NSObject, GridLayoutDelegate, PluginLayoutDelegate {
-    let dataSource: DataSource
-    init(dataSource: DataSource) {
+    let dataSource: PicturesDataSource
+    init(dataSource: PicturesDataSource) {
         self.dataSource = dataSource
     }
 

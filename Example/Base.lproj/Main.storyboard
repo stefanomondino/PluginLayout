@@ -124,5 +124,43 @@
             </objects>
             <point key="canvasLocation" x="4180" y="-972"/>
         </scene>
+        <!--Shows View Controller-->
+        <scene sceneID="ebw-67-qBP">
+            <objects>
+                <viewController storyboardIdentifier="shows" id="cTT-2i-yaj" customClass="ShowsViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="D3S-u4-vbg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="T6s-6R-fdW">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="p5F-Nb-rHS">
+                                    <size key="itemSize" width="145" height="103"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="T6s-6R-fdW" firstAttribute="leading" secondItem="Kp5-UM-BKb" secondAttribute="leading" id="A0y-jH-zMb"/>
+                            <constraint firstItem="T6s-6R-fdW" firstAttribute="top" secondItem="Kp5-UM-BKb" secondAttribute="top" id="h3k-2U-yQm"/>
+                            <constraint firstItem="Kp5-UM-BKb" firstAttribute="bottom" secondItem="T6s-6R-fdW" secondAttribute="bottom" id="srj-7N-D1q"/>
+                            <constraint firstItem="Kp5-UM-BKb" firstAttribute="trailing" secondItem="T6s-6R-fdW" secondAttribute="trailing" id="y2H-Lw-07X"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Kp5-UM-BKb"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="V81-aY-Ywc"/>
+                    <connections>
+                        <outlet property="collectionView" destination="T6s-6R-fdW" id="Ou9-A9-ooh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rfN-Xz-Hp1" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4180" y="-972"/>
+        </scene>
     </scenes>
 </document>

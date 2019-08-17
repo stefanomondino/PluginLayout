@@ -18,9 +18,11 @@ enum Scene {
     case mosaic(columns: Int)
     case comparison
     case customPlugin
+    case shows
     
     static var all: [Scene] {
         return [
+            .shows,
             .flow(pinned: false),
             .grid(horizontal: false),
             .staggered,
@@ -43,6 +45,7 @@ enum Scene {
         case .mixed: return "Mixed"
         case .comparison: return "Comparison with default flow"
         case .customPlugin: return "Custom Plugin"
+        case .shows: return "Shows (TVMaze API)"
         }
     }
     
@@ -62,7 +65,7 @@ enum Scene {
         switch self {
             
         case .flow :
-            let dataSource = DataSource(count: 40, contentType: .food, sections: 2)
+            let dataSource = PicturesDataSource(count: 40, contentType: .food, sections: 2)
             let delegate = FlowDelegate(dataSource: dataSource)
             let layout = FlowLayout()
             layout.sectionFootersPinToVisibleBounds = pinHeaders
@@ -70,7 +73,7 @@ enum Scene {
             return CollectionViewController(dataSource: dataSource, delegate: delegate, layout: layout)
             
         case .staggered :
-            let dataSource = DataSource(count: 40, contentType: .nature, sections: 2)
+            let dataSource = PicturesDataSource(count: 40, contentType: .nature, sections: 2)
             let delegate = StaggeredDelegate(dataSource: dataSource)
             let layout = StaggeredLayout()
             layout.sectionFootersPinToVisibleBounds = pinHeaders
@@ -78,7 +81,7 @@ enum Scene {
             return CollectionViewController(dataSource: dataSource, delegate: delegate, layout: layout)
             
         case .grid(let horizontal) :
-            let dataSource = DataSource(count: 40, contentType: .cats, sections: 2)
+            let dataSource = PicturesDataSource(count: 40, contentType: .cats, sections: 2)
             let delegate = GridDelegate(dataSource: dataSource)
             let layout = GridLayout()
             layout.scrollDirection = horizontal ? .horizontal : .vertical
@@ -87,7 +90,7 @@ enum Scene {
             return CollectionViewController(dataSource: dataSource, delegate: delegate, layout: layout)
             
         case .mosaic(let columns) :
-            let dataSource = DataSource(count: 60, contentType: .people, sections: 2)
+            let dataSource = PicturesDataSource(count: 60, contentType: .people, sections: 2)
             let delegate = MosaicDelegate(dataSource: dataSource, columns: columns)
             let layout = MosaicLayout()
             layout.sectionFootersPinToVisibleBounds = pinHeaders
@@ -97,6 +100,8 @@ enum Scene {
         case .mixed: return fromSceneIdentifier("mixed")
             
         case .customPlugin: return fromSceneIdentifier("customPlugin")
+            
+        case .shows: return fromSceneIdentifier("shows")
             
         default: return fromSceneIdentifier("simple")
         }

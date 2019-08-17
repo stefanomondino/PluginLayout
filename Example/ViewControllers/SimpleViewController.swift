@@ -12,7 +12,7 @@ import PluginLayout
 class SimpleViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var collectionView: UICollectionView!
     
-    let dataSource = DataSource(count: 26, sections: 2)
+    let dataSource = PicturesDataSource(count: 26, sections: 2)
     let layout = FlowLayout()
     let flow = UICollectionViewFlowLayout()
     override func viewDidLoad() {

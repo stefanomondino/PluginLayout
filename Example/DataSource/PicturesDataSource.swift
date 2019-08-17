@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class DataSource: NSObject, UICollectionViewDataSource {
+class PicturesDataSource: NSObject, UICollectionViewDataSource {
     struct Section {
         var pictures: [Picture]
         var header: String?
@@ -61,4 +61,5 @@ class DataSource: NSObject, UICollectionViewDataSource {
          (cell as? SupplementaryCollectionViewCell)?.titleLabel.text = text
         return cell
     }
+    
 }

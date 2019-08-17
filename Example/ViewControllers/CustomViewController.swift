@@ -11,7 +11,7 @@ import PluginLayout
 
 class CustomViewController: UIViewController, TableLayoutDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
-    let dataSource = DataSource(count: 26, sections: 2)
+    let dataSource = PicturesDataSource(count: 26, sections: 2)
     let layout = PluginLayout()
     override func viewDidLoad() {
         super.viewDidLoad()
