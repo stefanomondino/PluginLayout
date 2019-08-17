@@ -48,7 +48,7 @@ extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, Gr
         return plugins[section]
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, columnsForSectionAt section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineCountForSectionAt section: Int) -> Int {
         switch section {
         case 1: return 3
         default: return 4

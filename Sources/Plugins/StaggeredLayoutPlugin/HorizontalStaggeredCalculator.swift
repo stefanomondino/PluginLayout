@@ -26,7 +26,7 @@ class HorizontalStaggeredCalculator: StaggeredLayoutCalculator {
         guard let collectionView = layout.collectionView,
         let delegate = self.delegate else { return [] }
         offset.x += parameters.insets.left
-        let columns = delegate.collectionView(collectionView, layout: layout, columnsForSectionAt: parameters.section)
+        let columns = delegate.collectionView(collectionView, layout: layout, lineCountForSectionAt: parameters.section)
         //var lineTop: [CGFloat] = (0..<columns).map { _ in offset.y }
         var lineBottom = (0..<columns).map { _ in offset.x }
         let contentBounds = parameters.contentBounds
@@ -68,7 +68,7 @@ class HorizontalStaggeredCalculator: StaggeredLayoutCalculator {
     }
     
     func columnHeight(for section: Int, collectionView: UICollectionView, layout: PluginLayout) -> CGFloat {
-        let columnsCount = delegate?.collectionView(collectionView, layout: layout, columnsForSectionAt: section) ?? 1
+        let columnsCount = delegate?.collectionView(collectionView, layout: layout, lineCountForSectionAt: section) ?? 1
         let itemsPerLine = max(columnsCount, 1)
         let insets = parameters.insets
         let spacing = parameters.itemSpacing
