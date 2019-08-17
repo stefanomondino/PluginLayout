@@ -17,7 +17,7 @@ struct Show: Codable {
     let name: String?
     let genres: [String]?
     var genre: String? {
-        return genres?.first
+        return genres?.joined(separator: ", ")
     }
     var title: String { return name ?? "" }
     let image: Poster?
