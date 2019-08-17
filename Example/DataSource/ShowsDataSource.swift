@@ -53,9 +53,23 @@ class ShowsDataSource: NSObject, UICollectionViewDataSource {
          (cell as? SupplementaryCollectionViewCell)?.titleLabel.text = text
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, placeholderViewAt indexPath: IndexPath) -> UICollectionViewCell? {
+    
+    private var placeholderCell: ShowCollectionViewCell?
+    private var placeholderConstraint: NSLayoutConstraint?
+    func collectionView(_ collectionView: UICollectionView, placeholderViewAt indexPath: IndexPath, constrainedToWidth width: CGFloat) -> UICollectionViewCell? {
+        if placeholderCell == nil {
+            
         guard let cell = UINib(nibName: "ShowCollectionViewCell", bundle: nil).instantiate(withOwner: nil, options: nil).first as? ShowCollectionViewCell else { return nil }
+            placeholderCell = cell
+            
+            cell.contentView.translatesAutoresizingMaskIntoConstraints = false
+            placeholderConstraint = cell.contentView.widthAnchor.constraint(equalToConstant: width)
+            placeholderConstraint?.isActive = true
+        }
+        guard let cell = placeholderCell else { return nil }
         cell.show = self.show(at: indexPath)
+        placeholderConstraint?.constant = width
+        cell.contentView.layoutIfNeeded()
         return cell
         
     }

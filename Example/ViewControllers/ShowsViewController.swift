@@ -9,7 +9,7 @@
 import UIKit
 import PluginLayout
 
-class ShowsViewController: UIViewController, StaggeredLayoutDelegate {
+class ShowsViewController: UIViewController, StaggeredLayoutDelegate, MosaicLayoutDelegate {
  
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -17,7 +17,7 @@ class ShowsViewController: UIViewController, StaggeredLayoutDelegate {
     let layout = StaggeredLayout()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         collectionView.dataSource = dataSource
         collectionView.delegate = self
         self.collectionView.setCollectionViewLayout(layout, animated: false)
@@ -29,15 +29,11 @@ class ShowsViewController: UIViewController, StaggeredLayoutDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
-        guard let cell = dataSource.collectionView(collectionView, placeholderViewAt: indexPath) else { return 1 }
-        
-        let width = floor((collectionView.bounds.width - 8 - 8 - (2 * 8)) / 3)
-        
-        cell.contentView.translatesAutoresizingMaskIntoConstraints = false
-        cell.contentView.widthAnchor.constraint(equalToConstant: width).isActive = true
-        cell.contentView.layoutIfNeeded()
+        let columns: CGFloat = CGFloat(self.collectionView(collectionView, layout: layout, lineCountForSectionAt: indexPath.section))
+        let spacing: CGFloat = 8
+        let width = floor((collectionView.bounds.width - spacing - spacing - ((columns - 1) * spacing)) / columns)
+        guard let cell = dataSource.collectionView(collectionView, placeholderViewAt: indexPath, constrainedToWidth: width) else { return 1 }
         let size = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-//        let size = cell.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize, withHorizontalFittingPriority: .defaultLow, verticalFittingPriority: .defaultLow)
         return size.width / size.height
         
     }
