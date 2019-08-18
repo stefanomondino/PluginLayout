@@ -114,6 +114,7 @@
 		2F0C065D22E9F43800CE1676 /* FlowLayoutCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayoutCalculator.swift; sourceTree = "<group>"; };
 		7030C05A230840D60038A548 /* ShowCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowCollectionViewCell.xib; sourceTree = "<group>"; };
 		7030C05B230840D60038A548 /* ShowCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowCollectionViewCell.swift; sourceTree = "<group>"; };
+		7030C05E23093E130038A548 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		70B8A3FB2307EB25008BC2B9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		70B8A3FD2307EBBC008BC2B9 /* VerticalStaggeredCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStaggeredCalculator.swift; sourceTree = "<group>"; };
 		70B8A3FF2307F24F008BC2B9 /* StaggeredLayoutCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredLayoutCalculator.swift; sourceTree = "<group>"; };
@@ -428,6 +429,7 @@
 		7BA30DA222E663CF00AAF618 /* Extras */ = {
 			isa = PBXGroup;
 			children = (
+				7030C05E23093E130038A548 /* docs */,
 				7BA30DA422E663DE00AAF618 /* LICENSE.md */,
 				7BA30DA522E663DE00AAF618 /* PluginLayout.podspec */,
 				7B9160C822EDE80800661A72 /* config.swiftlint.yml */,
