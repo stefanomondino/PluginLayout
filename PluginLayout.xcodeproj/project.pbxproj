@@ -280,6 +280,7 @@
 				7B157B3E22E7A903001A7BCF /* DataSource */,
 				7B157B3D22E7A8DC001A7BCF /* Delegates */,
 				70E71E4222C8F91C005674CD /* AppDelegate.swift */,
+				7B157B4622E7A9CA001A7BCF /* Scene.swift */,
 				70E71E4E22C8F91E005674CD /* Info.plist */,
 				70E71E4622C8F91C005674CD /* Main.storyboard */,
 				70E71E4922C8F91E005674CD /* Assets.xcassets */,
@@ -362,7 +363,6 @@
 				70B8A40D23083E6D008BC2B9 /* Image.swift */,
 				70B8A40F23083EA0008BC2B9 /* Show.swift */,
 				70B8A40B23083DCF008BC2B9 /* shows.json */,
-				7B157B4622E7A9CA001A7BCF /* Scene.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

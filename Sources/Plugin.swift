@@ -12,6 +12,7 @@ public protocol PluginType {
     func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes]
     func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes]
     var attributesClass: PluginLayoutAttributes.Type { get }
+     func defaultEffectsForAttribute(_ attribute: PluginLayoutAttributes) -> [PluginEffect]
 }
 
 public extension PluginType {
@@ -38,4 +39,14 @@ public extension Plugin {
         return attributes.filter { $0.frame.intersects(rect) }
     }
     
+    func defaultEffectsForAttribute(_ attribute: PluginLayoutAttributes) -> [PluginEffect] {
+        if sectionHeadersPinToVisibleBounds && attribute.representedElementKind == UICollectionView.elementKindSectionHeader {
+            return [StickyEffect(position: .start)]
+        }
+        if sectionFootersPinToVisibleBounds && attribute.representedElementKind == UICollectionView.elementKindSectionFooter {
+            return [StickyEffect(position: .end)]
+        }
+        return []
+    }
+
 }

@@ -23,7 +23,7 @@ enum Scene {
     static var all: [Scene] {
         return [
             .shows,
-            .flow(pinned: false),
+            .flow(pinned: true),
             .grid(horizontal: false),
             .staggered,
             .mosaic(columns: 4),
@@ -53,6 +53,7 @@ enum Scene {
         switch self {
         case .flow (let pinned): return pinned
         case .mosaic: return true
+        case .grid: return true
         default: return false
         }
     }

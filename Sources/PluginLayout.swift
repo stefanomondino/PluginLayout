@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol PluginEffect {
-func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout, plugin: PluginType, sectionAttributes attributes: [PluginLayoutAttributes]) -> PluginLayoutAttributes
+    func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout, plugin: PluginType, sectionAttributes attributes: [PluginLayoutAttributes]) -> PluginLayoutAttributes
     func percentage(from originalAttribute: PluginLayoutAttributes, layout: PluginLayout, span: CGFloat) -> CGPoint
 }
 
@@ -78,7 +78,7 @@ open class PluginLayout: UICollectionViewLayout {
             let collectionView = collectionView else { return defaultPlugin }
         return delegate.collectionView(collectionView, layout: self, pluginForSectionAt: section) ?? defaultPlugin
     }
-
+    
     public func effects(at indexPath: IndexPath, kind: String? = nil) -> [PluginEffect] {
         guard let delegate = self.delegate,
             let collectionView = collectionView else { return [] }
@@ -92,7 +92,7 @@ open class PluginLayout: UICollectionViewLayout {
     private var oldBounds: CGSize = .zero
     
     open override func prepare() {
-
+        
         if oldBounds != collectionView?.bounds.size {
             attributesCache.clear()
         }
@@ -123,19 +123,22 @@ open class PluginLayout: UICollectionViewLayout {
         guard let collectionView = collectionView else { return nil }
         return (0..<collectionView.numberOfSections).flatMap { section  -> [UICollectionViewLayoutAttributes] in
             guard let plugin = self.plugin(for: section),
-                 let attributes = self.attributesCache.items(forKey: section) else { return [] }
+                let attributes = self.attributesCache.items(forKey: section) else { return [] }
             
-            var inRect = plugin.layoutAttributesForElements(in: rect, from: attributes, section: section, layout: self )
+            var inRect = plugin
+                .layoutAttributesForElements(in: rect, from: attributes, section: section, layout: self)
                 .reduce([EffectIndex: PluginLayoutAttributes]()) { acc, element in
-                var accumulator = acc
-                accumulator[EffectIndex(indexPath: element.indexPath, kind: element.representedElementKind)] = element
-                return accumulator
+                    var accumulator = acc
+                    accumulator[EffectIndex(indexPath: element.indexPath, kind: element.representedElementKind)] = element
+                    return accumulator
             }
             
             return attributes
                 .compactMap { attribute -> PluginLayoutAttributes? in
                     let index = EffectIndex(indexPath: attribute.indexPath, kind: attribute.representedElementKind)
-                    let effects = self.effectsCacheByIndex.items(forKey: index) ?? []
+                    let defaultEffects = plugin.defaultEffectsForAttribute(attribute)
+                    let externalEffects = self.effectsCacheByIndex.items(forKey: index) ?? []
+                    let effects = defaultEffects + externalEffects
                     if effects.count == 0 { return inRect[index] }
                     let properAttribute: PluginLayoutAttributes = inRect[index] ?? attribute
                     return effects
@@ -163,22 +166,22 @@ open class PluginLayout: UICollectionViewLayout {
         }
         return true
     }
-
+    
     open override func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {
-//        self.effectsCacheByIndex.items.forEach { pair in
-//            let index = pair.key
-//            if let kind = index.kind {
-//                context.invalidateSupplementaryElements(ofKind: kind, at: [index.indexPath])
-//            } else {
-//                print ("Invalidating: \(index.indexPath)")
-//                context.invalidateItems(at: [index.indexPath])
-//            }
-//
-//        }
+        //        self.effectsCacheByIndex.items.forEach { pair in
+        //            let index = pair.key
+        //            if let kind = index.kind {
+        //                context.invalidateSupplementaryElements(ofKind: kind, at: [index.indexPath])
+        //            } else {
+        //                print ("Invalidating: \(index.indexPath)")
+        //                context.invalidateItems(at: [index.indexPath])
+        //            }
+        //
+        //        }
         super.invalidateLayout(with: context)
     }
     open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
-
+        
         let context = super.invalidationContext(forBoundsChange: newBounds)
         
         //This is where the optimization should happen. Needs investigation

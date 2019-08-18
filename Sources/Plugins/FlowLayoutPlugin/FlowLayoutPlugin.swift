@@ -40,7 +40,7 @@ open class FlowLayoutPlugin: Plugin {
         self.sectionFootersPinToVisibleBounds = pinSectionFooters
         self.alignment = alignment
     }
-    
+
     public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
         //Create the header if available
