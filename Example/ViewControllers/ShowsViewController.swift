@@ -9,7 +9,7 @@
 import UIKit
 import PluginLayout
 
-class ShowsViewController: UIViewController, StaggeredLayoutDelegate, MosaicLayoutDelegate, PluginLayoutDelegate {
+class ShowsViewController: UIViewController, StaggeredLayoutDelegate, PluginLayoutDelegate {
  
     @IBOutlet weak var collectionView: UICollectionView!
     let dataSource = ShowsDataSource()

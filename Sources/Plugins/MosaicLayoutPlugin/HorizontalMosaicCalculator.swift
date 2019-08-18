@@ -59,8 +59,9 @@ class HorizontalMosaicCalculator: MosaicLayoutCalculator {
                 
                 let properColumn = properColumns.first ?? 0
                 let isLandscape = ratio >= 1
-                let odds = isLandscape ? 10 : 60
-                if self.chanceForBig(at: indexPath.item) < odds ||
+//                let odds = isLandscape ? 10 : 60
+                let canBeBig = delegate.collectionView(collectionView, layout: layout, canBeBigAt: indexPath)
+                if !canBeBig ||
                     (itemsAccumulator.last?.frame.height ?? 0) > columnHeight ||
                     (!isLandscape && properColumns.count == columnsCount) {
                     properColumns = [properColumn]
@@ -87,13 +88,5 @@ class HorizontalMosaicCalculator: MosaicLayoutCalculator {
         offset.x += insets.right
         return attributes
     }
-    private var chances: [Int: Int] = [:]
-    func chanceForBig(at index: Int) -> Int {
-        guard let chance = chances[index] else {
-            let c = Int.random(in: (0..<100))
-            chances[index] = c
-            return c
-        }
-        return chance
-    }
+    
 }

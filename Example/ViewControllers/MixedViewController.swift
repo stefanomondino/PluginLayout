@@ -40,6 +40,7 @@ class MixedViewController: UIViewController {
         self.collectionView.setCollectionViewLayout(PluginLayout(), animated: false)
         self.collectionView.reloadData()
     }
+    fileprivate var chances: [Int: Int] = [:]
 }
 
 extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, GridLayoutDelegate, MosaicLayoutDelegate {
@@ -90,5 +91,17 @@ extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, Gr
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 60)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, canBeBigAt indexPath: IndexPath) -> Bool {
+        return chanceForBig(at: indexPath.item) > 60
+    }
+    
+    func chanceForBig(at index: Int) -> Int {
+        guard let chance = chances[index] else {
+            let c = Int.random(in: (0..<100))
+            chances[index] = c
+            return c
+        }
+        return chance
     }
 }

@@ -10,6 +10,16 @@ import UIKit
 import PluginLayout
 
 class MosaicDelegate: NSObject, MosaicLayoutDelegate, PluginLayoutDelegate {
+    private var chances: [Int: Int] = [:]
+    func chanceForBig(at index: Int) -> Int {
+        guard let chance = chances[index] else {
+            let c = Int.random(in: (0..<100))
+            chances[index] = c
+            return c
+        }
+        return chance
+    }
+    
     let dataSource: PicturesDataSource
     let columns: Int
     init(dataSource: PicturesDataSource, columns: Int = 4) {
@@ -42,5 +52,7 @@ class MosaicDelegate: NSObject, MosaicLayoutDelegate, PluginLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
         return dataSource.picture(at: indexPath).ratio
     }
-    
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, canBeBigAt indexPath: IndexPath) -> Bool {
+        return chanceForBig(at: indexPath.item) > 60
+    }
 }
