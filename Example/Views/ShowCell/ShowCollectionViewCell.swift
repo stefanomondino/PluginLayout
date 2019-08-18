@@ -47,6 +47,7 @@ class ShowCollectionViewCell: UICollectionViewCell {
         self.layer.masksToBounds = true
     }
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        
         super.apply(layoutAttributes)
     }
 }
