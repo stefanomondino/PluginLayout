@@ -160,7 +160,45 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rfN-Xz-Hp1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4180" y="-972"/>
+            <point key="canvasLocation" x="4877" y="-1006"/>
+        </scene>
+        <!--Cast View Controller-->
+        <scene sceneID="pgB-RH-PEn">
+            <objects>
+                <viewController storyboardIdentifier="cast" id="Qoj-if-oIH" customClass="CastViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IxW-Ld-fr6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="0zy-Er-jNf">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sfJ-KW-hCn">
+                                    <size key="itemSize" width="145" height="103"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="0zy-Er-jNf" firstAttribute="leading" secondItem="Mbb-zV-3MR" secondAttribute="leading" id="CQD-Or-Zrd"/>
+                            <constraint firstItem="Mbb-zV-3MR" firstAttribute="bottom" secondItem="0zy-Er-jNf" secondAttribute="bottom" id="Txd-5s-0Po"/>
+                            <constraint firstItem="0zy-Er-jNf" firstAttribute="top" secondItem="Mbb-zV-3MR" secondAttribute="top" id="hdR-eR-BgQ"/>
+                            <constraint firstItem="Mbb-zV-3MR" firstAttribute="trailing" secondItem="0zy-Er-jNf" secondAttribute="trailing" id="voI-OB-xnR"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Mbb-zV-3MR"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="A3l-r1-Pm1"/>
+                    <connections>
+                        <outlet property="collectionView" destination="0zy-Er-jNf" id="Xka-nG-Uha"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WKd-d7-vAM" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5516" y="-1006"/>
         </scene>
     </scenes>
 </document>

@@ -19,7 +19,7 @@ enum Scene {
     case comparison
     case customPlugin
     case shows
-    
+    case cast(show: Show)
     static var all: [Scene] {
         return [
             .shows,
@@ -46,6 +46,7 @@ enum Scene {
         case .comparison: return "Comparison with default flow"
         case .customPlugin: return "Custom Plugin"
         case .shows: return "Shows (TVMaze API)"
+        case .cast(let show): return show.title
         }
     }
     
@@ -103,6 +104,11 @@ enum Scene {
         case .customPlugin: return fromSceneIdentifier("customPlugin")
             
         case .shows: return fromSceneIdentifier("shows")
+        
+        case .cast(let show):
+            let vc = self.fromSceneIdentifier("cast") as! CastViewController
+            vc.show = show
+            return vc
             
         default: return fromSceneIdentifier("simple")
         }

@@ -8,19 +8,21 @@
 
 import Foundation
 
+struct TVMazeImage: Codable {
+    let medium: URL?
+    let original: URL?
+}
+
 struct Show: Codable {
-    struct Poster: Codable {
-        let medium: URL?
-        let original: URL?
-    }
     
+    let id: Int
     let name: String?
     let genres: [String]?
     var genre: String? {
         return genres?.joined(separator: ", ")
     }
     var title: String { return name ?? "" }
-    let image: Poster?
+    let image: TVMazeImage?
     var poster: Image? {
         guard let url = image?.medium else { return nil }
         return Image(url: url)

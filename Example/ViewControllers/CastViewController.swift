@@ -9,15 +9,30 @@
 import UIKit
 import PluginLayout
 
-class ShowsViewController: UIViewController, StaggeredLayoutDelegate, MosaicLayoutDelegate, PluginLayoutDelegate {
- 
+class CastViewController: UIViewController, StaggeredLayoutDelegate, MosaicLayoutDelegate, PluginLayoutDelegate {
+    
     @IBOutlet weak var collectionView: UICollectionView!
-    let dataSource = ShowsDataSource()
+    var dataSource: CastDataSource?
+    var show: Show?
+    var networkHandler: URLSessionDataTask?
     let layout = StaggeredLayout()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.dataSource = dataSource
+        if let show = show {
+            networkHandler = Cast.cast(from: show) {[weak self] (cast) in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.dataSource = CastDataSource(cast: cast)
+                    self.collectionView.dataSource = self.dataSource
+                    self.collectionView.reloadData()
+                }
+            }
+            networkHandler?.resume()
+        }
+        
+        
         collectionView.delegate = self
         self.collectionView.setCollectionViewLayout(layout, animated: false)
         self.collectionView.backgroundColor = UIColor.init(white: 0.90, alpha: 1)
@@ -27,11 +42,12 @@ class ShowsViewController: UIViewController, StaggeredLayoutDelegate, MosaicLayo
         return 3
     }
     let spacing: CGFloat = 8
+    
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
         let columns: CGFloat = CGFloat(self.collectionView(collectionView, layout: layout, lineCountForSectionAt: indexPath.section))
         
         let width = floor((collectionView.bounds.width - spacing - spacing - ((columns - 1) * spacing)) / columns)
-        guard let cell = dataSource.collectionView(collectionView, placeholderViewAt: indexPath, constrainedToWidth: width) else { return 1 }
+        guard let cell = dataSource?.collectionView(collectionView, placeholderViewAt: indexPath, constrainedToWidth: width) else { return 1 }
         let size = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
         return size.width / size.height
         
@@ -46,14 +62,4 @@ class ShowsViewController: UIViewController, StaggeredLayoutDelegate, MosaicLayo
         return UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
-        return [
-            ElasticEffect(spacing: 100, span: 100),
-            FadeEffect(span: 100)]
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let show = self.dataSource.show(at: indexPath)
-        let vc = Scene.cast(show: show).viewController
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
 }

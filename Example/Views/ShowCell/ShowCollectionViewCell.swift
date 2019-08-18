@@ -28,6 +28,17 @@ class ShowCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    var cast: Cast? {
+        didSet {
+            task?.cancel()
+            self.image.image = nil
+            self.genre.text = cast?.person.name ?? ""
+            self.title.text = cast?.character.name ?? ""
+            task = cast?.character.poster?.download { [weak self] in
+                self?.image.image = $0
+            }
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         self.image.contentMode = .scaleAspectFill
