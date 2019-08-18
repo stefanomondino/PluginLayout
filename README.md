@@ -2,11 +2,13 @@
 
 Plugin layout is a `UICollectionViewLayout` designed to have a specific layout configuration for each `UICollectionView`s section.
 
-![staggered](docs/gif/plugin-staggered.gif)
+
 
 For each section, the layout asks it's `delegate` for a proper `Plugin` that will create proper `UICollectionViewLayoutAttributes` and contribute determining the final size of contents.
 
 ## TLDR
+
+![staggered](docs/gif/plugin-staggered.gif)
 
 `PluginLayout` offers the possibility to combine different way of laying out objects for each section of its collection view.
 
