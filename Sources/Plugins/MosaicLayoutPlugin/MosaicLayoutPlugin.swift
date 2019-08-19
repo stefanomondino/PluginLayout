@@ -10,6 +10,9 @@ import UIKit
 
 public protocol MosaicLayoutDelegate: AnyObject, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineCountForSectionAt section: Int) -> Int
+    
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineMultipleForSectionAt section: Int) -> CGFloat 
+    
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat
     
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, canBeBigAt indexPath: IndexPath) -> Bool

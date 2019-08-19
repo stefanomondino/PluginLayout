@@ -37,7 +37,7 @@ class HorizontalMosaicCalculator: MosaicLayoutCalculator {
         let availableHeight = contentBounds.height - insets.top - insets.bottom
         let columnHeight = (availableHeight - (CGFloat(columnsCount - 1) * itemSpacing)) / CGFloat(columnsCount)
         var columns = (0..<columnsCount).map { _ in offset.x }
-        let widthMultiple: CGFloat = 50
+        let widthMultiple: CGFloat = delegate.collectionView(collectionView, layout: layout, lineMultipleForSectionAt: section)
         let attributes: [PluginLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: section))
             .map { item in IndexPath(item: item, section: section) }
             .reduce([]) { itemsAccumulator, indexPath -> [PluginLayoutAttributes] in
@@ -71,7 +71,7 @@ class HorizontalMosaicCalculator: MosaicLayoutCalculator {
                 let bigHeight = columnHeight * CGFloat(properColumns.count) + CGFloat(properColumns.count - 1) * itemSpacing
                 let bigWidth = bigHeight * ratio
                 var width = round(bigWidth / widthMultiple) * widthMultiple
-                if let closestWidth = sortedColumns.filter ({ abs($0.element - (x + width)) < 50 }).first {
+                if let closestWidth = sortedColumns.filter ({ abs($0.element - (x + width)) < widthMultiple }).first {
                     width = closestWidth.element - x
                 }
                 //let height = round((bigHeight + CGFloat(properColumns.count - 1) * lineSpacing) / heightMultiple ) * heightMultiple

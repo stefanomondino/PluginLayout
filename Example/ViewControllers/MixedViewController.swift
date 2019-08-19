@@ -92,6 +92,11 @@ extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, Gr
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 60)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineMultipleForSectionAt section: Int) -> CGFloat {
+        return 50
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, canBeBigAt indexPath: IndexPath) -> Bool {
         return chanceForBig(at: indexPath.item) > 60
     }

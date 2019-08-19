@@ -55,4 +55,8 @@ class MosaicDelegate: NSObject, MosaicLayoutDelegate, PluginLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, canBeBigAt indexPath: IndexPath) -> Bool {
         return chanceForBig(at: indexPath.item) > 60
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineMultipleForSectionAt section: Int) -> CGFloat {
+        return 150
+    }
 }
