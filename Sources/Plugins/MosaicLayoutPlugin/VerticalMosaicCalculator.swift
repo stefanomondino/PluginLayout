@@ -37,7 +37,7 @@ class VerticalMosaicCalculator: MosaicLayoutCalculator {
         let availableWidth = contentBounds.width - insets.left - insets.right
         let columnWidth = (availableWidth - (CGFloat(columnsCount - 1) * itemSpacing)) / CGFloat(columnsCount)
         var columns = (0..<columnsCount).map { _ in offset.y }
-        let heightMultiple: CGFloat = min(delegate.collectionView(collectionView, layout: layout, lineMultipleForSectionAt: section), columnWidth)
+        let heightMultiple: CGFloat = max(delegate.collectionView(collectionView, layout: layout, lineMultipleForSectionAt: section), 20)
         let attributes: [PluginLayoutAttributes] = (0..<collectionView.numberOfItems(inSection: section))
             .map { item in IndexPath(item: item, section: section) }
             .reduce([]) { itemsAccumulator, indexPath -> [PluginLayoutAttributes] in
@@ -70,7 +70,7 @@ class VerticalMosaicCalculator: MosaicLayoutCalculator {
                 let y = columns[properColumn] + lineSpacing
                 let bigWidth = columnWidth * CGFloat(properColumns.count) + CGFloat(properColumns.count - 1) * itemSpacing
                 let bigHeight = bigWidth / ratio
-                var height = round(bigHeight / heightMultiple) * heightMultiple
+                var height = ceil(bigHeight / heightMultiple) * heightMultiple
                 if let closestHeight = sortedColumns.filter ({ abs($0.element - (y + height)) < heightMultiple }).first {
                     height = closestHeight.element - y
                 }

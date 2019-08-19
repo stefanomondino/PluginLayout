@@ -70,7 +70,7 @@ class HorizontalMosaicCalculator: MosaicLayoutCalculator {
                 let x = columns[properColumn] + lineSpacing
                 let bigHeight = columnHeight * CGFloat(properColumns.count) + CGFloat(properColumns.count - 1) * itemSpacing
                 let bigWidth = bigHeight * ratio
-                var width = round(bigWidth / widthMultiple) * widthMultiple
+                var width = ceil(bigWidth / widthMultiple) * widthMultiple
                 if let closestWidth = sortedColumns.filter ({ abs($0.element - (x + width)) < widthMultiple }).first {
                     width = closestWidth.element - x
                 }

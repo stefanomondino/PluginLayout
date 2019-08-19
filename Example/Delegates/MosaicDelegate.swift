@@ -57,6 +57,6 @@ class MosaicDelegate: NSObject, MosaicLayoutDelegate, PluginLayoutDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineMultipleForSectionAt section: Int) -> CGFloat {
-        return 150
+        return 50
     }
 }
