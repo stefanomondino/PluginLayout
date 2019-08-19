@@ -8,7 +8,7 @@ For each section, the layout asks it's `delegate` for a proper `Plugin` that wil
 
 ## TLDR
 
-![staggered](docs/gif/plugin-staggered.gif)
+<img src="docs/gif/plugin-staggered.gif" width="150" />
 
 `PluginLayout` offers the possibility to combine different way of laying out objects for each section of its collection view.
 
