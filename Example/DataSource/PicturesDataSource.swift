@@ -16,19 +16,26 @@ class PicturesDataSource: NSObject, UICollectionViewDataSource {
         var footer: String?
     }
     var sections: [Section] = []
-    
+    var showIndexes: Bool = true
     init(pictures: [[Picture]]) {
         super.init()
         sections = pictures.enumerated().map {
             Section(pictures: $0.element, header: "Section #\($0.offset)", footer: "Total count: \($0.element.count)")
         }
     }
-    convenience init(pictures: [Picture]) {
+    convenience init(pictures: [Picture], showIndexes: Bool = true) {
         self.init(pictures: [pictures])
+        self.showIndexes = showIndexes
     }
     convenience init(count: Int, contentType: Picture.ContentType = .food, sections: Int = 1) {
         let pictures = (0..<count).map { Picture(id: $0, type: contentType)}
         self.init(pictures: (0..<sections).map { _ in pictures })
+    }
+    
+    init(shows: [Show]) {
+        sections =
+            [Section(pictures: shows.map { Picture(show: $0 )}, header: "Shows", footer: nil)]
+        showIndexes = false
     }
     
     func picture(at indexPath: IndexPath) -> Picture {
@@ -46,7 +53,7 @@ class PicturesDataSource: NSObject, UICollectionViewDataSource {
         collectionView.register(UINib(nibName: "PictureCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "picture")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "picture", for: indexPath)
         (cell as? PictureCollectionViewCell)?.picture = sections[indexPath.section].pictures[indexPath.item]
-        (cell as? PictureCollectionViewCell)?.number.text = "\(indexPath.item)"
+        (cell as? PictureCollectionViewCell)?.number.text = showIndexes ? "\(indexPath.item)" : ""
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -62,4 +69,11 @@ class PicturesDataSource: NSObject, UICollectionViewDataSource {
         return cell
     }
     
+    func hasHeaderInSection(_ section: Int) -> Bool {
+        return sections[section].header != nil
+    }
+    
+    func hasFooterInSection(_ section: Int) -> Bool {
+        return sections[section].footer != nil
+    }
 }

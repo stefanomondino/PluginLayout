@@ -92,7 +92,7 @@ enum Scene {
             return CollectionViewController(dataSource: dataSource, delegate: delegate, layout: layout)
             
         case .mosaic(let columns) :
-            let dataSource = PicturesDataSource(count: 60, contentType: .people, sections: 2)
+            let dataSource = PicturesDataSource(shows: Show.all())
             let delegate = MosaicDelegate(dataSource: dataSource, columns: columns)
             let layout = MosaicLayout()
             layout.sectionFootersPinToVisibleBounds = pinHeaders

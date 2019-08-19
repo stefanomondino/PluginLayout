@@ -9,6 +9,7 @@ For each section, the layout asks it's `delegate` for a proper `Plugin` that wil
 ## TLDR
 
 <img src="docs/gif/plugin-staggered.gif" width="150" />
+<img src="docs/images/mosaic2.png" width="150" />
 
 `PluginLayout` offers the possibility to combine different way of laying out objects for each section of its collection view.
 
@@ -96,7 +97,7 @@ In horizontal layouts, this value is used to calculate `width` of each item ( `h
 
 ### StaggeredLayout
 
-![staggered](docs/images/staggered.png)
+<img src="docs/images/staggered.png" width="150" />
 
 A Staggered Layout is made by a pre-defined number of *lines* (columns in a vertical-scrolling layout) that gets independently filled by items with a specific size.
 Lines/columns are filled by iterating over the total amount of items and placing each one into the next column available; since item size can vary a lot between items, there is no guaranteed alignment at the end, but the total count of items per line/column will be the same (if total count is a multiple of column count, otherwise there will be a difference of 1 element between the first columns and the last ones).
@@ -105,6 +106,9 @@ A typical example of staggered layout is the Pinterest app, designed to have an 
 
 
 ### MosaicLayout
+
+<img src="docs/images/mosaic1.png" width="150" />
+<img src="docs/images/mosaic2.png" width="150" />
 
 A mosaic layout is suited for items that have a *desired* size that doesn't have to be *precise*. Our algorithm takes full inspiration from Lightbox algorithm and this excellent [post](https://blog.vjeux.com/2012/image/image-layout-algorithm-lightbox.html).
 

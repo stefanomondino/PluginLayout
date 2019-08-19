@@ -17,9 +17,10 @@ struct Picture {
         case sports
         case people
         case nature
-        
+        case show
         var ratio: CGFloat {
             switch self {
+            case .show: return 9/16
             case .cats: return 4/3
             case .nature, .people: return CGFloat([16.0/9.0, 4.0/3.0, 9.0/16.0, 3.0/4.0, 21.0/9.0, 9.0/21.0].randomElement() ?? 1)
             default: return 1
@@ -39,16 +40,22 @@ struct Picture {
     var type: ContentType
     var ratio: CGFloat
     
+    init (show: Show) {
+        self.id = show.id
+        self.ratio = 9/16
+        self.type = .show
+        self.url = show.image?.medium ?? URL(fileURLWithPath: "")
+    }
+    
     init(id: Int, type: ContentType = .food) {
         self.id = id
         self.ratio = type.ratio
         self.type = type
-    }
-    var url: URL {
         let width = 600
         let height = Int(round(CGFloat(width) / ratio))
-        return URL(string: "http://lorempixel.com/\(width)/\(height)/\(type.rawValue)/\(id % type.max)")!
+        url = URL(string: "http://lorempixel.com/\(width)/\(height)/\(type.rawValue)/\(id % type.max)")!
     }
+    var url: URL
     
     func download(_ completion: @escaping (UIImage) -> Void) -> URLSessionTask? {
             return Image(url: url).download(completion)

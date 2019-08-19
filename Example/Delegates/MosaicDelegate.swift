@@ -40,10 +40,18 @@ class MosaicDelegate: NSObject, MosaicLayoutDelegate, PluginLayoutDelegate {
         return UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 60)
+        if dataSource.hasHeaderInSection(section) {
+            return CGSize(width: collectionView.bounds.width, height: 60)
+        } else {
+            return .zero
+        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 60)
+        if dataSource.hasFooterInSection(section) {
+            return CGSize(width: collectionView.bounds.width, height: 60)
+        } else {
+            return .zero
+        }
     }
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineCountForSectionAt section: Int) -> Int {
         return columns
