@@ -8,7 +8,25 @@
 
 import UIKit
 
+/**
+    An object capable of calculating layout attributes for a specific section of the collection view.
+ 
+    Each plugin must be capable to pre-calculate all the attributes and "inflate" total content size by proper values.
+    It also must be able to return a subset of internal attributes for a given visible rectangle for each step of current scroll.
+*/
 public protocol PluginType {
+    /**   Asks for all attributes in specific section.
+     
+     This is the main part of each plugin; the plugin must be able to retrieve the total count of elements in current section and create a specific layout attribut for each one. At the end of the iteration, the `offset` property must be updated to reflect the bottom-right-most point "inflated" by the plugin at current stage.
+     Plugins are always iterated sequentially by parent layout.
+     
+     - Parameters:
+        - section: The section where calculations will happen
+        - offset: The current distance from content view's origin. It should be updated at least once at the end of all iterations.
+        - layout: The layout requesting the information.
+     
+     - Returns: A layout attributes array for each element in current section, including supplementary and decoration view attributes when needed.
+     */
     func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes]
     func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes]
     var attributesClass: PluginLayoutAttributes.Type { get }
