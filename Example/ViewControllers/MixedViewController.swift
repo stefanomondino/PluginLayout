@@ -11,6 +11,7 @@ import PluginLayout
 
 class MixedViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    fileprivate var chances: [Int: Int] = [:]
     lazy var plugins: [PluginType] = {
         return [
             FlowLayoutPlugin(delegate: self, pinSectionHeaders: true, pinSectionFooters: true),
@@ -40,7 +41,6 @@ class MixedViewController: UIViewController {
         self.collectionView.setCollectionViewLayout(PluginLayout(), animated: false)
         self.collectionView.reloadData()
     }
-    fileprivate var chances: [Int: Int] = [:]
 }
 
 extension MixedViewController: PluginLayoutDelegate, StaggeredLayoutDelegate, GridLayoutDelegate, MosaicLayoutDelegate {

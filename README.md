@@ -96,5 +96,20 @@ In horizontal layouts, this value is used to calculate `width` of each item ( `h
 
 ### StaggeredLayout
 
+A Staggered Layout is made by a pre-defined number of *lines* (columns in a vertical-scrolling layout) that gets independently filled by items with a specific size.
+Lines/columns are filled by iterating over the total amount of items and placing each one into the next column available; since item size can vary a lot between items, there is no guaranteed alignment at the end, but the total count of items per line/column will be the same (if total count is a multiple of column count, otherwise there will be a difference of 1 element between the first columns and the last ones).
+
+A typical example of staggered layout is the Pinterest app, designed to have an infinite number of items. In that case, having the bottom part not aligned is not a big issue, since it's unlikely to ever get to the scroll bottom.
+
+
 ### MosaicLayout
 
+A mosaic layout is suited for items that have a *desired* size that doesn't have to be *precise*. Our algorithm takes full inspiration from Lightbox algorithm and this excellent [post](https://blog.vjeux.com/2012/image/image-layout-algorithm-lightbox.html).
+
+Layout is made by a precise number of line/columns; each line/column is divided by equally-spaced columns/lines, creating an invisible "grid". For this explanation, let's imagine a vertical scrolling layout, made by columns.
+
+Each item is provided with a desired aspect ratio, placed in proper column by assigning current column width and then rounded in height to next line so that aspect ratio is respected as much as possible.
+
+If previous columns ends at the same line and are contiguous, next item's width is sized to cover all contiguous columns, while its height is scaled by aspect ratio and rounded as before.
+
+Next item is always placed into the topmost available column, so that the overall bottom line grows in the most uniform way possible.
