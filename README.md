@@ -8,8 +8,7 @@ For each section, the layout asks it's `delegate` for a proper `Plugin` that wil
 
 ## TLDR
 
-<img src="docs/gif/plugin-staggered.gif" width="150" />
-<img src="docs/images/mosaic2.png" width="150" />
+<img src="docs/gif/plugin-staggered.gif" width="150" /> <img src="docs/images/mosaic2.png" width="150" />
 
 `PluginLayout` offers the possibility to combine different way of laying out objects for each section of its collection view.
 
@@ -107,8 +106,7 @@ A typical example of staggered layout is the Pinterest app, designed to have an 
 
 ### MosaicLayout
 
-<img src="docs/images/mosaic1.png" width="150" />
-<img src="docs/images/mosaic2.png" width="150" />
+<img src="docs/images/mosaic1.png" width="150" /> <img src="docs/images/mosaic2.png" width="150" />
 
 A mosaic layout is suited for items that have a *desired* size that doesn't have to be *precise*. Our algorithm takes full inspiration from Lightbox algorithm and this excellent [post](https://blog.vjeux.com/2012/image/image-layout-algorithm-lightbox.html).
 
