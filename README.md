@@ -96,7 +96,7 @@ In horizontal layouts, this value is used to calculate `width` of each item ( `h
 
 ### StaggeredLayout
 
-![staggered](docs/images/staggered.png)
+![staggered](docs/images/staggered.png | width=150)
 
 A Staggered Layout is made by a pre-defined number of *lines* (columns in a vertical-scrolling layout) that gets independently filled by items with a specific size.
 Lines/columns are filled by iterating over the total amount of items and placing each one into the next column available; since item size can vary a lot between items, there is no guaranteed alignment at the end, but the total count of items per line/column will be the same (if total count is a multiple of column count, otherwise there will be a difference of 1 element between the first columns and the last ones).
