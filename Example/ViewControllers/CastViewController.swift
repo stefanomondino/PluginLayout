@@ -76,6 +76,9 @@ class CastViewController: UIViewController, UICollectionViewDelegateFlowLayout, 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: PluginLayout, effectsForItemAt indexPath: IndexPath, kind: String?) -> [PluginEffect] {
         return [SpiralEffect(radius: -10)]
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return collectionView.bounds.size
+    }
 }
 
 

@@ -6,7 +6,7 @@ For each section, the layout asks it's `delegate` for a proper `Plugin` that wil
 
 ## TLDR
 
-<img src="docs/gif/plugin-staggered.gif" width="150" /> <img src="docs/images/mosaic2.png" width="150" />
+<img src="docs/gif/plugin-staggered.gif" width="150" /> <img src="docs/images/mosaic2.png" width="150" /> <img src="docs/gif/plugin-custom.gif" width="150" />
 
 `PluginLayout` offers the possibility to combine different way of laying out objects for each section of its collection view.
 
@@ -115,3 +115,10 @@ Each item is provided with a desired aspect ratio, placed in proper column by as
 If previous columns ends at the same line and are contiguous, next item's width is sized to cover all contiguous columns, while its height is scaled by aspect ratio and rounded as before.
 
 Next item is always placed into the topmost available column, so that the overall bottom line grows in the most uniform way possible.
+
+## Demo
+
+### Custom Effect
+
+<img src="docs/gif/plugin-custom.gif" width="150" />
+
