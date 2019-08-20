@@ -50,7 +50,7 @@ class HorizontalFlowCalculator: FlowLayoutCalculator {
                     if y + itemSize.height + parameters.insets.bottom > parameters.contentBounds.height {
                         origin = CGPoint(x: lineEnd + parameters.lineSpacing, y: parameters.insets.top )
                         
-                        realignAttibutes(lastLineAttributes, inAvailableHeight: lineMaxHeight, alignment: alignment)
+                        realignAttibutes(lastLineAttributes, inAvailableHeight: lineMaxHeight, alignment: alignment, insets: parameters.insets)
                         lastLineAttributes = [attribute]
                         lineStart = origin.x
                     } else {
@@ -73,7 +73,7 @@ class HorizontalFlowCalculator: FlowLayoutCalculator {
         }
         
         if alignment != .default {
-            realignAttibutes(lastLineAttributes, inAvailableHeight: lineMaxHeight, alignment: alignment)
+            realignAttibutes(lastLineAttributes, inAvailableHeight: lineMaxHeight, alignment: alignment, insets: parameters.insets)
         }
         offset.x = lineEnd + parameters.insets.right
         return attributes

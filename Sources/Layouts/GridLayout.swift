@@ -18,9 +18,14 @@ open class GridLayout: SingleLayout<GridLayoutPlugin> {
         didSet { invalidateLayout() }
     }
     
+    public var alignment: FlowLayoutAlignment = .default {
+        didSet { invalidateLayout() }
+    }
+    
     open override func prepare() {
         super.prepare()
         plugin?.sectionHeadersPinToVisibleBounds = sectionHeadersPinToVisibleBounds
         plugin?.sectionFootersPinToVisibleBounds = sectionFootersPinToVisibleBounds
+        plugin?.alignment = alignment
     }
 }

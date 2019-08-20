@@ -66,7 +66,7 @@ class VerticalFlowCalculator: FlowLayoutCalculator {
                     //If placing this item at desired x would cause item itself to overflow collection view bounds, create a new line
                     if x + itemSize.width + self.parameters.insets.right > self.parameters.contentBounds.width {
                         //Take all previous line attributes and re-space them
-                        realignAttibutes(lastLineAttributes, inAvailableWidth: lineMaxWidth, alignment: alignment)
+                        realignAttibutes(lastLineAttributes, inAvailableWidth: lineMaxWidth, alignment: alignment, insets: parameters.insets)
                         //Recreate the line array with new attribute
                         lastLineAttributes = [attribute]
                         //Place new attribute's origin on a new line.
@@ -102,7 +102,7 @@ class VerticalFlowCalculator: FlowLayoutCalculator {
         
         //Realign last line. Note: UICollectionViewFlowLayout seems to NOT do this.
         if alignment != .default {
-            realignAttibutes(lastLineAttributes, inAvailableWidth: lineMaxWidth, alignment: alignment)
+            realignAttibutes(lastLineAttributes, inAvailableWidth: lineMaxWidth, alignment: alignment, insets: parameters.insets)
         }
         
         //Update the offset with insets

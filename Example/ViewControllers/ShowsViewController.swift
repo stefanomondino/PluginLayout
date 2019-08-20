@@ -9,24 +9,47 @@
 import UIKit
 import PluginLayout
 
-class ShowsViewController: UIViewController, StaggeredLayoutDelegate, PluginLayoutDelegate {
+class ShowsViewController: UIViewController, StaggeredLayoutDelegate, GridLayoutDelegate, PluginLayoutDelegate {
  
     @IBOutlet weak var collectionView: UICollectionView!
     let dataSource = ShowsDataSource()
-    let layout = StaggeredLayout()
+    let gridLayout = GridLayout()
+    let staggeredLayoyt = StaggeredLayout()
+    let flowLayout = FlowLayout()
+    lazy var item = UIBarButtonItem(title: "Staggered", style: .done, target: self, action: #selector(switchLayout(_:)))
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         collectionView.dataSource = dataSource
         collectionView.delegate = self
-        self.collectionView.setCollectionViewLayout(layout, animated: false)
+        self.collectionView.setCollectionViewLayout(staggeredLayoyt, animated: false)
         self.collectionView.backgroundColor = UIColor.init(white: 0.90, alpha: 1)
         self.collectionView.reloadData()
+        
+        
+        self.navigationItem.rightBarButtonItem = item
+        
     }
+    private var currentLayout = 0
+    @objc func switchLayout(_ target: Any) {
+        let allLayouts = [staggeredLayoyt, gridLayout, flowLayout]
+        let titles = ["Staggered", "Grid", "Flow"]
+        currentLayout = (currentLayout + 1) % allLayouts.count
+        let layout = allLayouts[currentLayout]
+        item.title = titles[currentLayout]
+        self.collectionView.setCollectionViewLayout(layout, animated: false)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineCountForSectionAt section: Int) -> Int {
         return 3
     }
     let spacing: CGFloat = 8
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let columns: CGFloat = 1
+        
+        let width = round((collectionView.bounds.width - spacing - spacing - ((columns - 1) * spacing)) / columns)
+        guard let cell = dataSource.collectionView(collectionView, placeholderViewAt: indexPath, constrainedToWidth: width) else { return .zero }
+        return cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+    }
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, aspectRatioAt indexPath: IndexPath) -> CGFloat {
         let columns: CGFloat = CGFloat(self.collectionView(collectionView, layout: layout, lineCountForSectionAt: indexPath.section))
         
@@ -56,4 +79,9 @@ class ShowsViewController: UIViewController, StaggeredLayoutDelegate, PluginLayo
         let vc = Scene.cast(show: show).viewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineFractionAt indexPath: IndexPath) -> Int {
+        return 3
+    }
+    
 }
