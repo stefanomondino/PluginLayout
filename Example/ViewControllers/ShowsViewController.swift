@@ -25,7 +25,6 @@ class ShowsViewController: UIViewController, StaggeredLayoutDelegate, GridLayout
         self.collectionView.backgroundColor = UIColor.init(white: 0.90, alpha: 1)
         self.collectionView.reloadData()
         
-        
         self.navigationItem.rightBarButtonItem = item
         
     }

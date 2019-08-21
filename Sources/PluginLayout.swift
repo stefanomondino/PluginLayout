@@ -90,14 +90,15 @@ open class PluginLayout: UICollectionViewLayout {
     }
     
     private var oldBounds: CGSize = .zero
-    
+    private var oldDirection: UICollectionView.ScrollDirection = .vertical
     open override func prepare() {
         
-        if oldBounds != collectionView?.bounds.size {
+        if oldBounds != collectionView?.bounds.size || oldDirection != scrollDirection {
             attributesCache.clear()
         }
         if !attributesCache.isEmpty { return }
         self.oldBounds = collectionView?.bounds.size ?? .zero
+        self.oldDirection = scrollDirection
         self.attributesCache.clear()
         self.effectsCacheByIndex.clear()
         
