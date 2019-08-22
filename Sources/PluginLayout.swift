@@ -88,15 +88,16 @@ open class PluginLayout: UICollectionViewLayout {
     open override var flipsHorizontallyInOppositeLayoutDirection: Bool {
         return true
     }
-    
+    private var forceInvalidation = true
     private var oldBounds: CGSize = .zero
     private var oldDirection: UICollectionView.ScrollDirection = .vertical
     open override func prepare() {
         
-        if oldBounds != collectionView?.bounds.size || oldDirection != scrollDirection {
+        if oldBounds != collectionView?.bounds.size || oldDirection != scrollDirection || forceInvalidation {
             attributesCache.clear()
         }
         if !attributesCache.isEmpty { return }
+        self.forceInvalidation = false
         self.oldBounds = collectionView?.bounds.size ?? .zero
         self.oldDirection = scrollDirection
         self.attributesCache.clear()
@@ -179,6 +180,9 @@ open class PluginLayout: UICollectionViewLayout {
         //            }
         //
         //        }
+        if context.invalidateDataSourceCounts || context.invalidateEverything {
+            self.forceInvalidation = true
+        }
         super.invalidateLayout(with: context)
     }
     open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
@@ -189,5 +193,8 @@ open class PluginLayout: UICollectionViewLayout {
         //        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionHeader, at: [IndexPath(item: 0, section: 1)])
         //        context.invalidateSupplementaryElements(ofKind: UICollectionView.elementKindSectionFooter, at: [IndexPath(item: 0, section: 0)])
         return context
+    }
+    open override func invalidateLayout() {
+        super.invalidateLayout()
     }
 }
