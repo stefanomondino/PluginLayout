@@ -44,3 +44,45 @@ open class PluginLayoutAttributes: UICollectionViewLayoutAttributes {
         return super.isEqual(object)
     }
 }
+
+extension Array where Element: PluginLayoutAttributes {
+    func filter(in rect: CGRect) -> [PluginLayoutAttributes] {
+        guard let lastIndex = self.indices.last,
+            let firstMatchIndex = binarySearch(rect, start: 0, end: lastIndex, values: self)
+            else {
+                return []
+        }
+        var values: [PluginLayoutAttributes] = []
+        for attributes in self[..<firstMatchIndex].reversed() {
+            guard attributes.frame.maxY >= rect.minY else {
+                break
+            }
+            values.append(attributes)
+        }
+        for attributes in self[firstMatchIndex...] {
+            guard attributes.frame.minY <= rect.maxY else {
+                break
+            }
+            values.append(attributes)
+        }
+        return values
+    }
+    
+    private func binarySearch(_ rect: CGRect, start: Int, end: Int, values: [PluginLayoutAttributes]) -> Int? {
+        guard end >= start else {
+            return nil
+        }
+        let mid = (start + end) / 2
+        let attribute = values[mid]
+
+        if attribute.frame.intersects(rect) {
+            return mid
+        } else {
+            if attribute.frame.maxY < rect.minY {
+                return binarySearch(rect, start: (mid + 1), end: end, values: values)
+            } else {
+                return binarySearch(rect, start: start, end: (mid - 1), values: values)
+            }
+        }
+    }
+}
