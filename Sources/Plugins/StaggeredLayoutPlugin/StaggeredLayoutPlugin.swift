@@ -66,6 +66,6 @@ open class StaggeredLayoutPlugin: Plugin {
 
     public func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
-        return attributes.filter(in: rect)
+        return attributes.filter(in: rect, scrollDirection: layout.scrollDirection)
     }
 }

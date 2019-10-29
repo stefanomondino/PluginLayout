@@ -54,7 +54,7 @@ public protocol Plugin: PluginType {
 
 public extension Plugin {
     func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
-        return attributes.filter(in: rect)
+        return attributes.filter(in: rect, scrollDirection: layout.scrollDirection)
     }
     
     func defaultEffectsForAttribute(_ attribute: PluginLayoutAttributes) -> [PluginEffect] {
