@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "PluginLayout"
-  spec.version      = "0.0.1"
+  spec.version      = "0.1"
   spec.summary      = "A flexible UICollectionViewLayout based on plugins."
 
   # This description is used to generate tags and improve search results.

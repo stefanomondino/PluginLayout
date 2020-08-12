@@ -41,7 +41,7 @@ open class FlowLayoutPlugin: Plugin {
         self.alignment = alignment
     }
 
-    public func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
+    open func layoutAttributes(in section: Int, offset: inout CGPoint, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
         //Create the header if available
         let header: PluginLayoutAttributes? = self.header(in: section, offset: &offset, layout: layout)
@@ -74,7 +74,7 @@ open class FlowLayoutPlugin: Plugin {
         }
     }
 
-    public func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
+    open func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
         return attributes.filter { $0.frame.intersects(rect) }
 

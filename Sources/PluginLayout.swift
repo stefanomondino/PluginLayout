@@ -159,7 +159,18 @@ open class PluginLayout: UICollectionViewLayout {
         return attributesCache.all().filter { $0.indexPath == indexPath && $0.representedElementKind == nil }.first
     }
     open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return attributesCache.all().filter { $0.indexPath == indexPath && $0.representedElementKind == elementKind }.first
+        attributesCache.all().filter {
+            $0.indexPath == indexPath
+            && $0.representedElementKind == elementKind
+            && $0.representedElementCategory == .supplementaryView
+        }.first
+    }
+    open override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+       return attributesCache.all().filter {
+           $0.indexPath == indexPath
+           && $0.representedElementKind == elementKind
+           && $0.representedElementCategory == .decorationView
+       }.first
     }
     //This is propably very inefficient at the moment, as it's completely invalidating the layout for each scroll
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
