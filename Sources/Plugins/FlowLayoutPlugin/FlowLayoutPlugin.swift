@@ -76,7 +76,7 @@ open class FlowLayoutPlugin: Plugin {
 
     open func layoutAttributesForElements(in rect: CGRect, from attributes: [PluginLayoutAttributes], section: Int, layout: PluginLayout) -> [PluginLayoutAttributes] {
         
-        return attributes.filter { $0.frame.intersects(rect) }
+        return attributes.filter(in: rect, scrollDirection: layout.scrollDirection)
 
     }
 }
