@@ -14,7 +14,6 @@ struct TVMazeImage: Codable {
 }
 
 struct Show: Codable {
-    
     let id: Int
     let name: String?
     let genres: [String]?

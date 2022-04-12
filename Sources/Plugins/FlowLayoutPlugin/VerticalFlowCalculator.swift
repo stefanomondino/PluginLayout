@@ -28,7 +28,7 @@ class VerticalFlowCalculator: FlowLayoutCalculator {
         //Offset should be incremented by insets top, to create padding between header (if present) or previous section.
         
         offset.y += self.parameters.insets.top
-        
+         
         //First line should start from current offset. It's the proper point (y) where the new attribute's origin should be placed
         var lineStart: CGFloat = offset.y
         

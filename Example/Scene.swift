@@ -19,10 +19,12 @@ enum Scene {
     case comparison
     case customPlugin
     case shows
+    case memes
     case cast(show: Show)
     static var all: [Scene] {
         return [
             .shows,
+            .memes,
             .flow(pinned: true),
             .grid(horizontal: false),
             .staggered,
@@ -39,6 +41,7 @@ enum Scene {
     var title: String {
         switch self {
         case .flow (let pinned): return "Flow" + (pinned ? " Pinned" : "")
+        case .memes: return "Memes"
         case .grid(let horizontal): return "Grid \(horizontal ? "Horizontal" : "Vertical")"
         case .staggered: return "Staggered"
         case .mosaic(let columns): return "Mosaic (\(columns) cols)"
@@ -104,7 +107,7 @@ enum Scene {
         case .customPlugin: return fromSceneIdentifier("customPlugin")
             
         case .shows: return fromSceneIdentifier("shows")
-        
+        case .memes: return fromSceneIdentifier("memes")
         case .cast(let show):
             let vc = self.fromSceneIdentifier("cast") as! CastViewController
             vc.show = show

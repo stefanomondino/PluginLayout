@@ -14,7 +14,7 @@ struct SpiralEffect: PluginEffect {
     let radius: CGFloat
     
     public func apply(to originalAttribute: PluginLayoutAttributes, layout: PluginLayout, plugin: PluginType, sectionAttributes attributes: [PluginLayoutAttributes]) -> PluginLayoutAttributes {
-        guard originalAttribute.representedElementKind == nil else { return originalAttribute }
+        guard originalAttribute.representedElementKind == nil, abs(radius) > 0 else { return originalAttribute }
         guard
             let collectionView = layout.collectionView,
             let attribute = originalAttribute.copy() as? PluginLayoutAttributes else { return originalAttribute }
@@ -26,17 +26,19 @@ struct SpiralEffect: PluginEffect {
         let maxRotation: CGFloat = (cos(collectionView.bounds.width / (radius)))
         let rotationValue = ((percentage * 2) - 1) * maxRotation / 2.0
         var transform = CATransform3DIdentity
-        transform = CATransform3DTranslate(transform, 0, -radius, 0)
-        if rotationValue.isNaN == false {
-            transform = CATransform3DRotate(transform, rotationValue, 0, 0, 1)
+        if alpha > 0 {
+            transform = CATransform3DTranslate(transform, 0, -radius, 0)
+            if rotationValue.isNaN == false {
+                transform = CATransform3DRotate(transform, rotationValue, 0, 0, 1)
+            }
+            
+            let xOffset = -((percentage) - 0.5) * width
+            
+            let trimmed = max(-width, min(width, xOffset))
+            transform.m34 = 1 / 2000
+            transform = CATransform3DTranslate(transform, trimmed, radius, 200 + xOffset * 10.0)
+            
         }
-        
-        let xOffset = -((percentage) - 0.5) * width
-        
-        let trimmed = max(-width, min(width, xOffset))
-        transform.m34 = 1 / 2000
-        transform = CATransform3DTranslate(transform, trimmed, radius, 200 + xOffset * 10.0)
-        
         attribute.transform3D = transform
         
         return attribute

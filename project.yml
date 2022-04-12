@@ -1,0 +1,30 @@
+name: PluginLayout
+options: 
+  deploymentTarget:
+    iOS: 11.0
+    tvOS: 11.0
+packages: 
+  Inject:
+    url: https://github.com/krzysztofzablocki/Inject
+    from: 1.0.5
+targets:
+  PluginLayout:
+    type: framework
+    platform: [iOS, tvOS]
+    sources: Sources
+    settings:
+      base:
+        INFOPLIST_FILE: Sources/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.stefanomondino.pluginlayout
+  Example:
+    type: application
+    platform: iOS
+    sources: "Example"
+    settings: 
+      base:
+        INFOPLIST_FILE: Example/Info.plist
+        IPHONEOS_DEPLOYMENT_TARGET: 13.0
+        PRODUCT_BUNDLE_IDENTIFIER: com.stefanomondino.pluginlayout.demo
+    dependencies:
+    - target: PluginLayout_iOS
+    - package: Inject

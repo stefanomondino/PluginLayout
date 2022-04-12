@@ -55,10 +55,9 @@ open class PluginLayout: UICollectionViewLayout {
     override open class var invalidationContextClass: AnyClass {
         return PluginLayoutInvalidationContext.self
     }
-    
+
     private var contentSize: CGSize = .zero
     private let attributesCache = Cache<Int, PluginLayoutAttributes>()
-    
     private let effectsCacheByIndex = Cache<EffectIndex, PluginEffect>()
     
     private var delegate: PluginLayoutDelegate? {
@@ -123,17 +122,18 @@ open class PluginLayout: UICollectionViewLayout {
     }
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard let collectionView = collectionView else { return nil }
-        return (0..<collectionView.numberOfSections).flatMap { section  -> [UICollectionViewLayoutAttributes] in
+        let finalAttributes = (0..<collectionView.numberOfSections)
+            .flatMap { section  -> [UICollectionViewLayoutAttributes] in
             guard let plugin = self.plugin(for: section),
-                let attributes = self.attributesCache.items(forKey: section) else { return [] }
+                let attributes = self.attributesCache.items(forKey: section)
+                else { return [] }
             
-            var inRect = plugin
+            let inRect = plugin
                 .layoutAttributesForElements(in: rect, from: attributes, section: section, layout: self)
-                .reduce([EffectIndex: PluginLayoutAttributes]()) { acc, element in
-                    var accumulator = acc
-                    accumulator[EffectIndex(indexPath: element.indexPath, kind: element.representedElementKind)] = element
-                    return accumulator
+                .reduce(into: [EffectIndex: PluginLayoutAttributes]()) { acc, element in
+                    acc[EffectIndex(indexPath: element.indexPath, kind: element.representedElementKind)] = element
             }
+            
             
             return attributes
                 .compactMap { attribute -> PluginLayoutAttributes? in
@@ -154,6 +154,7 @@ open class PluginLayout: UICollectionViewLayout {
             }
             
         }
+        return finalAttributes.isEmpty ? nil : finalAttributes
     }
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return attributesCache.all().filter { $0.indexPath == indexPath && $0.representedElementKind == nil }.first

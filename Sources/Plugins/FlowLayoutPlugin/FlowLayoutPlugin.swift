@@ -25,7 +25,6 @@ open class FlowLayoutPlugin: Plugin {
     
     public var sectionHeadersPinToVisibleBounds: Bool = false
     public var sectionFootersPinToVisibleBounds: Bool = false
-    
     public var alignment: FlowLayoutAlignment = .default
     
     public private(set) weak var delegate: FlowLayoutDelegate?

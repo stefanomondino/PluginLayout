@@ -80,7 +80,7 @@ class ShowsViewController: UIViewController, StaggeredLayoutDelegate, GridLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout: PluginLayout, lineFractionAt indexPath: IndexPath) -> Int {
-        return 3
+        return 2
     }
     
 }

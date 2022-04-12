@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Inject
 class TabViewController: UITabBarController {
     
     override func viewDidLoad() {
@@ -15,7 +15,7 @@ class TabViewController: UITabBarController {
         super.viewDidLoad()
         
         self.viewControllers = Scene.all.map {
-            let viewController = $0.viewController
+            let viewController = Inject.ViewControllerHost($0.viewController)
             viewController.title = $0.title
             return UINavigationController(rootViewController: viewController)
         }

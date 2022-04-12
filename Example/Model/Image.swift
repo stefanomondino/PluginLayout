@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-private class ImageCache {
+class ImageCache {
     private var cache = NSCache<NSURL, UIImage>()
     subscript(key: URL) -> UIImage? {
         get {
@@ -23,19 +23,16 @@ private class ImageCache {
         }
     }
 }
-
-struct Image {
-    let url: URL
-    private static var cache = ImageCache()
+extension URL {
     func download(_ completion: @escaping (UIImage) -> Void) -> URLSessionTask? {
-        if let cached = Image.cache[url] {
+        if let cached = Image.cache[self] {
             completion(cached)
             return nil
         }
-        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
+        let task = URLSession.shared.dataTask(with: self) { (data, _, _) in
             DispatchQueue.main.async {
                 if let data = data, let image = UIImage(data: data) {
-                    Image.cache[self.url] = image
+                    Image.cache[self] = image
                     completion(image)
                 } else {
                     //                    Picture.cache.removeObject(forKey: self.url as NSURL)
@@ -45,5 +42,12 @@ struct Image {
         }
         task.resume()
         return task
+    }
+}
+struct Image {
+    let url: URL
+    static var cache = ImageCache()
+    func download(_ completion: @escaping (UIImage) -> Void) -> URLSessionTask? {
+        url.download(completion)
     }
 }
